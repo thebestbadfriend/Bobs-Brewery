@@ -15,5 +15,9 @@ def create_window(title = "Bob's Brewery", min_width = 300, min_height = 300, ma
   return window
 
 
-root = create_window()
-root.mainloop()
+def main():
+  root = create_window()
+  root.mainloop()
+
+
+main()
