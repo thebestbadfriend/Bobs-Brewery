@@ -1,2 +1,7 @@
 .idea/
 .venv/
+dist/
+build/
+
+requirements.txt
+main.spec

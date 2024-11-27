@@ -53,6 +53,8 @@ def create_main_window():
 
 
 def fix_server_access():
+    os.system("net use * /delete /y")
+    os.system("net use Z: \\\\PAT-PC\\MiTek_Network")
     os.system("net use")
 
 
