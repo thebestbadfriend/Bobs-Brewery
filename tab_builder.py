@@ -41,4 +41,8 @@ def create_contacts_tab(tab_control):
     #    last name
     #    company
 
+    # I also need to get the database set up. Need to remember to do it in such a way that when I go from
+    # dev to prod, the path, login, etc can be easily updated from one location.
+    # I will probably make the db local to the program during dev, but ultimately it will exist on the server.
+
     tab_control.add(contacts_tab, text="Contacts")
