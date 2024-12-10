@@ -7,7 +7,7 @@ pg_user = "postgres"                # PostgreSQL username
 pg_password = "yourpassword"        # PostgreSQL password (if needed)
 pg_host = "localhost"               # PostgreSQL host (if different from localhost)
 pg_port = "5432"                    # PostgreSQL port (default 5432)
-db_name = "mynewdb"                 # Database name to check/create
+db_name = "bb_contacts"                 # Database name to check/create
 dump_file = r"C:\path\to\your\dumpfile.sql"  # Path to your dump file
 
 # Set environment variable for password (optional, if password is needed)
