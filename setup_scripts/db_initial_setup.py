@@ -1,14 +1,15 @@
 import psycopg2
 import subprocess
 import sys
+import concealed_vars as cv
 
 # Configuration - update these variables
-pg_user = "postgres"                # PostgreSQL username
-pg_password = "yourpassword"        # PostgreSQL password (if needed)
-pg_host = "localhost"               # PostgreSQL host (if different from localhost)
-pg_port = "5432"                    # PostgreSQL port (default 5432)
-db_name = "bb_contacts"                 # Database name to check/create
-dump_file = r"C:\Toolbox\Dev\Bobs-Brewery\setup_scripts\db_initial_setup.py"  # Path to your dump file
+pg_user = cv.DB_USER                                                          # PostgreSQL username
+pg_password = cv.COMMON_PASS                                                  # PostgreSQL password (if needed)
+pg_host = 'localhost'                                                         # PostgreSQL host (if different from localhost)
+pg_port = '5432'                                                              # PostgreSQL port (default 5432)
+db_name = 'bb_contacts'                                                       # Database name to check/create
+dump_file = r'C:\Toolbox\Dev\Bobs-Brewery\setup_scripts\db_initial_setup.py'  # Path to your dump file
 
 # Set environment variable for password (optional, if password is needed)
 import os
@@ -31,7 +32,7 @@ def check_database_exists():
         conn.close()
         return exists
     except psycopg2.Error as e:
-        print(f"Error checking database existence: {e}")
+        print(f'Error checking database existence: {e}')
         sys.exit(1)
 
 def create_database():
@@ -45,22 +46,22 @@ def create_database():
         )
         conn.autocommit = True
         cur = conn.cursor()
-        cur.execute(f"CREATE DATABASE {db_name}")
+        cur.execute(f'CREATE DATABASE {db_name}')
         cur.close()
         conn.close()
         print(f"Database '{db_name}' created successfully.")
     except psycopg2.Error as e:
-        print(f"Error creating database: {e}")
+        print(f'Error creating database: {e}')
         sys.exit(1)
 
 def restore_dump():
     """Restore the dump file into the created database."""
     try:
-        restore_command = f"psql -U {pg_user} -d {db_name} -f {dump_file} -h {pg_host} -p {pg_port}"
+        restore_command = f'psql -U {pg_user} -d {db_name} -f {dump_file} -h {pg_host} -p {pg_port}'
         subprocess.run(restore_command, check=True, shell=True)
         print(f"Dump file '{dump_file}' has been applied to the database '{db_name}'.")
     except subprocess.CalledProcessError as e:
-        print(f"Error restoring dump: {e}")
+        print(f'Error restoring dump: {e}')
         sys.exit(1)
 
 def main():
