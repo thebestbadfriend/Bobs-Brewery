@@ -1,3 +1,4 @@
+import brewery_db_accessor as bda
 import os
 import psycopg2
 
