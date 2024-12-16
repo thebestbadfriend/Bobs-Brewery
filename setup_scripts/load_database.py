@@ -1,7 +1,7 @@
 import brewery_db_accessor as bda
 
 
-def main():
+def load():
     """Main script to check, create, and restore."""
     # Check if the database exists
     if bda.check_database_exists():
@@ -12,6 +12,10 @@ def main():
 
     # Restore the dump file
     bda.restore_dump()
+
+
+def main():
+    load()
 
 
 if __name__ == "__main__":

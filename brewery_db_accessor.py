@@ -82,3 +82,7 @@ def restore_dump():
     except subprocess.CalledProcessError as e:
         print(f'Error restoring dump: {e}')
         sys.exit(1)
+
+
+def drop_database(dbname='bb_contacts'):
+    execute_db_command(f'drop database if exists {dbname}', 'postgres')
