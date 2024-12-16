@@ -2,6 +2,8 @@ import brewery_db_accessor as bda
 import load_database as ldb
 
 '''
+seems like all the issues in this set of comments are fixed. Need to test though.
+
 street addresses sometimes include commas or are on two lines
 there are columns for them in the csv, but really the street address should be one column, and the po box should
 be another. Need to fix the formatting in that csv, but the inserts here work properly to the degree that
