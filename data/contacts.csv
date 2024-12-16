@@ -173,7 +173,7 @@ company_id,person_id,primary_phone_number_id,secondary_phone_number_id,fax_numbe
 101,,585,,,,,180,FALSE,
 226,215,585,,,,,210,FALSE,
 100,333,751,750,38,8,46,130,FALSE,
-104,,136,,,,,,FALSE,Brewer’s Account Number 107702
+104,,136,,,,,,FALSE,Brewer's Account Number 107702
 105,,96,,,,,36,FALSE,
 106,,228,,39,,44,250,FALSE,
 ,323,,703,,,,,FALSE,
@@ -241,7 +241,7 @@ company_id,person_id,primary_phone_number_id,secondary_phone_number_id,fax_numbe
 ,387,719,,,,,266,FALSE,
 ,143,42,,,,,173,FALSE,
 ,17,469,,,,,,FALSE,
-,187,469,667,,,,177,FALSE,One card has Jeff’s primary as ending with 3152
+,187,469,667,,,,177,FALSE,One card has Jeff's primary as ending with 3152
 ,304,285,,,,,,FALSE,
 122,97,320,410,,,,283,FALSE,
 ,335,,,,,,372,FALSE,
@@ -364,7 +364,7 @@ company_id,person_id,primary_phone_number_id,secondary_phone_number_id,fax_numbe
 194,45,329,,79,,,333,FALSE,
 194,,307,315,80,,,275,FALSE,
 194,294,602,513,81,,39,317,FALSE,
-194,,599,237,,,,317,FALSE,alternate phone – 870-365-6344 | Account number 1087000
+194,,599,237,,,,317,FALSE,alternate phone : 870-365-6344 | Account number 1087000
 198,,609,,82,,,1,FALSE,
 198,,435,,83,,,410,FALSE,
 ,296,13,,,,,117,FALSE,
@@ -412,7 +412,7 @@ company_id,person_id,primary_phone_number_id,secondary_phone_number_id,fax_numbe
 221,380,47,21,90,,43,316,FALSE,
 216,,131,,,,,,FALSE,
 217,,58,,,,,386,FALSE,I am not sure what the full name of this company is. Could use expansion.
-205,,724,,,,,,FALSE,Literally next door? Or a company called “Next Door”
+205,,724,,,,,,FALSE,Literally next door? Or a company called 'Next Door'
 218,166,614,373,91,,,22,FALSE,
 167,246,408,503,92,,33,359,FALSE,
 ,131,354,549,93,,,246,FALSE,Another card has Pyatt as the city.

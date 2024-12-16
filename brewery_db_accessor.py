@@ -16,9 +16,9 @@ dump_file = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\sql\bb_contacts_dump.
 os.environ['PGPASSWORD'] = pg_password
 
 
-def connect_to_db():
+def connect_to_db(dbname):
     conn = psycopg2.connect(
-        dbname='postgres',  # Connect to the default 'postgres' database
+        dbname=dbname,  # Connect to the default 'postgres' database
         user=pg_user,
         host=pg_host,
         port=pg_port
@@ -28,17 +28,17 @@ def connect_to_db():
     return conn
 
 
-def execute_db_command(query):
+def execute_db_command(query, dbname = 'bb_contacts'):
     try:
         results = None
-        conn = connect_to_db()
+        conn = connect_to_db(dbname)
         cur = conn.cursor()
-
         cur.execute(query)
 
-        if cur.rowcount > 0:
-            # https://www.psycopg.org/docs/cursor.html#cursor.fetchall
-            results = cur.fetchall()
+        if query.split(' ')[0] == 'SELECT':
+            if cur.rowcount > 0:
+                # https://www.psycopg.org/docs/cursor.html#cursor.fetchall
+                results = cur.fetchall()
 
         return results
     finally:
@@ -49,7 +49,7 @@ def execute_db_command(query):
 def check_database_exists():
     """Check if the database exists."""
     try:
-        results = execute_db_command(f"SELECT 1 FROM pg_catalog.pg_database WHERE datname = '{db_name}'")
+        results = execute_db_command(f"SELECT 1 FROM pg_catalog.pg_database WHERE datname = '{db_name}'", dbname = 'postgres')
         return results is not None
     except psycopg2.Error as e:
         print(f'Error checking database existence: {e}')
@@ -59,7 +59,7 @@ def check_database_exists():
 def create_database():
     """Create the database if it doesn't exist."""
     try:
-        execute_db_command(f'CREATE DATABASE {db_name}')
+        execute_db_command(f'CREATE DATABASE {db_name}', 'postgres')
         print(f"Database '{db_name}' created successfully.")
     except psycopg2.Error as e:
         print(f'Error creating database: {e}')
