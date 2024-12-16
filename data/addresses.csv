@@ -1,4 +1,4 @@
-id,Street Address 1,Street Address 2,City,State,Zip Code
+id,Street Address,PO Box ,City,State,Zip Code
 1,#2 Necessity Ave,,Harrison,AR,72601
 2,#3 Necessity Ave,,Harrison,AR,72601
 3,#8 Lisa Dr,,Batesville,AR,72501
@@ -13,7 +13,7 @@ id,Street Address 1,Street Address 2,City,State,Zip Code
 12,104 Bluebird St Ste A,,Harrison,AR,72601-1908
 13,10401 Hwy 65 N,,Omaha,AR,
 14,10425 S Hwy 125,,Protem,MO,65733
-15,10500 University Center Drive,Suite 140,Tampa,FL,33612
+15,10500 University Center Drive - Suite 140,,Tampa,FL,33612
 16,107 Oxford St,,Harrison,AR,72601
 17,107 S Pine St,,Harrison,AR,72601
 18,107 W Commercial,,Harrison,AR,72601
@@ -60,7 +60,7 @@ id,Street Address 1,Street Address 2,City,State,Zip Code
 59,14439 Robertson Ln,,Omaha,AR,72662
 60,14445 Hwy 65,,St. Joe,AR,72675
 61,14515 North Outer 40 Drive,,Chesterfield,MO,63017-5746
-62,"14515 North Outer Forty Drive, Suite 300",,Chesterfield,MO,63017
+62,14515 North Outer Forty Drive - Suite 300,,Chesterfield,MO,63017
 63,1477 Hwy 143,,Berryville,AR,72616
 64,149 MC 6021,,Yellville,AR,72687
 65,1523 MC 7069,,Yellville,AR,72687
@@ -85,13 +85,13 @@ id,Street Address 1,Street Address 2,City,State,Zip Code
 84,200 Collins Rd,,Branson,MO,65616
 85,200 South Twin Oaks Drive,PO Box 1335,Tuckerman,AR,72473
 86,200 West Stephenson,,Harrison,AR,72601
-87,"203 N Walnut St, Ste A",,Harrison,AR,72601-4357
+87,203 N Walnut St – Ste A,,Harrison,AR,72601-4357
 88,20434 Old Hwy 65,,Omaha,AR,72662
 89,205 CR 842,,Henderson,AR,72544
 90,205 N Cherry,,Harrison,AR,72601
 91,205 Russell Dr,,Harrison,AR,72601
 92,206 Coy,,Harrison,AR,72601
-93,"209 E Wade Ave, Suite C",,Mountain Home,AR,72653-0004
+93,209 E Wade Ave – Suite C,,Mountain Home,AR,72653-0004
 94,209 North Walnut,PO Box 1695,Harrison,AR,72602-1695
 95,2101 Sulphur Mtn Rd,,Harrison,AR,72601-8391
 96,2104 First National Dr,,Harrison,AR,72602-1258
@@ -102,7 +102,7 @@ id,Street Address 1,Street Address 2,City,State,Zip Code
 101,2131 NC 3320,,Harrison,AR,72601
 102,214 Phillips St,,Berryville,AR,72616
 103,2153 CR 607,,Green Forest,AR,72638
-104,217 N Spring,Apt 2,Harrison,AR,72601
+104,217 N Spring – Apt 2,,Harrison,AR,72601
 105,217 Patridge Ave,,Harrison,AR,72601
 106,218 MC 7049,,Flippin,AR,72634
 107,2204 Old Calvert City Rd,,Paducah,KY,42001-0000
@@ -128,7 +128,7 @@ id,Street Address 1,Street Address 2,City,State,Zip Code
 127,2700 Baughman Cutoff Rd,,Harrison,AR,72601
 128,2700 Salmon Ln,,Harrison,AR,72601
 129,2704 Margie Lane,,Metanie,LA,
-130,2711 LBJ Freeway,Suite 160,Mabank,TX,75147
+130,2711 LBJ Freeway – Suite 160,,Mabank,TX,75147
 131,2738 Hwy 7 N,,Harrison,AR,72601
 132,2756 Rock Cliff Dr,,Harrison,AR,72601
 133,2770 Edwards Farm Dr,,Harrison,AR,72601
@@ -141,7 +141,7 @@ id,Street Address 1,Street Address 2,City,State,Zip Code
 140,301 S Maple,,Harrison,AR,72601
 141,3016 MC 6014,,Yellville,AR,72687
 142,302 South Main,,Mountain Home,AR,72653
-143,"303 North Main, Suite 202",,Harrison,AR,72601
+143,303 North Main – Suite 202,,Harrison,AR,72601
 144,3094 MC 3022,,Pyatt,AR,72672
 145,3113 East Washington Ave,,N. Little Rock,AR,72114
 146,312 CR 988,,Green Forest,AR,72638
@@ -218,12 +218,12 @@ id,Street Address 1,Street Address 2,City,State,Zip Code
 217,5650 Birch Rd,,Harrison,AR,72601
 218,5743A Hwy 7 N,,Harrison,AR,72601
 219,5779 Marshall Creek Rd,,Everton,AR,72633
-220,5830 Hwy 62 PO Box 547,,Eureka Springs,AR,72632
+220,5830 Hwy 62,PO Box 547,Eureka Springs,AR,72632
 221,5997 Parliament Dr,,Harrison,AR,72601
 222,6 Springfield St,,Berryville,AR,72616
 223,601 Hwy 62-65 S,,Harrison,AR,72601
 224,6012 A James Phifer Ln,,,,
-225,605 B Hwy 62-65 N,Box 346,Harrison,AR,72601-2200
+225,605 B Hwy 62-65 N,PO Box 346,Harrison,AR,72601-2200
 226,605 W Smythe,,Harrison,AR,72601
 227,6170 Sulphur Mtn Rd,,Harrison,AR,72601
 228,618 N Great SW Pkwy,,Arlington,TX,76011
@@ -255,7 +255,7 @@ id,Street Address 1,Street Address 2,City,State,Zip Code
 254,7478 Lotus Ln,,Harrison,AR,72601
 255,7515 Fork Creek Rd,,Harrison,AR,72601
 256,7712 Snowball Creek Rd,,Everton,AR,72633
-257,"775 Hwy 201 N, Suite A",PO Box 442,Mountain Home,AR,72654-0442
+257,775 Hwy 201 N – Suite A,PO Box 442,Mountain Home,AR,72654-0442
 258,7923 Hwy 392 W,,Harrison,AR,72601
 259,797 Industrial Park Dr,PO Drawer 391,Waynesboro,MS,39367
 260,8 Timberwolf Circle,,Yellville,AR,72687
@@ -279,8 +279,8 @@ id,Street Address 1,Street Address 2,City,State,Zip Code
 278,914 Hwy 62-65 N,,Harrison,AR,72601
 279,915 Olvey Rd,,Harrison,AR,72601
 280,9187 21 N,,Berryville,AR,72616
-281,919 Central Blvd,Box 214,Bull Shoals,AR,72619
-282,"920 Hwy 62 &, 65 N",,Harrison,AR,72601
+281,919 Central Blvd,PO Box 214,Bull Shoals,AR,72619
+282,920 Hwy 62 & 65 N,,Harrison,AR,72601
 283,921 CR 802,,Green Forest,AR,72638
 284,9224 King Arthur Dr,,Dallas,TX,75247
 285,9238 Sugar Rode,,Harrison,AR,72601
@@ -298,22 +298,22 @@ id,Street Address 1,Street Address 2,City,State,Zip Code
 297,,,Harrison,AR,
 298,,,Harrison,AR,72601
 299,,,Harrison,AR,72602
-300,HC 32 Box 112G,,Hasty,AR,72640
-301,HC 32 Box 168C,,Hasty,AR,72640
-302,HC 33 Box 41,,Compton,AR,72624
-303,HC 37 Box 72,,Mount Judea,AR,72655
-304,HC 62 Box 269,,Ozone,AR,72854
-305,HC 70 Box 311,,Jasper,AR,72641
-306,HC 70 Box 44,,Jasper,AR,72641
-307,HC 72 Box 104D,,Jasper,AR,72641
-308,HC 72 Box 48,,Vendor,AR,72683
-309,HC 73 Box 16B,,Marble Falls,AR,72648
+300,,HC 32 Box 112G,Hasty,AR,72640
+301,,HC 32 Box 168C,Hasty,AR,72640
+302,,HC 33 Box 41,Compton,AR,72624
+303,,HC 37 Box 72,Mount Judea,AR,72655
+304,,HC 62 Box 269,Ozone,AR,72854
+305,,HC 70 Box 311,Jasper,AR,72641
+306,,HC 70 Box 44,Jasper,AR,72641
+307,,HC 72 Box 104D,Jasper,AR,72641
+308,,HC 72 Box 48,Vendor,AR,72683
+309,,HC 73 Box 16B,Marble Falls,AR,72648
 310,HC 76,,Marshall,AR,72650
-311,HC 79 Box 279,,Marshall,AR,72650
-312,HCR &0 Box 372,,Jasper,AR,72641
-313,HCR 31 Box 475,,Deere,AR,72628
-314,HCR 70 Box 372,,Jasper,AR,72601
-315,HL 62 Box 2892,,Ozone,AR,72854
+311,,HC 79 Box 279,Marshall,AR,72650
+312,,HCR &0 Box 372,Jasper,AR,72641
+313,,HCR 31 Box 475,Deere,AR,72628
+314,,HCR 70 Box 372,Jasper,AR,72601
+315,,HL 62 Box 2892,Ozone,AR,72854
 316,Hwy 19 S,PO Box 336,Alton,MO,65606
 317,Hwy 62-65 N,PO Box 10,Harrison,AR,72601
 318,,,Lowell,AR,
@@ -323,129 +323,129 @@ id,Street Address 1,Street Address 2,City,State,Zip Code
 322,North Central Unit,HC 62 Box 300,Calico Rock,AR,72519
 323,,,Omaha,AR,
 324,,,Paragould,AR,
-325,PO Box 10036,,Russellville,AR,72812
-326,PO Box 1031,,Harrison,AR,72601
-327,PO Box 1054,,Harrison,AR,72602
-328,PO Box 1075,,Flippin,AR,72634
-329,PO Box 1078,,Harrison,AR,72601
-330,PO Box 108,,Golden,MO,65658
-331,PO Box 10,,Valley Springs,AR,72682
-332,PO Box 1125,,Pine Bluff,AR,71613-1125
-333,PO Box 1150,Hwy 62 SW,Mountain Home,AR,72654
-334,PO Box 1155,,Harrison,AR,72601
-335,PO Box 1163,,Yellville,AR,72687
-336,PO Box 1171,,Harrison,AR,72602
-337,PO Box 1191,,Harrison,AR,72601
-338,PO Box 1192,,Harrison,AR,72601
-339,PO Box 123,,Summit,AR,72677
-340,PO Box 1258,,Harrison,AR,72602-0159
-341,PO Box 130,,Dennard,AR,72629
-342,PO Box 132,,Deere,AR,72628
-343,PO Box 136,,Golden,MO,65658
-344,PO Box 1386,,Diamond City,AR,72630
-345,PO Box 138,,Mountain Home,AR,72653
-346,PO Box 1393,,Harrison,AR,72601
-347,PO Box 1393,,Harrison,AR,72602
-348,PO Box 13,,Valley Springs,AR,72682
-349,PO Box 147,,Lead Hill,AR,72644
-350,PO Box 1568,,Sherwood,OR,97140
-351,PO Box 1636,2020 Hwy 65 S,Harrison,AR,72602
-352,PO Box 16,,Alpena,AR,72611
-353,PO Box 1700,,Harrison,AR,72601
-354,PO Box 1822,,Branson,MO,65615
-355,PO Box 1822,,Lead Hill,AR,72644
-356,PO Box 1899,,Harrison,AR,72601
-357,PO Box 19033,,Greensboro,NC,27419-9033
-358,PO Box 1903,,Texarkana,AR,71854
-359,PO Box 192,,Green Forest,AR,72638
-360,PO Box 1965,,Harrison,AR,72602
-361,PO Box 1991,,Harrison,AR,72602
-362,PO Box 204,,Harrison,AR,72602
-363,PO Box 206,6988 Hwy 62 W,Gassville,AR,72635
-364,PO Box 207,,Harrison,AR,72602
-365,PO Box 2092,,Harrison,AR,72601
-366,PO Box 214,,Lead Hill,AR,72644
-367,PO Box 2151,,Harrison,AR,72601
-368,PO Box 2155,,Harrison,AR,72602
-369,PO Box 217,,Western Grove,AR,
-370,PO Box 2213,,Harrison,AR,72601
-371,PO Box 223,,Pyatt,AR,72672
-372,PO Box 2251,,Harrison,AR,72602
-373,PO Box 2261,,Little Rock,AR,72203
-374,PO Box 2282,,Harrison,AR,72602
-375,PO Box 2306,,Harrison,AR,72601
-376,PO Box 231,,Harrison,AR,72602
-377,PO Box 2334,,Harrison,AR,72601
-378,PO Box 237,,Plumerville,AR,72127
-379,PO Box 2396,,Harrison,AR,72602
-380,PO Box 240,,Valley Springs,AR,72682
-381,PO Box 255,,Western Grove,AR,72685
-382,PO Box 2568,114 Sisco Ave,Harrison,AR,72602
-383,PO Box 2568,,Harrison,AR,72602
-384,PO Box 2598,,Harrison,AR,72601
-385,PO Box 264,,Bergman,AR,72615
-386,PO Box 278,,Chickasha,OK,73023
-387,PO Box 280055,,Tampa,FL,33682-0055
-388,PO Box 2930,,Harrison,AR,72602
-389,PO Box 293,,Harrison,AR,72602
-390,PO Box 308,,Harrison,AR,72602
-391,PO Box 316,,Valley Center,KS,67147
-392,PO Box 323,,Yellville,AR,72687
-393,PO Box 327,81 Jeffries Ln,Hustonville,KY,40437
-394,PO Box 336,,Lead Hill,AR,72644
-395,PO Box 344,,Green Forest,AR,72638
-396,PO Box 369,,Green Forest,AR,72638
-397,PO Box 371,,Green Forest,AR,72638
-398,PO Box 375,,Alpena,AR,72611
-399,PO Box 390,,Jasper,AR,72641
-400,PO Box 404,,Shell Knob,MO,65747
-401,PO Box 4067,,Fort Smith,AR,72914
-402,PO Box 413,,Lead Hill,AR,72644
-403,PO Box 433,,Lead Hill,AR,72644
-404,PO Box 447,,Middletown,NY,10941
-405,PO Box 456,,Alpena,AR,72611
-406,PO Box 47,,Valley Springs,AR,72682
-407,PO Box 492,,Leslie,AR,72645
-408,PO Box 500,,Norfork,AR,72658-0500
-409,PO Box 541550,128-15 26th Ave,Flushing,NY,11354-0108
-410,PO Box 574,,Yellville,AR,72687
-411,PO Box 575,,Harrison,AR,72602
-412,PO Box 57,,Harrison,AR,72601
-413,PO Box 6465,,Lee's Summit,MO,64064
-414,PO Box 647,,Jasper,IN,47546-0647
-415,PO Box 65,,Lead Hill,AR,72644
-416,PO Box 6636,,Pine Bluff,AR,71611
-417,PO Box 663,,Berryville,AR,72616
-418,PO Box 687,314 Industrial Park,Harrison,AR,72602
-419,PO Box 70,E Hwy 14,Lead Hill,AR,72644
-420,PO Box 7105 MPO,,Springfield,MO,65801
-421,PO Box 712,,Marshall,AR,72650
-422,PO Box 730197,,Dallas,TX,75373-0197
-423,PO Box 76,,Valley Springs,AR,72682
-424,PO Box 8050,,Little Rock,AR,72203-8050
-425,PO Box 812,,Yellville,AR,72687
-426,PO Box 818,,Amite,LA,70422
-427,PO Box 832,,Hollister,MO,65673
-428,PO Box 840,,Harrison,AR,72601
-429,PO Box 850,,Harrison,AR,72601
-430,PO Box 890108,,Charlotte,NC,28289-0108
-431,PO Box 892,,Harrison,AR,72602
-432,PO Box 935,,Rolla,MO,65402
-433,PO Box 9,,Lincoln,AR,72744
-434,PO Box C,,Mountain Home,AR,72653
+325,,PO Box 10036,Russellville,AR,72812
+326,,PO Box 1031,Harrison,AR,72601
+327,,PO Box 1054,Harrison,AR,72602
+328,,PO Box 1075,Flippin,AR,72634
+329,,PO Box 1078,Harrison,AR,72601
+330,,PO Box 108,Golden,MO,65658
+331,,PO Box 10,Valley Springs,AR,72682
+332,,PO Box 1125,Pine Bluff,AR,71613-1125
+333,Hwy 62 SW,PO Box 1150,Mountain Home,AR,72654
+334,,PO Box 1155,Harrison,AR,72601
+335,,PO Box 1163,Yellville,AR,72687
+336,,PO Box 1171,Harrison,AR,72602
+337,,PO Box 1191,Harrison,AR,72601
+338,,PO Box 1192,Harrison,AR,72601
+339,,PO Box 123,Summit,AR,72677
+340,,PO Box 1258,Harrison,AR,72602-0159
+341,,PO Box 130,Dennard,AR,72629
+342,,PO Box 132,Deere,AR,72628
+343,,PO Box 136,Golden,MO,65658
+344,,PO Box 1386,Diamond City,AR,72630
+345,,PO Box 138,Mountain Home,AR,72653
+346,,PO Box 1393,Harrison,AR,72601
+347,,PO Box 1393,Harrison,AR,72602
+348,,PO Box 13,Valley Springs,AR,72682
+349,,PO Box 147,Lead Hill,AR,72644
+350,,PO Box 1568,Sherwood,OR,97140
+351,2020 Hwy 65 S,PO Box 1636,Harrison,AR,72602
+352,,PO Box 16,Alpena,AR,72611
+353,,PO Box 1700,Harrison,AR,72601
+354,,PO Box 1822,Branson,MO,65615
+355,,PO Box 1822,Lead Hill,AR,72644
+356,,PO Box 1899,Harrison,AR,72601
+357,,PO Box 19033,Greensboro,NC,27419-9033
+358,,PO Box 1903,Texarkana,AR,71854
+359,,PO Box 192,Green Forest,AR,72638
+360,,PO Box 1965,Harrison,AR,72602
+361,,PO Box 1991,Harrison,AR,72602
+362,,PO Box 204,Harrison,AR,72602
+363,6988 Hwy 62 W,PO Box 206,Gassville,AR,72635
+364,,PO Box 207,Harrison,AR,72602
+365,,PO Box 2092,Harrison,AR,72601
+366,,PO Box 214,Lead Hill,AR,72644
+367,,PO Box 2151,Harrison,AR,72601
+368,,PO Box 2155,Harrison,AR,72602
+369,,PO Box 217,Western Grove,AR,
+370,,PO Box 2213,Harrison,AR,72601
+371,,PO Box 223,Pyatt,AR,72672
+372,,PO Box 2251,Harrison,AR,72602
+373,,PO Box 2261,Little Rock,AR,72203
+374,,PO Box 2282,Harrison,AR,72602
+375,,PO Box 2306,Harrison,AR,72601
+376,,PO Box 231,Harrison,AR,72602
+377,,PO Box 2334,Harrison,AR,72601
+378,,PO Box 237,Plumerville,AR,72127
+379,,PO Box 2396,Harrison,AR,72602
+380,,PO Box 240,Valley Springs,AR,72682
+381,,PO Box 255,Western Grove,AR,72685
+382,114 Sisco Ave,PO Box 2568,Harrison,AR,72602
+383,,PO Box 2568,Harrison,AR,72602
+384,,PO Box 2598,Harrison,AR,72601
+385,,PO Box 264,Bergman,AR,72615
+386,,PO Box 278,Chickasha,OK,73023
+387,,PO Box 280055,Tampa,FL,33682-0055
+388,,PO Box 2930,Harrison,AR,72602
+389,,PO Box 293,Harrison,AR,72602
+390,,PO Box 308,Harrison,AR,72602
+391,,PO Box 316,Valley Center,KS,67147
+392,,PO Box 323,Yellville,AR,72687
+393,81 Jeffries Ln,PO Box 327,Hustonville,KY,40437
+394,,PO Box 336,Lead Hill,AR,72644
+395,,PO Box 344,Green Forest,AR,72638
+396,,PO Box 369,Green Forest,AR,72638
+397,,PO Box 371,Green Forest,AR,72638
+398,,PO Box 375,Alpena,AR,72611
+399,,PO Box 390,Jasper,AR,72641
+400,,PO Box 404,Shell Knob,MO,65747
+401,,PO Box 4067,Fort Smith,AR,72914
+402,,PO Box 413,Lead Hill,AR,72644
+403,,PO Box 433,Lead Hill,AR,72644
+404,,PO Box 447,Middletown,NY,10941
+405,,PO Box 456,Alpena,AR,72611
+406,,PO Box 47,Valley Springs,AR,72682
+407,,PO Box 492,Leslie,AR,72645
+408,,PO Box 500,Norfork,AR,72658-0500
+409,128-15 26th Ave,PO Box 541550,Flushing,NY,11354-0108
+410,,PO Box 574,Yellville,AR,72687
+411,,PO Box 575,Harrison,AR,72602
+412,,PO Box 57,Harrison,AR,72601
+413,,PO Box 6465,Lee's Summit,MO,64064
+414,,PO Box 647,Jasper,IN,47546-0647
+415,,PO Box 65,Lead Hill,AR,72644
+416,,PO Box 6636,Pine Bluff,AR,71611
+417,,PO Box 663,Berryville,AR,72616
+418,314 Industrial Park,PO Box 687,Harrison,AR,72602
+419,E Hwy 14,PO Box 70,Lead Hill,AR,72644
+420,,PO Box 7105 MPO,Springfield,MO,65801
+421,,PO Box 712,Marshall,AR,72650
+422,,PO Box 730197,Dallas,TX,75373-0197
+423,,PO Box 76,Valley Springs,AR,72682
+424,,PO Box 8050,Little Rock,AR,72203-8050
+425,,PO Box 812,Yellville,AR,72687
+426,,PO Box 818,Amite,LA,70422
+427,,PO Box 832,Hollister,MO,65673
+428,,PO Box 840,Harrison,AR,72601
+429,,PO Box 850,Harrison,AR,72601
+430,,PO Box 890108,Charlotte,NC,28289-0108
+431,,PO Box 892,Harrison,AR,72602
+432,,PO Box 935,Rolla,MO,65402
+433,,PO Box 9,Lincoln,AR,72744
+434,,PO Box C,Mountain Home,AR,72653
 435,,,Pyatt,AR,
 436,Rally Hill Rd,,,,
 437,Road Runner Ln,,Harrison,AR,72601
-438,RR 2 Box 506,,Dardanelle,AR,72834
-439,Rt 1 Box 1010,,Shell Knob,MO,65747
-440,Rt 1 Box 187-H,,Houston,AR,72072
-441,Rt 1 Box 395,,Western Grove,AR,72685
-442,Rt 1 Box 430,,Western Grove,AR,72685
-443,Rt 1 Box 495,,Western Grove,AR,72685
-444,Rt 1 Box 522,,Dardnell,AR,72834
-445,Rt 1 Box 538,,Western Grove,AR,72685
-446,Rt 1 Box ,,Osceola,MO,64776
-447,Rt 5 Box 318,,Harrison,AR,72601
+438,,RR 2 Box 506,Dardanelle,AR,72834
+439,,Rt 1 Box 1010,Shell Knob,MO,65747
+440,,Rt 1 Box 187-H,Houston,AR,72072
+441,,Rt 1 Box 395,Western Grove,AR,72685
+442,,Rt 1 Box 430,Western Grove,AR,72685
+443,,Rt 1 Box 495,Western Grove,AR,72685
+444,,Rt 1 Box 522,Dardnell,AR,72834
+445,,Rt 1 Box 538,Western Grove,AR,72685
+446,,Rt 1 Box ,Osceola,MO,64776
+447,,Rt 5 Box 318,Harrison,AR,72601
 448,Rt 5,,Marshall,AR,72650
 449,,,Springfield,MO,
 450,,,St. Joe,AR,72675

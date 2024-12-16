@@ -1,7 +1,5 @@
 import brewery_db_accessor as bda
 import load_database as ldb
-import os
-import psycopg2
 
 '''
 street addresses sometimes include commas or are on two lines
