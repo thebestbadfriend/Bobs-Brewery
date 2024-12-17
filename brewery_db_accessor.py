@@ -1,5 +1,5 @@
 import os
-import psycopg2
+import psycopg
 import subprocess
 import sys
 import concealed_vars as cv
@@ -17,7 +17,7 @@ os.environ['PGPASSWORD'] = pg_password
 
 
 def connect_to_db(dbname):
-    conn = psycopg2.connect(
+    conn = psycopg.connect(
         dbname=dbname,  # Connect to the default 'postgres' database
         user=pg_user,
         host=pg_host,
@@ -52,7 +52,7 @@ def check_database_exists():
     try:
         results = execute_db_command(f"SELECT 1 FROM pg_catalog.pg_database WHERE datname = '{db_name}'", dbname = 'postgres')
         return results is not None
-    except psycopg2.Error as e:
+    except psycopg.Error as e:
         print(f'Error checking database existence: {e}')
         sys.exit(1)
 
@@ -62,7 +62,7 @@ def create_database():
     try:
         execute_db_command(f'CREATE DATABASE {db_name}', 'postgres')
         print(f"Database '{db_name}' created successfully.")
-    except psycopg2.Error as e:
+    except psycopg.Error as e:
         print(f'Error creating database: {e}')
         sys.exit(1)
 
