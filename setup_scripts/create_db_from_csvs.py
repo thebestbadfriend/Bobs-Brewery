@@ -73,6 +73,10 @@ def populate_addresses():
     print('Addresses populated')
 
 
+def populate_contacts_addresses():
+    print('Populating contacts addresses (not implemented)')
+
+
 def populate_email_addresses():
     print('Populating email addresses')
     email_addresses_csv = csv_folder + r'\email_addresses.csv'
@@ -83,6 +87,10 @@ def populate_email_addresses():
 
             bda.execute_db_command(f"insert into email_addresses (email_address) values ('{email_address}')")
     print('Email addresses populated')
+
+
+def populate_contacts_email_addresses():
+    print('Populating contacts email addresses (not implemented)')
 
 
 def populate_phone_numbers():
@@ -97,6 +105,10 @@ def populate_phone_numbers():
     print('Phone numbers populated')
 
 
+def populate_contacts_phone_numbers():
+    print('Populating contacts phone numbers (not implemented)')
+
+
 def populate_fax_numbers():
     print('Populating fax numbers')
     fax_numbers_csv = csv_folder + r'\fax_numbers.csv'
@@ -107,6 +119,10 @@ def populate_fax_numbers():
 
             bda.execute_db_command(f"insert into fax_numbers (fax_number) values ('{fax_number}')")
     print('Fax numbers populated')
+
+
+def populate_contacts_fax_numbers():
+    print('Populating contacts fax numbers (not implemented)')
 
 
 def populate_websites():
@@ -121,25 +137,12 @@ def populate_websites():
     print('Websites populated')
 
 
+def populate_contacts_websites():
+    print('Populating contacts websites (not implemented)')
+
+
 def populate_people_companies():
     print('need to implement populate_people_companies')
-
-
-def populate_contact_info():
-    '''
-    need to either make a big contact_info table and populate it with the full sets of contact info
-    (very much leaning against that)
-
-    or, more likely, split this out into functions (and create corresponding tables in the schema)
-    to populate_contact_phone_numbers
-    populate contact_addresses
-    and so on for all such relations
-
-    the reason people_companies gets its own table is that they are both contacts, so contacts_companies or
-    contacts_people would be confusing
-    '''
-    
-    print('need to implement populate_contact_info')
 
 
 def main():

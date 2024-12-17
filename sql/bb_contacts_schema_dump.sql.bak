@@ -2,13 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 17.2
--- Dumped by pg_dump version 17.2
+-- Dumped from database version 15.3
+-- Dumped by pg_dump version 15.3
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -31,7 +30,8 @@ CREATE TABLE public.addresses (
     po_box character varying(20),
     city character varying(50),
     state character varying(50),
-    zip_code character varying(15)
+    zip_code character varying(15),
+    is_verified boolean DEFAULT false NOT NULL
 );
 
 
@@ -50,7 +50,7 @@ CREATE SEQUENCE public.addresses_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.addresses_id_seq OWNER TO postgres;
+ALTER TABLE public.addresses_id_seq OWNER TO postgres;
 
 --
 -- Name: addresses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -86,7 +86,7 @@ CREATE SEQUENCE public.companies_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.companies_id_seq OWNER TO postgres;
+ALTER TABLE public.companies_id_seq OWNER TO postgres;
 
 --
 -- Name: companies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -110,19 +110,6 @@ CREATE TABLE public.contacts (
 ALTER TABLE public.contacts OWNER TO postgres;
 
 --
--- Name: contacts_addresses; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.contacts_addresses (
-    contact_id integer NOT NULL,
-    address_id integer NOT NULL,
-    last_verified date
-);
-
-
-ALTER TABLE public.contacts_addresses OWNER TO postgres;
-
---
 -- Name: contacts_contact_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -135,7 +122,7 @@ CREATE SEQUENCE public.contacts_contact_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.contacts_contact_id_seq OWNER TO postgres;
+ALTER TABLE public.contacts_contact_id_seq OWNER TO postgres;
 
 --
 -- Name: contacts_contact_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -170,7 +157,7 @@ CREATE SEQUENCE public.email_addresses_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.email_addresses_id_seq OWNER TO postgres;
+ALTER TABLE public.email_addresses_id_seq OWNER TO postgres;
 
 --
 -- Name: email_addresses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -205,7 +192,7 @@ CREATE SEQUENCE public.fax_numbers_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.fax_numbers_id_seq OWNER TO postgres;
+ALTER TABLE public.fax_numbers_id_seq OWNER TO postgres;
 
 --
 -- Name: fax_numbers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -255,7 +242,7 @@ CREATE SEQUENCE public.people_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.people_id_seq OWNER TO postgres;
+ALTER TABLE public.people_id_seq OWNER TO postgres;
 
 --
 -- Name: people_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -290,7 +277,7 @@ CREATE SEQUENCE public.phone_numbers_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.phone_numbers_id_seq OWNER TO postgres;
+ALTER TABLE public.phone_numbers_id_seq OWNER TO postgres;
 
 --
 -- Name: phone_numbers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -324,7 +311,7 @@ CREATE SEQUENCE public.status_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.status_id_seq OWNER TO postgres;
+ALTER TABLE public.status_id_seq OWNER TO postgres;
 
 --
 -- Name: status_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -393,7 +380,7 @@ ALTER TABLE ONLY public.status ALTER COLUMN id SET DEFAULT nextval('public.statu
 -- Data for Name: addresses; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.addresses (id, street_address, po_box, city, state, zip_code) FROM stdin;
+COPY public.addresses (id, street_address, po_box, city, state, zip_code, is_verified) FROM stdin;
 \.
 
 
@@ -410,14 +397,6 @@ COPY public.companies (id, name, is_verified, contact_id) FROM stdin;
 --
 
 COPY public.contacts (contact_id, person_id, company_id, status_id) FROM stdin;
-\.
-
-
---
--- Data for Name: contacts_addresses; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.contacts_addresses (contact_id, address_id, last_verified) FROM stdin;
 \.
 
 
@@ -545,14 +524,6 @@ ALTER TABLE ONLY public.companies
 
 
 --
--- Name: contacts_addresses contacts_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.contacts_addresses
-    ADD CONSTRAINT contacts_addresses_pkey PRIMARY KEY (contact_id, address_id);
-
-
---
 -- Name: contacts contacts_person_id_company_id_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -622,22 +593,6 @@ ALTER TABLE ONLY public.status
 
 ALTER TABLE ONLY public.companies
     ADD CONSTRAINT companies_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(contact_id);
-
-
---
--- Name: contacts_addresses contacts_addresses_address_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.contacts_addresses
-    ADD CONSTRAINT contacts_addresses_address_id_fkey FOREIGN KEY (address_id) REFERENCES public.addresses(id);
-
-
---
--- Name: contacts_addresses contacts_addresses_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.contacts_addresses
-    ADD CONSTRAINT contacts_addresses_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(contact_id);
 
 
 --

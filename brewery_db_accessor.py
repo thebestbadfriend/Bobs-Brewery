@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 import psycopg
 import subprocess
@@ -10,7 +11,8 @@ pg_password = cv.COMMON_PASS
 pg_host = 'localhost'
 pg_port = '5432'
 db_name = 'bb_contacts'
-dump_file = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\sql\bb_contacts_full_dump.sql'
+dump_directory = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\sql'
+dump_file = rf'{dump_directory}\bb_contacts_schema_dump.sql.bak'
 
 # Set environment variable for password (optional, if password is needed)
 os.environ['PGPASSWORD'] = pg_password
@@ -82,6 +84,25 @@ def restore_dump():
         print(f"Dump file '{dump_file}' has been applied to the database '{db_name}'.")
     except subprocess.CalledProcessError as e:
         print(f'Error restoring dump: {e}')
+        sys.exit(1)
+
+
+def create_dump(dump_to = rf"{dump_directory}\{db_name}.{datetime.now().strftime("%Y%m%d.%H%M%S")}.dump"):
+    """Restore the dump file into the created database."""
+    try:
+        pg_dump_command = [
+            'pg_dump',
+            '-U', pg_user,
+            '-E', 'utf8',
+            '-f', dump_to,
+            db_name,
+        ]
+
+        subprocess.run(pg_dump_command, check=True)
+        print(f"Dump file '{dump_to}' created successfully.")
+
+    except subprocess.CalledProcessError as e:
+        print(f'Error creating dump: {e}')
         sys.exit(1)
 
 
