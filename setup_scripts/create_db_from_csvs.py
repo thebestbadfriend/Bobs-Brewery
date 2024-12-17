@@ -5,6 +5,8 @@ csv_folder = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\data'
 
 
 def populate_companies():
+    print('Populating companies')
+
     companies_csv = csv_folder + r'\companies.csv'
     with open(companies_csv, 'r', newline='') as file:
         for line in file:
@@ -12,18 +14,50 @@ def populate_companies():
             company_name = spline[1].replace("'", "''")
             bda.execute_db_command(f"insert into companies(name) values ('{company_name}')")
 
+            results = bda.execute_db_command(f"select id from companies where name = '{company_name}'")
+            if results:
+                company_id = results[0][0]
+                bda.execute_db_command(f"""insert into contacts(company_id) values({company_id})""")
+
+                results = bda.execute_db_command(f"select contact_id from contacts where company_id = '{company_id}'")
+                if results:
+                    contact_id = results[0][0]
+                    bda.execute_db_command(f"""update companies
+                                               set contact_id = '{contact_id}'
+                                               where id = '{company_id}'""")
+    print('Companies populated')
+
 
 def populate_people():
+    print('Populating people')
     people_csv = csv_folder + r'\people.csv'
     with open(people_csv, 'r', newline='') as file:
         for line in file:
             spline = line.strip().split(',')
+
             first_name = spline[1].replace("'", "''")
-            last_name = spline[2].replace("'","''")
+            last_name = spline[2].replace("'", "''")
+
             bda.execute_db_command(f"insert into people (first_name, last_name) values ('{first_name}', '{last_name}')")
+
+            results = bda.execute_db_command(f"""select id from people
+                                                 where first_name = '{first_name}'
+                                                 and last_name = '{last_name}'""")
+            if results:
+                person_id = results[0][0]
+                bda.execute_db_command(f"insert into contacts(person_id) values({person_id})")
+
+                results = bda.execute_db_command(f"""select contact_id
+                                                     from contacts
+                                                     where person_id = '{person_id}'""")
+                if results:
+                    contact_id = results[0][0]
+                    bda.execute_db_command(f"update people set contact_id = '{contact_id}' where id = '{person_id}'")
+    print('People populated')
 
 
 def populate_addresses():
+    print('Populating addresses')
     addresses_csv = csv_folder + r'\addresses.csv'
     with open(addresses_csv, 'r', newline='') as file:
         for line in file:
@@ -36,9 +70,11 @@ def populate_addresses():
 
             bda.execute_db_command(f"""insert into addresses (street_address, po_box, city, state, zip_code)
                                        values ('{street_address}', '{po_box}', '{city}', '{state}', '{zip_code}')""")
+    print('Addresses populated')
 
 
 def populate_email_addresses():
+    print('Populating email addresses')
     email_addresses_csv = csv_folder + r'\email_addresses.csv'
     with open(email_addresses_csv, 'r', newline='') as file:
         for line in file:
@@ -46,9 +82,11 @@ def populate_email_addresses():
             email_address = spline[1].replace("'", "''")
 
             bda.execute_db_command(f"insert into email_addresses (email_address) values ('{email_address}')")
+    print('Email addresses populated')
 
 
 def populate_phone_numbers():
+    print('Populating phone numbers')
     phone_numbers_csv = csv_folder + r'\phone_numbers.csv'
     with open(phone_numbers_csv, 'r', newline='') as file:
         for line in file:
@@ -56,9 +94,11 @@ def populate_phone_numbers():
             phone_number = spline[1].replace("'", "''")
 
             bda.execute_db_command(f"insert into phone_numbers (phone_number) values ('{phone_number}')")
+    print('Phone numbers populated')
 
 
 def populate_fax_numbers():
+    print('Populating fax numbers')
     fax_numbers_csv = csv_folder + r'\fax_numbers.csv'
     with open(fax_numbers_csv, 'r', newline='') as file:
         for line in file:
@@ -66,9 +106,11 @@ def populate_fax_numbers():
             fax_number = spline[1].replace("'", "''")
 
             bda.execute_db_command(f"insert into fax_numbers (fax_number) values ('{fax_number}')")
+    print('Fax numbers populated')
 
 
 def populate_websites():
+    print('Populating websites')
     websites_csv = csv_folder + r'\websites.csv'
     with open(websites_csv, 'r', newline='') as file:
         for line in file:
@@ -76,10 +118,11 @@ def populate_websites():
             website = spline[1].replace("'", "''")
 
             bda.execute_db_command(f"insert into websites (website) values ('{website}'")
+    print('Websites populated')
 
 
 def populate_people_companies():
-    pass
+    print('need to implement populate_people_companies')
 
 
 def main():

@@ -30,7 +30,8 @@ CREATE TABLE public.addresses (
     po_box character varying(20),
     city character varying(50),
     state character varying(50),
-    zip_code character varying(15)
+    zip_code character varying(15),
+    is_verified boolean DEFAULT false NOT NULL
 );
 
 
@@ -64,7 +65,9 @@ ALTER SEQUENCE public.addresses_id_seq OWNED BY public.addresses.id;
 
 CREATE TABLE public.companies (
     id integer NOT NULL,
-    name character varying(150)
+    name character varying(150),
+    is_verified boolean DEFAULT false NOT NULL,
+    contact_id integer
 );
 
 
@@ -93,12 +96,49 @@ ALTER SEQUENCE public.companies_id_seq OWNED BY public.companies.id;
 
 
 --
+-- Name: contacts; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.contacts (
+    contact_id integer NOT NULL,
+    person_id integer,
+    company_id integer,
+    status_id integer DEFAULT 1 NOT NULL
+);
+
+
+ALTER TABLE public.contacts OWNER TO postgres;
+
+--
+-- Name: contacts_contact_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.contacts_contact_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.contacts_contact_id_seq OWNER TO postgres;
+
+--
+-- Name: contacts_contact_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.contacts_contact_id_seq OWNED BY public.contacts.contact_id;
+
+
+--
 -- Name: email_addresses; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.email_addresses (
     id integer NOT NULL,
-    email_address character varying(75) NOT NULL
+    email_address character varying(75) NOT NULL,
+    is_verified boolean DEFAULT false NOT NULL
 );
 
 
@@ -132,7 +172,8 @@ ALTER SEQUENCE public.email_addresses_id_seq OWNED BY public.email_addresses.id;
 
 CREATE TABLE public.fax_numbers (
     id integer NOT NULL,
-    fax_number character varying(15) NOT NULL
+    fax_number character varying(15) NOT NULL,
+    is_verified boolean DEFAULT false NOT NULL
 );
 
 
@@ -167,7 +208,9 @@ ALTER SEQUENCE public.fax_numbers_id_seq OWNED BY public.fax_numbers.id;
 CREATE TABLE public.people (
     id integer NOT NULL,
     first_name character varying(50),
-    last_name character varying(50)
+    last_name character varying(50),
+    is_verified boolean DEFAULT false NOT NULL,
+    contact_id integer
 );
 
 
@@ -179,7 +222,8 @@ ALTER TABLE public.people OWNER TO postgres;
 
 CREATE TABLE public.people_companies (
     person_id integer NOT NULL,
-    company_id integer NOT NULL
+    company_id integer NOT NULL,
+    is_verified boolean DEFAULT false NOT NULL
 );
 
 
@@ -213,7 +257,8 @@ ALTER SEQUENCE public.people_id_seq OWNED BY public.people.id;
 
 CREATE TABLE public.phone_numbers (
     id integer NOT NULL,
-    phone_number character varying(15) NOT NULL
+    phone_number character varying(25) NOT NULL,
+    is_verified boolean DEFAULT false NOT NULL
 );
 
 
@@ -242,6 +287,40 @@ ALTER SEQUENCE public.phone_numbers_id_seq OWNED BY public.phone_numbers.id;
 
 
 --
+-- Name: status; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.status (
+    id integer NOT NULL,
+    text character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.status OWNER TO postgres;
+
+--
+-- Name: status_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.status_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.status_id_seq OWNER TO postgres;
+
+--
+-- Name: status_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.status_id_seq OWNED BY public.status.id;
+
+
+--
 -- Name: addresses id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -253,6 +332,13 @@ ALTER TABLE ONLY public.addresses ALTER COLUMN id SET DEFAULT nextval('public.ad
 --
 
 ALTER TABLE ONLY public.companies ALTER COLUMN id SET DEFAULT nextval('public.companies_id_seq'::regclass);
+
+
+--
+-- Name: contacts contact_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts ALTER COLUMN contact_id SET DEFAULT nextval('public.contacts_contact_id_seq'::regclass);
 
 
 --
@@ -284,10 +370,17 @@ ALTER TABLE ONLY public.phone_numbers ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: status id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.status ALTER COLUMN id SET DEFAULT nextval('public.status_id_seq'::regclass);
+
+
+--
 -- Data for Name: addresses; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.addresses (id, street_address, po_box, city, state, zip_code) FROM stdin;
+COPY public.addresses (id, street_address, po_box, city, state, zip_code, is_verified) FROM stdin;
 \.
 
 
@@ -295,7 +388,15 @@ COPY public.addresses (id, street_address, po_box, city, state, zip_code) FROM s
 -- Data for Name: companies; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.companies (id, name) FROM stdin;
+COPY public.companies (id, name, is_verified, contact_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: contacts; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.contacts (contact_id, person_id, company_id, status_id) FROM stdin;
 \.
 
 
@@ -303,7 +404,7 @@ COPY public.companies (id, name) FROM stdin;
 -- Data for Name: email_addresses; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.email_addresses (id, email_address) FROM stdin;
+COPY public.email_addresses (id, email_address, is_verified) FROM stdin;
 \.
 
 
@@ -311,7 +412,7 @@ COPY public.email_addresses (id, email_address) FROM stdin;
 -- Data for Name: fax_numbers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.fax_numbers (id, fax_number) FROM stdin;
+COPY public.fax_numbers (id, fax_number, is_verified) FROM stdin;
 \.
 
 
@@ -319,7 +420,7 @@ COPY public.fax_numbers (id, fax_number) FROM stdin;
 -- Data for Name: people; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.people (id, first_name, last_name) FROM stdin;
+COPY public.people (id, first_name, last_name, is_verified, contact_id) FROM stdin;
 \.
 
 
@@ -327,7 +428,7 @@ COPY public.people (id, first_name, last_name) FROM stdin;
 -- Data for Name: people_companies; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.people_companies (person_id, company_id) FROM stdin;
+COPY public.people_companies (person_id, company_id, is_verified) FROM stdin;
 \.
 
 
@@ -335,7 +436,18 @@ COPY public.people_companies (person_id, company_id) FROM stdin;
 -- Data for Name: phone_numbers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.phone_numbers (id, phone_number) FROM stdin;
+COPY public.phone_numbers (id, phone_number, is_verified) FROM stdin;
+\.
+
+
+--
+-- Data for Name: status; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.status (id, text) FROM stdin;
+1	Active
+2	Inactive
+3	Banned
 \.
 
 
@@ -351,6 +463,13 @@ SELECT pg_catalog.setval('public.addresses_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.companies_id_seq', 1, false);
+
+
+--
+-- Name: contacts_contact_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.contacts_contact_id_seq', 1, false);
 
 
 --
@@ -382,6 +501,13 @@ SELECT pg_catalog.setval('public.phone_numbers_id_seq', 1, false);
 
 
 --
+-- Name: status_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.status_id_seq', 3, true);
+
+
+--
 -- Name: addresses addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -395,6 +521,22 @@ ALTER TABLE ONLY public.addresses
 
 ALTER TABLE ONLY public.companies
     ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contacts contacts_person_id_company_id_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_person_id_company_id_unique UNIQUE (person_id, company_id);
+
+
+--
+-- Name: contacts contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_pkey PRIMARY KEY (contact_id);
 
 
 --
@@ -438,6 +580,46 @@ ALTER TABLE ONLY public.phone_numbers
 
 
 --
+-- Name: status status_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.status
+    ADD CONSTRAINT status_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: companies companies_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(contact_id);
+
+
+--
+-- Name: contacts contacts_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id);
+
+
+--
+-- Name: contacts contacts_person_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_person_id_fkey FOREIGN KEY (person_id) REFERENCES public.people(id);
+
+
+--
+-- Name: contacts contacts_status_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id);
+
+
+--
 -- Name: people_companies people_companies_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -451,6 +633,14 @@ ALTER TABLE ONLY public.people_companies
 
 ALTER TABLE ONLY public.people_companies
     ADD CONSTRAINT people_companies_person_id_fkey FOREIGN KEY (person_id) REFERENCES public.people(id) ON DELETE CASCADE;
+
+
+--
+-- Name: people people_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.people
+    ADD CONSTRAINT people_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(contact_id);
 
 
 --

@@ -10,7 +10,7 @@ pg_password = cv.COMMON_PASS
 pg_host = 'localhost'
 pg_port = '5432'
 db_name = 'bb_contacts'
-dump_file = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\sql\bb_contacts_dump.sql'
+dump_file = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\sql\bb_contacts_full_dump.sql'
 
 # Set environment variable for password (optional, if password is needed)
 os.environ['PGPASSWORD'] = pg_password
@@ -35,10 +35,11 @@ def execute_db_command(query, dbname = 'bb_contacts'):
         cur = conn.cursor()
         cur.execute(query)
 
-        if query.split(' ')[0] == 'SELECT':
-            if cur.rowcount > 0:
-                # https://www.psycopg.org/docs/cursor.html#cursor.fetchall
-                results = cur.fetchall()
+        if query.strip().upper().startswith('SELECT'):
+            # check that the results set is not empty
+            # an empty results set is a falsey value
+            # https://www.psycopg.org/docs/cursor.html#cursor.fetchall
+            results = cur.fetchall()
 
         return results
     finally:

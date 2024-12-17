@@ -1,4 +1,3 @@
-id,Street Address,PO Box ,City,State,Zip Code
 1,#2 Necessity Ave,,Harrison,AR,72601
 2,#3 Necessity Ave,,Harrison,AR,72601
 3,#8 Lisa Dr,,Batesville,AR,72501
@@ -85,13 +84,13 @@ id,Street Address,PO Box ,City,State,Zip Code
 84,200 Collins Rd,,Branson,MO,65616
 85,200 South Twin Oaks Drive,PO Box 1335,Tuckerman,AR,72473
 86,200 West Stephenson,,Harrison,AR,72601
-87,203 N Walnut St – Ste A,,Harrison,AR,72601-4357
+87,203 N Walnut St ï¿½ Ste A,,Harrison,AR,72601-4357
 88,20434 Old Hwy 65,,Omaha,AR,72662
 89,205 CR 842,,Henderson,AR,72544
 90,205 N Cherry,,Harrison,AR,72601
 91,205 Russell Dr,,Harrison,AR,72601
 92,206 Coy,,Harrison,AR,72601
-93,209 E Wade Ave – Suite C,,Mountain Home,AR,72653-0004
+93,209 E Wade Ave ï¿½ Suite C,,Mountain Home,AR,72653-0004
 94,209 North Walnut,PO Box 1695,Harrison,AR,72602-1695
 95,2101 Sulphur Mtn Rd,,Harrison,AR,72601-8391
 96,2104 First National Dr,,Harrison,AR,72602-1258
@@ -102,7 +101,7 @@ id,Street Address,PO Box ,City,State,Zip Code
 101,2131 NC 3320,,Harrison,AR,72601
 102,214 Phillips St,,Berryville,AR,72616
 103,2153 CR 607,,Green Forest,AR,72638
-104,217 N Spring – Apt 2,,Harrison,AR,72601
+104,217 N Spring ï¿½ Apt 2,,Harrison,AR,72601
 105,217 Patridge Ave,,Harrison,AR,72601
 106,218 MC 7049,,Flippin,AR,72634
 107,2204 Old Calvert City Rd,,Paducah,KY,42001-0000
@@ -128,7 +127,7 @@ id,Street Address,PO Box ,City,State,Zip Code
 127,2700 Baughman Cutoff Rd,,Harrison,AR,72601
 128,2700 Salmon Ln,,Harrison,AR,72601
 129,2704 Margie Lane,,Metanie,LA,
-130,2711 LBJ Freeway – Suite 160,,Mabank,TX,75147
+130,2711 LBJ Freeway ï¿½ Suite 160,,Mabank,TX,75147
 131,2738 Hwy 7 N,,Harrison,AR,72601
 132,2756 Rock Cliff Dr,,Harrison,AR,72601
 133,2770 Edwards Farm Dr,,Harrison,AR,72601
@@ -141,7 +140,7 @@ id,Street Address,PO Box ,City,State,Zip Code
 140,301 S Maple,,Harrison,AR,72601
 141,3016 MC 6014,,Yellville,AR,72687
 142,302 South Main,,Mountain Home,AR,72653
-143,303 North Main – Suite 202,,Harrison,AR,72601
+143,303 North Main ï¿½ Suite 202,,Harrison,AR,72601
 144,3094 MC 3022,,Pyatt,AR,72672
 145,3113 East Washington Ave,,N. Little Rock,AR,72114
 146,312 CR 988,,Green Forest,AR,72638
@@ -255,7 +254,7 @@ id,Street Address,PO Box ,City,State,Zip Code
 254,7478 Lotus Ln,,Harrison,AR,72601
 255,7515 Fork Creek Rd,,Harrison,AR,72601
 256,7712 Snowball Creek Rd,,Everton,AR,72633
-257,775 Hwy 201 N – Suite A,PO Box 442,Mountain Home,AR,72654-0442
+257,775 Hwy 201 N ï¿½ Suite A,PO Box 442,Mountain Home,AR,72654-0442
 258,7923 Hwy 392 W,,Harrison,AR,72601
 259,797 Industrial Park Dr,PO Drawer 391,Waynesboro,MS,39367
 260,8 Timberwolf Circle,,Yellville,AR,72687
