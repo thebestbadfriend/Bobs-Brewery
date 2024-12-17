@@ -125,6 +125,23 @@ def populate_people_companies():
     print('need to implement populate_people_companies')
 
 
+def populate_contact_info():
+    '''
+    need to either make a big contact_info table and populate it with the full sets of contact info
+    (very much leaning against that)
+
+    or, more likely, split this out into functions (and create corresponding tables in the schema)
+    to populate_contact_phone_numbers
+    populate contact_addresses
+    and so on for all such relations
+
+    the reason people_companies gets its own table is that they are both contacts, so contacts_companies or
+    contacts_people would be confusing
+    '''
+    
+    print('need to implement populate_contact_info')
+
+
 def main():
     bda.drop_database()
     ldb.load()
