@@ -12,7 +12,7 @@ pg_host = 'localhost'
 pg_port = '5432'
 db_name = 'bb_contacts'
 dump_directory = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\sql'
-dump_file = rf'{dump_directory}\bb_contacts_schema_dump.sql.bak'
+dump_file = rf'{dump_directory}\bb_contacts.20241217.163315.dump'
 
 # Set environment variable for password (optional, if password is needed)
 os.environ['PGPASSWORD'] = pg_password
@@ -53,6 +53,7 @@ def check_database_exists():
     """Check if the database exists."""
     try:
         results = execute_db_command(f"SELECT 1 FROM pg_catalog.pg_database WHERE datname = '{db_name}'", dbname = 'postgres')
+        print(results)
         return results is not None
     except psycopg.Error as e:
         print(f'Error checking database existence: {e}')
@@ -62,6 +63,7 @@ def check_database_exists():
 def create_database():
     """Create the database if it doesn't exist."""
     try:
+
         execute_db_command(f'CREATE DATABASE {db_name}', 'postgres')
         print(f"Database '{db_name}' created successfully.")
     except psycopg.Error as e:
