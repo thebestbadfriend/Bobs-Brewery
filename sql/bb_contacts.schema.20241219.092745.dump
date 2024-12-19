@@ -1,0 +1,890 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 17.2
+-- Dumped by pg_dump version 17.2
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: addresses; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.addresses (
+    id integer NOT NULL,
+    street_address character varying(200),
+    po_box character varying(20),
+    city character varying(50),
+    state character varying(50),
+    zip_code character varying(15)
+);
+
+
+ALTER TABLE public.addresses OWNER TO postgres;
+
+--
+-- Name: addresses_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.addresses_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.addresses_id_seq OWNER TO postgres;
+
+--
+-- Name: addresses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.addresses_id_seq OWNED BY public.addresses.id;
+
+
+--
+-- Name: companies; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.companies (
+    id integer NOT NULL,
+    name character varying(150),
+    contact_id integer
+);
+
+
+ALTER TABLE public.companies OWNER TO postgres;
+
+--
+-- Name: companies_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.companies_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.companies_id_seq OWNER TO postgres;
+
+--
+-- Name: companies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.companies_id_seq OWNED BY public.companies.id;
+
+
+--
+-- Name: contacts; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.contacts (
+    contact_id integer NOT NULL,
+    person_id integer,
+    company_id integer,
+    status_id integer DEFAULT 1 NOT NULL
+);
+
+
+ALTER TABLE public.contacts OWNER TO postgres;
+
+--
+-- Name: contacts_addresses; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.contacts_addresses (
+    contact_id integer NOT NULL,
+    address_id integer NOT NULL,
+    last_verified date
+);
+
+
+ALTER TABLE public.contacts_addresses OWNER TO postgres;
+
+--
+-- Name: contacts_contact_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.contacts_contact_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.contacts_contact_id_seq OWNER TO postgres;
+
+--
+-- Name: contacts_contact_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.contacts_contact_id_seq OWNED BY public.contacts.contact_id;
+
+
+--
+-- Name: contacts_email_addresses; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.contacts_email_addresses (
+    contact_id integer NOT NULL,
+    email_address_id integer NOT NULL,
+    last_verified date
+);
+
+
+ALTER TABLE public.contacts_email_addresses OWNER TO postgres;
+
+--
+-- Name: contacts_fax_numbers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.contacts_fax_numbers (
+    contact_id integer NOT NULL,
+    fax_number_id integer NOT NULL,
+    last_verified date
+);
+
+
+ALTER TABLE public.contacts_fax_numbers OWNER TO postgres;
+
+--
+-- Name: contacts_phone_numbers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.contacts_phone_numbers (
+    contact_id integer NOT NULL,
+    phone_number_id integer NOT NULL,
+    last_verified date
+);
+
+
+ALTER TABLE public.contacts_phone_numbers OWNER TO postgres;
+
+--
+-- Name: email_addresses; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.email_addresses (
+    id integer NOT NULL,
+    email_address character varying(75) NOT NULL
+);
+
+
+ALTER TABLE public.email_addresses OWNER TO postgres;
+
+--
+-- Name: email_addresses_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.email_addresses_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.email_addresses_id_seq OWNER TO postgres;
+
+--
+-- Name: email_addresses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.email_addresses_id_seq OWNED BY public.email_addresses.id;
+
+
+--
+-- Name: fax_numbers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fax_numbers (
+    id integer NOT NULL,
+    fax_number character varying(15) NOT NULL
+);
+
+
+ALTER TABLE public.fax_numbers OWNER TO postgres;
+
+--
+-- Name: fax_numbers_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.fax_numbers_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.fax_numbers_id_seq OWNER TO postgres;
+
+--
+-- Name: fax_numbers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.fax_numbers_id_seq OWNED BY public.fax_numbers.id;
+
+
+--
+-- Name: people; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.people (
+    id integer NOT NULL,
+    first_name character varying(255),
+    last_name character varying(255),
+    contact_id integer,
+    suffix character varying(255),
+    nickname character varying(255)
+);
+
+
+ALTER TABLE public.people OWNER TO postgres;
+
+--
+-- Name: people_companies; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.people_companies (
+    person_id integer NOT NULL,
+    company_id integer NOT NULL,
+    last_verified date
+);
+
+
+ALTER TABLE public.people_companies OWNER TO postgres;
+
+--
+-- Name: people_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.people_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.people_id_seq OWNER TO postgres;
+
+--
+-- Name: people_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.people_id_seq OWNED BY public.people.id;
+
+
+--
+-- Name: phone_numbers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.phone_numbers (
+    id integer NOT NULL,
+    phone_number character varying(25) NOT NULL
+);
+
+
+ALTER TABLE public.phone_numbers OWNER TO postgres;
+
+--
+-- Name: phone_numbers_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.phone_numbers_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.phone_numbers_id_seq OWNER TO postgres;
+
+--
+-- Name: phone_numbers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.phone_numbers_id_seq OWNED BY public.phone_numbers.id;
+
+
+--
+-- Name: status; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.status (
+    id integer NOT NULL,
+    text character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.status OWNER TO postgres;
+
+--
+-- Name: status_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.status_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.status_id_seq OWNER TO postgres;
+
+--
+-- Name: status_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.status_id_seq OWNED BY public.status.id;
+
+
+--
+-- Name: websites; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.websites (
+    id integer NOT NULL,
+    url character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.websites OWNER TO postgres;
+
+--
+-- Name: websites_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.websites_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.websites_id_seq OWNER TO postgres;
+
+--
+-- Name: websites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.websites_id_seq OWNED BY public.websites.id;
+
+
+--
+-- Name: addresses id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addresses ALTER COLUMN id SET DEFAULT nextval('public.addresses_id_seq'::regclass);
+
+
+--
+-- Name: companies id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.companies ALTER COLUMN id SET DEFAULT nextval('public.companies_id_seq'::regclass);
+
+
+--
+-- Name: contacts contact_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts ALTER COLUMN contact_id SET DEFAULT nextval('public.contacts_contact_id_seq'::regclass);
+
+
+--
+-- Name: email_addresses id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.email_addresses ALTER COLUMN id SET DEFAULT nextval('public.email_addresses_id_seq'::regclass);
+
+
+--
+-- Name: fax_numbers id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fax_numbers ALTER COLUMN id SET DEFAULT nextval('public.fax_numbers_id_seq'::regclass);
+
+
+--
+-- Name: people id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.people ALTER COLUMN id SET DEFAULT nextval('public.people_id_seq'::regclass);
+
+
+--
+-- Name: phone_numbers id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.phone_numbers ALTER COLUMN id SET DEFAULT nextval('public.phone_numbers_id_seq'::regclass);
+
+
+--
+-- Name: status id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.status ALTER COLUMN id SET DEFAULT nextval('public.status_id_seq'::regclass);
+
+
+--
+-- Name: websites id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.websites ALTER COLUMN id SET DEFAULT nextval('public.websites_id_seq'::regclass);
+
+
+--
+-- Data for Name: addresses; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.addresses (id, street_address, po_box, city, state, zip_code) FROM stdin;
+\.
+
+
+--
+-- Data for Name: companies; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.companies (id, name, contact_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: contacts; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.contacts (contact_id, person_id, company_id, status_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: contacts_addresses; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.contacts_addresses (contact_id, address_id, last_verified) FROM stdin;
+\.
+
+
+--
+-- Data for Name: contacts_email_addresses; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.contacts_email_addresses (contact_id, email_address_id, last_verified) FROM stdin;
+\.
+
+
+--
+-- Data for Name: contacts_fax_numbers; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.contacts_fax_numbers (contact_id, fax_number_id, last_verified) FROM stdin;
+\.
+
+
+--
+-- Data for Name: contacts_phone_numbers; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.contacts_phone_numbers (contact_id, phone_number_id, last_verified) FROM stdin;
+\.
+
+
+--
+-- Data for Name: email_addresses; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.email_addresses (id, email_address) FROM stdin;
+\.
+
+
+--
+-- Data for Name: fax_numbers; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.fax_numbers (id, fax_number) FROM stdin;
+\.
+
+
+--
+-- Data for Name: people; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.people (id, first_name, last_name, contact_id, suffix, nickname) FROM stdin;
+\.
+
+
+--
+-- Data for Name: people_companies; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.people_companies (person_id, company_id, last_verified) FROM stdin;
+\.
+
+
+--
+-- Data for Name: phone_numbers; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.phone_numbers (id, phone_number) FROM stdin;
+\.
+
+
+--
+-- Data for Name: status; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.status (id, text) FROM stdin;
+1	Active
+2	Inactive
+3	Banned
+\.
+
+
+--
+-- Data for Name: websites; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.websites (id, url) FROM stdin;
+\.
+
+
+--
+-- Name: addresses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.addresses_id_seq', 1, false);
+
+
+--
+-- Name: companies_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.companies_id_seq', 1, false);
+
+
+--
+-- Name: contacts_contact_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.contacts_contact_id_seq', 1, false);
+
+
+--
+-- Name: email_addresses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.email_addresses_id_seq', 1, false);
+
+
+--
+-- Name: fax_numbers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.fax_numbers_id_seq', 1, false);
+
+
+--
+-- Name: people_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.people_id_seq', 1, false);
+
+
+--
+-- Name: phone_numbers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.phone_numbers_id_seq', 1, false);
+
+
+--
+-- Name: status_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.status_id_seq', 3, true);
+
+
+--
+-- Name: websites_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.websites_id_seq', 1, false);
+
+
+--
+-- Name: addresses addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addresses
+    ADD CONSTRAINT addresses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: companies companies_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contacts_addresses contacts_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts_addresses
+    ADD CONSTRAINT contacts_addresses_pkey PRIMARY KEY (contact_id, address_id);
+
+
+--
+-- Name: contacts_email_addresses contacts_email_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts_email_addresses
+    ADD CONSTRAINT contacts_email_addresses_pkey PRIMARY KEY (contact_id, email_address_id);
+
+
+--
+-- Name: contacts_fax_numbers contacts_fax_numbers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts_fax_numbers
+    ADD CONSTRAINT contacts_fax_numbers_pkey PRIMARY KEY (contact_id, fax_number_id);
+
+
+--
+-- Name: contacts contacts_person_id_company_id_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_person_id_company_id_unique UNIQUE (person_id, company_id);
+
+
+--
+-- Name: contacts_phone_numbers contacts_phone_numbers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts_phone_numbers
+    ADD CONSTRAINT contacts_phone_numbers_pkey PRIMARY KEY (contact_id, phone_number_id);
+
+
+--
+-- Name: contacts contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_pkey PRIMARY KEY (contact_id);
+
+
+--
+-- Name: email_addresses email_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.email_addresses
+    ADD CONSTRAINT email_addresses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: fax_numbers fax_numbers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fax_numbers
+    ADD CONSTRAINT fax_numbers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: people_companies people_companies_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.people_companies
+    ADD CONSTRAINT people_companies_pkey PRIMARY KEY (person_id, company_id);
+
+
+--
+-- Name: people people_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.people
+    ADD CONSTRAINT people_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: phone_numbers phone_numbers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.phone_numbers
+    ADD CONSTRAINT phone_numbers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: status status_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.status
+    ADD CONSTRAINT status_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: websites websites_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.websites
+    ADD CONSTRAINT websites_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: companies companies_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(contact_id);
+
+
+--
+-- Name: contacts_addresses contacts_addresses_address_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts_addresses
+    ADD CONSTRAINT contacts_addresses_address_id_fkey FOREIGN KEY (address_id) REFERENCES public.addresses(id);
+
+
+--
+-- Name: contacts_addresses contacts_addresses_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts_addresses
+    ADD CONSTRAINT contacts_addresses_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(contact_id);
+
+
+--
+-- Name: contacts contacts_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contacts_email_addresses contacts_email_addresses_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts_email_addresses
+    ADD CONSTRAINT contacts_email_addresses_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(contact_id);
+
+
+--
+-- Name: contacts_email_addresses contacts_email_addresses_email_address_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts_email_addresses
+    ADD CONSTRAINT contacts_email_addresses_email_address_id_fkey FOREIGN KEY (email_address_id) REFERENCES public.email_addresses(id);
+
+
+--
+-- Name: contacts_fax_numbers contacts_fax_numbers_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts_fax_numbers
+    ADD CONSTRAINT contacts_fax_numbers_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(contact_id);
+
+
+--
+-- Name: contacts_fax_numbers contacts_fax_numbers_fax_number_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts_fax_numbers
+    ADD CONSTRAINT contacts_fax_numbers_fax_number_id_fkey FOREIGN KEY (fax_number_id) REFERENCES public.fax_numbers(id);
+
+
+--
+-- Name: contacts contacts_person_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_person_id_fkey FOREIGN KEY (person_id) REFERENCES public.people(id) ON DELETE CASCADE;
+
+
+--
+-- Name: contacts_phone_numbers contacts_phone_numbers_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts_phone_numbers
+    ADD CONSTRAINT contacts_phone_numbers_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(contact_id);
+
+
+--
+-- Name: contacts_phone_numbers contacts_phone_numbers_phone_number_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts_phone_numbers
+    ADD CONSTRAINT contacts_phone_numbers_phone_number_id_fkey FOREIGN KEY (phone_number_id) REFERENCES public.phone_numbers(id);
+
+
+--
+-- Name: contacts contacts_status_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.contacts
+    ADD CONSTRAINT contacts_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id);
+
+
+--
+-- Name: people_companies people_companies_company_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.people_companies
+    ADD CONSTRAINT people_companies_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON DELETE CASCADE;
+
+
+--
+-- Name: people_companies people_companies_person_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.people_companies
+    ADD CONSTRAINT people_companies_person_id_fkey FOREIGN KEY (person_id) REFERENCES public.people(id) ON DELETE CASCADE;
+
+
+--
+-- Name: people people_contact_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.people
+    ADD CONSTRAINT people_contact_id_fkey FOREIGN KEY (contact_id) REFERENCES public.contacts(contact_id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

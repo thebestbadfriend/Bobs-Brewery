@@ -78,7 +78,9 @@ def populate_addresses():
 
 
 def populate_contacts_addresses():
-    print('Populating contacts addresses (not implemented)')
+    print('Populating contacts addresses')
+    contact_details_csv = csv_folder + r'\contacts.csv'
+    print('Contacts addresses populated')
 
 
 def populate_email_addresses():

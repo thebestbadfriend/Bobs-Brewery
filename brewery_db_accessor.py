@@ -12,7 +12,7 @@ pg_host = 'localhost'
 pg_port = '5432'
 db_name = 'bb_contacts'
 dump_directory = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\sql'
-dump_file = rf'{dump_directory}\bb_contacts.20241218.153334.dump'
+dump_file = rf'{dump_directory}\bb_contacts.schema.20241219.092745.dump'
 
 # Set environment variable for password (optional, if password is needed)
 os.environ['PGPASSWORD'] = pg_password
@@ -88,7 +88,9 @@ def restore_dump(dump = dump_file):
         sys.exit(1)
 
 
-def create_dump(dump_to = rf"{dump_directory}\{db_name}.{datetime.now().strftime("%Y%m%d.%H%M%S")}.dump"):
+def create_dump(dump_type = 'unspecified_type'):
+    dump_to = rf"{dump_directory}\{db_name}.{dump_type}.{datetime.now().strftime("%Y%m%d.%H%M%S")}.dump"
+
     """Restore the dump file into the created database."""
     try:
         pg_dump_command = [

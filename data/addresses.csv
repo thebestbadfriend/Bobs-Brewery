@@ -309,6 +309,7 @@
 309,,HC 73 Box 16B,Marble Falls,AR,72648
 310,HC 76,,Marshall,AR,72650
 311,,HC 79 Box 279,Marshall,AR,72650
+312,"invalid row, safe to delete in db","invalid row, safe to delete in db","invalid row, safe to delete in db",,
 313,,HCR 31 Box 475,Deere,AR,72628
 314,,HCR 70 Box 372,Jasper,AR,72601
 315,,HL 62 Box 2892,Ozone,AR,72854
@@ -442,7 +443,7 @@
 443,,Rt 1 Box 495,Western Grove,AR,72685
 444,,Rt 1 Box 522,Dardnell,AR,72834
 445,,Rt 1 Box 538,Western Grove,AR,72685
-446,,Rt 1 Box ,Osceola,MO,64776
+446,,Rt 1 Box,Osceola,MO,64776
 447,,Rt 5 Box 318,Harrison,AR,72601
 448,Rt 5,,Marshall,AR,72650
 449,,,Springfield,MO,

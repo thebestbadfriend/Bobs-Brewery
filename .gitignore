@@ -7,3 +7,10 @@ requirements.txt
 main.spec
 *.pyc
 /concealed_vars.py
+/data/.~lock.addresses.csv#
+/data/.~lock.companies.csv#
+/data/.~lock.email_addresses.csv#
+/data/.~lock.fax_numbers.csv#
+/data/.~lock.people.csv#
+/data/.~lock.phone_numbers.csv#
+/data/.~lock.websites.csv#

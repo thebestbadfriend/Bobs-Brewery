@@ -1,4 +1,4 @@
 import brewery_db_accessor as bda
 
 
-bda.create_dump()
+bda.create_dump('schema')
