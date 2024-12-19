@@ -303,7 +303,7 @@ def populate_people_companies():
             company_id = spline[0]
             person_id = spline[1]
 
-    print('people companies populated')
+    print('People companies populated')
 
 
 def main():
