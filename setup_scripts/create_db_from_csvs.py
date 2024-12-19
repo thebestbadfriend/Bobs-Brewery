@@ -247,6 +247,25 @@ def populate_contacts_fax_numbers():
             person_id = spline[1]
             fax_number_id = spline[4]
 
+            if fax_number_id:
+                if company_id:
+                    query = rf'select contact_id from contacts where company_id = {company_id}'
+                    results = bda.execute_db_command(query)
+                    if results:
+                        fax_number_contact_id = results[0][0]
+                        query = rf"""insert into fax_numbers(contact_id, fax_number_id)
+                                     values ('{fax_number_contact_id}', '{fax_number_id}')
+                                     on conflict do nothing"""
+
+                if person_id:
+                    query = rf'select contact_id from contacts where person_id = {person_id}'
+                    results = bda.execute_db_command(query)
+                    if results:
+                        fax_number_contact_id = results[0][0]
+                        query = rf"""insert into fax_numbers(contact_id, fax_number_id)
+                                     values ('{fax_number_contact_id}', '{fax_number_id}')
+                                     on conflict do nothing"""
+
     print('Contacts fax numbers populated')
 
 
