@@ -80,6 +80,32 @@ def populate_addresses():
 def populate_contacts_addresses():
     print('Populating contacts addresses')
     contact_details_csv = csv_folder + r'\contacts.csv'
+    with open(contact_details_csv, 'r', newline='') as file:
+        for line in file:
+            spline = line.strip().replace("'", "''").split(',')
+            company_id = spline[0]
+            person_id = spline[1]
+            address_id = spline[7]
+
+            if address_id:
+                if company_id:
+                    query = rf'select contact_id from contacts where company_id = {company_id}'
+                    results = bda.execute_db_command(query)
+                    if results:
+                        company_contact_id = results[0][0]
+                        query = rf"""insert into contacts_addresses(contact_id, address_id)
+                                     values({company_contact_id}, {address_id}) on conflict do nothing"""
+                        bda.execute_db_command(query)
+
+                if person_id:
+                    query = rf'select contact_id from contacts where person_id = {person_id}'
+                    results = bda.execute_db_command(query)
+                    if results:
+                        person_contact_id = results[0][0]
+                        query = rf"""insert into contacts_addresses(contact_id, address_id)
+                                     values({person_contact_id}, {address_id}) on conflict do nothing"""
+                        bda.execute_db_command(query)
+
     print('Contacts addresses populated')
 
 
@@ -96,7 +122,39 @@ def populate_email_addresses():
 
 
 def populate_contacts_email_addresses():
-    print('Populating contacts email addresses (not implemented)')
+    print('Populating contacts email addresses')
+    contact_details_csv = csv_folder + r'\contacts.csv'
+    with open(contact_details_csv, 'r', newline='') as file:
+        for line in file:
+            spline = line.strip().replace("'", "''").split(',')
+            company_id = spline[0]
+            person_id = spline[1]
+            email_address_id = spline[6]
+
+            if email_address_id:
+                if company_id:
+                    query = rf'select contact_id from contacts where company_id = {company_id}'
+                    results = bda.execute_db_command(query)
+                    if results:
+                        email_address_contact_id = results[0][0]
+                        query = rf"""insert into contacts_email_addresses(contact_id, email_address_id)
+                                     values ('{email_address_contact_id}', '{email_address_id}')
+                                     on conflict do nothing"""
+                        bda.execute_db_command(query)
+
+                if person_id:
+                    query = rf'select contact_id from contacts where person_id = {person_id}'
+                    results = bda.execute_db_command(query)
+                    if results:
+                        email_address_contact_id = results[0][0]
+                        query = rf"""insert into contacts_email_addresses(contact_id, email_address_id)
+                                     values ('{email_address_contact_id}', '{email_address_id}')
+                                     on conflict do nothing"""
+                        bda.execute_db_command(query)
+
+
+
+    print('Contacts email addresses populated')
 
 
 def populate_phone_numbers():
@@ -112,7 +170,59 @@ def populate_phone_numbers():
 
 
 def populate_contacts_phone_numbers():
-    print('Populating contacts phone numbers (not implemented)')
+    print('Populating contacts phone numbers')
+    contact_details_csv = csv_folder + r'\contacts.csv'
+    with open(contact_details_csv, 'r', newline='') as file:
+        for line in file:
+            spline = line.strip().replace("'", "''").split(',')
+            company_id = spline[0]
+            person_id = spline[1]
+            primary_phone_number_id = spline[2]
+            secondary_phone_number_id = spline[3]
+
+            if primary_phone_number_id:
+                if company_id:
+                    query = rf'select contact_id from contacts where company_id = {company_id}'
+                    results = bda.execute_db_command(query)
+                    if results:
+                        phone_number_contact_id = results[0][0]
+                        query = rf"""insert into contacts_phone_numbers(contact_id, phone_number_id)
+                                     values ('{phone_number_contact_id}', '{primary_phone_number_id}')
+                                     on conflict do nothing"""
+                        bda.execute_db_command(query)
+
+                if person_id:
+                    query = rf'select contact_id from contacts where person_id = {person_id}'
+                    results = bda.execute_db_command(query)
+                    if results:
+                        phone_number_contact_id = results[0][0]
+                        query = rf"""insert into contacts_phone_numbers(contact_id, phone_number_id)
+                                     values ('{phone_number_contact_id}', '{primary_phone_number_id}')
+                                     on conflict do nothing"""
+                        bda.execute_db_command(query)
+
+            if secondary_phone_number_id:
+                if company_id:
+                    query = rf'select contact_id from contacts where company_id = {company_id}'
+                    results = bda.execute_db_command(query)
+                    if results:
+                        phone_number_contact_id = results[0][0]
+                        query = rf"""insert into contacts_phone_numbers(contact_id, phone_number_id)
+                                     values ('{phone_number_contact_id}', '{secondary_phone_number_id}')
+                                     on conflict do nothing"""
+                        bda.execute_db_command(query)
+
+                if person_id:
+                    query = rf'select contact_id from contacts where person_id = {person_id}'
+                    results = bda.execute_db_command(query)
+                    if results:
+                        phone_number_contact_id = results[0][0]
+                        query = rf"""insert into contacts_phone_numbers(contact_id, phone_number_id)
+                                     values ('{phone_number_contact_id}', '{secondary_phone_number_id}')
+                                     on conflict do nothing"""
+                        bda.execute_db_command(query)
+
+    print('Contacts phone numbers populated')
 
 
 def populate_fax_numbers():
@@ -128,7 +238,16 @@ def populate_fax_numbers():
 
 
 def populate_contacts_fax_numbers():
-    print('Populating contacts fax numbers (not implemented)')
+    print('Populating contacts fax numbers')
+    contact_details_csv = csv_folder + r'\contacts.csv'
+    with open(contact_details_csv, 'r', newline='') as file:
+        for line in file:
+            spline = line.strip().replace("'", "''").split(',')
+            company_id = spline[0]
+            person_id = spline[1]
+            fax_number_id = spline[4]
+
+    print('Contacts fax numbers populated')
 
 
 def populate_websites():
@@ -144,11 +263,28 @@ def populate_websites():
 
 
 def populate_contacts_websites():
-    print('Populating contacts websites (not implemented)')
+    print('Populating contacts websites')
+    contact_details_csv = csv_folder + r'\contacts.csv'
+    with open(contact_details_csv, 'r', newline='') as file:
+        for line in file:
+            spline = line.strip().replace("'", "''").split(',')
+            company_id = spline[0]
+            person_id = spline[1]
+            url = spline[5]
+
+    print('Contacts websites populated')
 
 
 def populate_people_companies():
-    print('need to implement populate_people_companies')
+    print('Populating people companies')
+    contact_details_csv = csv_folder + r'\contacts.csv'
+    with open(contact_details_csv, 'r', newline='') as file:
+        for line in file:
+            spline = line.strip().replace("'", "''").split(',')
+            company_id = spline[0]
+            person_id = spline[1]
+
+    print('people companies populated')
 
 
 def main():
