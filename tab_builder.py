@@ -30,19 +30,4 @@ def create_contacts_tab(tab_control):
                                 command=btn_commands.add_contact)
     btn_add_contact.pack()
 
-    # add the following functionality too
-    # open contacts as spreadsheet
-    # remove contact
-    # edit contact
-    #    validate x where x is each value associated with the contact
-    #    update values manually for the contact
-    # advanced search(es)
-    # view by (make root of tree in hierarchical view)
-    #    last name
-    #    company
-
-    # I also need to get the database set up. Need to remember to do it in such a way that when I go from
-    # dev to prod, the path, login, etc can be easily updated from one location.
-    # I will probably make the db local to the program during dev, but ultimately it will exist on the server.
-
     tab_control.add(contacts_tab, text="Contacts")
