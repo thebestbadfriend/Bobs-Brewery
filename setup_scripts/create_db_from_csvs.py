@@ -326,6 +326,13 @@ def populate_people_companies():
             company_id = spline[0]
             person_id = spline[1]
 
+            if person_id:
+                if company_id:
+                    query = rf"""insert into people_companies(person_id, company_id)
+                                 values ('{person_id}', '{company_id}')
+                                 on conflict do nothing"""
+                    bda.execute_db_command(query)
+
     print('People companies populated')
 
 

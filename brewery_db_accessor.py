@@ -81,7 +81,7 @@ def restore_dump(dump = dump_file):
             '-h', pg_host,
             '-p', pg_port
         ]
-        subprocess.run(restore_command, check=True)
+        subprocess.run(restore_command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
         print(f"Dump file '{dump_file}' has been applied to the database '{db_name}'.")
     except subprocess.CalledProcessError as e:
         print(f'Error restoring dump: {e}')
