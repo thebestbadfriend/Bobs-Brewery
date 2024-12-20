@@ -291,7 +291,28 @@ def populate_contacts_websites():
             spline = line.strip().replace("'", "''").split(',')
             company_id = spline[0]
             person_id = spline[1]
-            url = spline[5]
+            website_id = spline[5]
+
+            if website_id:
+                if company_id:
+                    query = rf'select contact_id from contacts where company_id = {company_id}'
+                    results = bda.execute_db_command(query)
+                    if results:
+                        website_contact_id = results[0][0]
+                        query = rf"""insert into contacts_websites(contact_id, website_id)
+                                     values ({website_contact_id}, '{website_id}')
+                                     on conflict do nothing"""
+                        bda.execute_db_command(query)
+
+                if person_id:
+                    query = rf'select contact_id from contacts where person_id = {person_id}'
+                    results = bda.execute_db_command(query)
+                    if results:
+                        website_contact_id = results[0][0]
+                        query = rf"""insert into contacts_websites(contact_id, website_id)
+                                     values ('{website_contact_id}', '{website_id}')
+                                     on conflict do nothing"""
+                        bda.execute_db_command(query)
 
     print('Contacts websites populated')
 
