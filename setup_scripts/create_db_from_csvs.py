@@ -253,18 +253,20 @@ def populate_contacts_fax_numbers():
                     results = bda.execute_db_command(query)
                     if results:
                         fax_number_contact_id = results[0][0]
-                        query = rf"""insert into fax_numbers(contact_id, fax_number_id)
+                        query = rf"""insert into contacts_fax_numbers(contact_id, fax_number_id)
                                      values ('{fax_number_contact_id}', '{fax_number_id}')
                                      on conflict do nothing"""
+                        bda.execute_db_command(query)
 
                 if person_id:
                     query = rf'select contact_id from contacts where person_id = {person_id}'
                     results = bda.execute_db_command(query)
                     if results:
                         fax_number_contact_id = results[0][0]
-                        query = rf"""insert into fax_numbers(contact_id, fax_number_id)
+                        query = rf"""insert into contacts_fax_numbers(contact_id, fax_number_id)
                                      values ('{fax_number_contact_id}', '{fax_number_id}')
                                      on conflict do nothing"""
+                        bda.execute_db_command(query)
 
     print('Contacts fax numbers populated')
 
@@ -324,7 +326,7 @@ def main():
     populate_contacts_addresses()
     populate_contacts_email_addresses()
     populate_contacts_phone_numbers()
-    populate_fax_numbers()
+    populate_contacts_fax_numbers()
     populate_contacts_websites()
 
 
