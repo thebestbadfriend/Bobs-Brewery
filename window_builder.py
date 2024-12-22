@@ -20,7 +20,7 @@ def create_main_window():
                          max_height=3000,
                          xpos=800,
                          ypos=200,
-                         geometry_string="")
+                         geometry_string="800x600")
 
     tab_control = nb.create_main_window_tab_control(root)
     tab_control.pack(expand=1, fill="both")

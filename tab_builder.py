@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
+import brewery_db_accessor as bda
+from brewery_treeview import BreweryTreeview as btv
 
 import btn_commands
 
@@ -27,9 +29,33 @@ def create_favorite_programs_tab(tab_control):
 def create_contacts_tab(tab_control):
     contacts_tab = tk.Frame(tab_control)
 
-    contacts_treeview = ttk.Treeview(contacts_tab)
+    contacts_treeview = btv(contacts_tab)
     contacts_treeview.heading('#0', text='Companies', anchor=tk.W)
 
+    companies = bda.execute_db_command('select * from companies')
+    if companies:
+        for company in companies:
+            company_id = company[0]
+            company_name = company[1]
+            company_contact_id = company[2]
+
+            company_iid = contacts_treeview.add_node(company_name)
+
+            company_contact_info_iid = contacts_treeview.add_node('Contact Details', company_iid)
+            company_phone_numbers_iid = contacts_treeview.add_node('Phone Numbers',company_contact_info_iid)
+            company_fax_numbers_iid = contacts_treeview.add_node('Fax Numbers', company_contact_info_iid)
+            company_email_addresses_iid = contacts_treeview.add_node('Email Addresses', company_contact_info_iid)
+
+            employees_iid = contacts_treeview.add_node('People', company_iid)
+
+            # create people subnodes first, with all their relevant data
+            # then create contact details subnodes for any remaining contact info
+            #
+            # that is, contact details which are associated with people, will go in the subnodes for those people,
+            # but contact details which are associated only with the company and not with any individuals will go in
+            # the contact appropriate details subnodes.
+
+    '''
     contacts_treeview.insert('', tk.END, text='test company', iid=0, open=False)
     contacts_treeview.insert('', tk.END, text='nuther test company', iid=1, open=False)
     contacts_treeview.insert('', tk.END, text='test company again', iid=2, open=False)
@@ -38,8 +64,8 @@ def create_contacts_tab(tab_control):
     contacts_treeview.move(3,0,0)
     contacts_treeview.insert('', tk.END, text='Contact Info', iid=4, open=False)
     contacts_treeview.move(4,0,0)
-
-    contacts_treeview.pack()
+    '''
+    contacts_treeview.pack(fill=tk.BOTH, expand=1)
 
     btn_add_contact = tk.Button(contacts_tab,
                                 text="Add Contact",
