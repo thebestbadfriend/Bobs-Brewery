@@ -1,5 +1,5 @@
 import tkinter as tk
-import notebook_builder as nb
+from ui import notebook_builder as nb
 
 
 def create_window(title, min_width, min_height, max_width, max_height, xpos, ypos, geometry_string):

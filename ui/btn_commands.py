@@ -10,7 +10,7 @@ def fix_server_access():
 
 
 def open_favorite_programs():
-    with open('favorite_programs.json', 'r') as favorite_programs_file:
+    with open('../dal/favorite_programs.json', 'r') as favorite_programs_file:
         data = json.load(favorite_programs_file)
 
         for program in data:

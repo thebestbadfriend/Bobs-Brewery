@@ -1,7 +1,8 @@
-import brewery_db_accessor as bda
+from dal import BreweryDBAccessor
 import load_database as ldb
 
-csv_folder = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\data'
+bda = BreweryDBAccessor()
+csv_folder = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\dal\csv_data'
 
 
 def populate_companies():
@@ -11,7 +12,7 @@ def populate_companies():
     with open(companies_csv, 'r', newline='') as file:
         for line in file:
             spline = line.strip().replace("'", "''").split(',')
-            company_name = spline[1]        #.replace("'", "''")
+            company_name = spline[1]
 
             bda.execute_db_command(f"insert into companies(name) values ('{company_name}')")
 
@@ -36,10 +37,10 @@ def populate_people():
         for line in file:
             spline = line.strip().replace("'", "''").split(',')
 
-            first_name = spline[1]      #.replace("'", "''")
-            last_name = spline[2]       #.replace("'", "''")
-            suffix = spline[3]       #.replace("'", "''")
-            nickname = spline[4]       #.replace("'", "''")
+            first_name = spline[1]
+            last_name = spline[2]
+            suffix = spline[3]
+            nickname = spline[4]
 
             bda.execute_db_command(f"""insert into people (first_name, last_name, suffix, nickname)
                                        values ('{first_name}', '{last_name}', '{suffix}', '{nickname}')""")
@@ -66,11 +67,11 @@ def populate_addresses():
     with open(addresses_csv, 'r', newline='') as file:
         for line in file:
             spline = line.strip().replace("'", "''").split(',')
-            street_address = spline[1]  #.replace("'", "''")
-            po_box = spline[2]          #.replace("'", "''")
-            city = spline[3]            #.replace("'", "''")
-            state = spline[4]           #.replace("'", "''")
-            zip_code = spline[5]        #.replace("'", "''")
+            street_address = spline[1]
+            po_box = spline[2]
+            city = spline[3]
+            state = spline[4]
+            zip_code = spline[5]
 
             bda.execute_db_command(f"""insert into addresses (street_address, po_box, city, state, zip_code)
                                        values ('{street_address}', '{po_box}', '{city}', '{state}', '{zip_code}')""")
@@ -115,7 +116,7 @@ def populate_email_addresses():
     with open(email_addresses_csv, 'r', newline='') as file:
         for line in file:
             spline = line.strip().replace("'", "''").split(',')
-            email_address = spline[1]       #.replace("'", "''")
+            email_address = spline[1]
 
             bda.execute_db_command(f"insert into email_addresses (email_address) values ('{email_address}')")
     print('Email addresses populated')
@@ -152,8 +153,6 @@ def populate_contacts_email_addresses():
                                      on conflict do nothing"""
                         bda.execute_db_command(query)
 
-
-
     print('Contacts email addresses populated')
 
 
@@ -163,7 +162,7 @@ def populate_phone_numbers():
     with open(phone_numbers_csv, 'r', newline='') as file:
         for line in file:
             spline = line.strip().replace("'", "''").split(',')
-            phone_number = spline[1]        #.replace("'", "''")
+            phone_number = spline[1]
 
             bda.execute_db_command(f"insert into phone_numbers (phone_number) values ('{phone_number}')")
     print('Phone numbers populated')
@@ -231,7 +230,7 @@ def populate_fax_numbers():
     with open(fax_numbers_csv, 'r', newline='') as file:
         for line in file:
             spline = line.strip().replace("'", "''").split(',')
-            fax_number = spline[1]      #.replace("'", "''")
+            fax_number = spline[1]
 
             bda.execute_db_command(f"insert into fax_numbers (fax_number) values ('{fax_number}')")
     print('Fax numbers populated')
@@ -277,7 +276,7 @@ def populate_websites():
     with open(websites_csv, 'r', newline='') as file:
         for line in file:
             spline = line.strip().replace("'", "''").split(',')
-            url = spline[1]     #.replace("'", "''")
+            url = spline[1]
 
             bda.execute_db_command(f"insert into websites (url) values ('{url}')")
     print('Websites populated')
@@ -339,10 +338,25 @@ def populate_people_companies():
 def populate_addresses_phone_numbers():
     print('Populating addresses phone numbers')
     contact_details_csv = csv_folder + r'\contacts.csv'
-    with open(contact_details_csv, 'r', newline='') as file:
+    with (open(contact_details_csv, 'r', newline='') as file):
         for line in file:
             spline = line.strip().replace("'", "''").split(',')
-            address_id = spline[0]
+            address_id = spline[7]
+            primary_phone_number_id = spline[2]
+            secondary_phone_number_id = spline[3]
+            if address_id:
+                if primary_phone_number_id:
+                    query = rf"""insert into addresses_phone_numbers(address_id, phone_number_id)
+                                 values ('{address_id}', '{primary_phone_number_id}')
+                                 on conflict do nothing"""
+                    bda.execute_db_command(query)
+
+                if secondary_phone_number_id:
+                    query = rf"""insert into addresses_phone_numbers(address_id, phone_number_id)
+                                 values ('{address_id}', '{secondary_phone_number_id}')
+                                 on conflict do nothing"""
+                    bda.execute_db_command(query)
+
     print('Addresses phone numbers populated')
 
 
@@ -366,6 +380,7 @@ def main():
     populate_contacts_phone_numbers()
     populate_contacts_fax_numbers()
     populate_contacts_websites()
+    populate_addresses_phone_numbers()
 
 
 if __name__ == "__main__":

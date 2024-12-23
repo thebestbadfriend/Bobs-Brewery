@@ -60,6 +60,19 @@ ALTER SEQUENCE public.addresses_id_seq OWNED BY public.addresses.id;
 
 
 --
+-- Name: addresses_phone_numbers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.addresses_phone_numbers (
+    address_id integer NOT NULL,
+    phone_number_id integer NOT NULL,
+    last_verified date
+);
+
+
+ALTER TABLE public.addresses_phone_numbers OWNER TO postgres;
+
+--
 -- Name: companies; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -940,6 +953,667 @@ COPY public.addresses (id, street_address, po_box, city, state, zip_code) FROM s
 
 
 --
+-- Data for Name: addresses_phone_numbers; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.addresses_phone_numbers (address_id, phone_number_id, last_verified) FROM stdin;
+112	73	\N
+249	318	\N
+249	304	\N
+77	567	\N
+10	502	\N
+335	263	\N
+236	475	\N
+53	754	\N
+53	753	\N
+256	529	\N
+262	632	\N
+200	8	\N
+282	612	\N
+424	698	\N
+17	709	\N
+17	250	\N
+428	152	\N
+145	17	\N
+373	98	\N
+384	730	\N
+164	340	\N
+345	326	\N
+324	149	\N
+328	444	\N
+369	383	\N
+48	437	\N
+48	261	\N
+376	696	\N
+376	576	\N
+376	538	\N
+388	577	\N
+156	552	\N
+101	539	\N
+101	257	\N
+235	45	\N
+89	297	\N
+114	313	\N
+114	62	\N
+108	693	\N
+108	562	\N
+286	125	\N
+272	283	\N
+157	112	\N
+194	595	\N
+208	29	\N
+208	32	\N
+279	528	\N
+279	172	\N
+171	276	\N
+171	275	\N
+110	53	\N
+110	167	\N
+44	15	\N
+40	82	\N
+40	4	\N
+40	83	\N
+452	440	\N
+265	186	\N
+265	176	\N
+417	306	\N
+417	312	\N
+399	421	\N
+399	420	\N
+399	417	\N
+399	422	\N
+126	387	\N
+126	269	\N
+31	295	\N
+31	485	\N
+295	370	\N
+343	22	\N
+299	189	\N
+299	188	\N
+139	187	\N
+214	4	\N
+214	611	\N
+150	87	\N
+118	107	\N
+204	120	\N
+204	129	\N
+43	356	\N
+281	416	\N
+3	740	\N
+129	109	\N
+152	671	\N
+92	725	\N
+198	653	\N
+198	669	\N
+79	48	\N
+79	49	\N
+441	372	\N
+191	358	\N
+252	553	\N
+325	106	\N
+325	91	\N
+318	97	\N
+47	460	\N
+296	364	\N
+85	748	\N
+138	386	\N
+138	267	\N
+95	384	\N
+52	439	\N
+436	110	\N
+88	473	\N
+218	647	\N
+218	500	\N
+174	399	\N
+174	290	\N
+121	175	\N
+315	474	\N
+315	359	\N
+94	625	\N
+94	255	\N
+45	35	\N
+134	504	\N
+363	391	\N
+363	511	\N
+362	639	\N
+362	207	\N
+155	657	\N
+342	531	\N
+33	600	\N
+142	328	\N
+211	616	\N
+374	293	\N
+374	493	\N
+307	388	\N
+307	532	\N
+305	741	\N
+153	675	\N
+51	294	\N
+63	299	\N
+449	54	\N
+46	608	\N
+46	597	\N
+353	251	\N
+81	52	\N
+426	137	\N
+41	596	\N
+223	687	\N
+73	683	\N
+73	497	\N
+391	14	\N
+391	151	\N
+70	142	\N
+70	95	\N
+170	104	\N
+170	749	\N
+192	77	\N
+192	76	\N
+448	429	\N
+297	686	\N
+297	483	\N
+408	454	\N
+408	271	\N
+106	18	\N
+154	38	\N
+154	114	\N
+412	571	\N
+385	662	\N
+385	256	\N
+179	6	\N
+212	6	\N
+405	179	\N
+405	401	\N
+205	185	\N
+205	734	\N
+280	736	\N
+302	292	\N
+302	557	\N
+99	634	\N
+99	545	\N
+196	586	\N
+196	210	\N
+122	426	\N
+9	322	\N
+9	273	\N
+25	727	\N
+25	316	\N
+166	684	\N
+166	471	\N
+445	377	\N
+113	654	\N
+113	213	\N
+64	438	\N
+28	393	\N
+321	325	\N
+315	509	\N
+368	530	\N
+368	520	\N
+180	585	\N
+210	585	\N
+130	751	\N
+130	750	\N
+36	96	\N
+250	228	\N
+287	331	\N
+34	339	\N
+105	174	\N
+105	289	\N
+38	464	\N
+38	193	\N
+269	578	\N
+269	258	\N
+298	583	\N
+298	718	\N
+159	481	\N
+163	314	\N
+163	310	\N
+224	214	\N
+224	664	\N
+303	389	\N
+303	278	\N
+50	575	\N
+407	459	\N
+71	40	\N
+71	39	\N
+193	701	\N
+193	277	\N
+193	704	\N
+294	100	\N
+123	691	\N
+4	291	\N
+4	244	\N
+209	681	\N
+360	336	\N
+360	196	\N
+86	648	\N
+86	225	\N
+431	656	\N
+404	163	\N
+276	592	\N
+55	655	\N
+56	69	\N
+56	161	\N
+56	128	\N
+56	74	\N
+220	68	\N
+352	462	\N
+352	533	\N
+264	99	\N
+264	89	\N
+80	33	\N
+257	323	\N
+397	407	\N
+397	452	\N
+37	392	\N
+27	661	\N
+27	566	\N
+237	345	\N
+90	711	\N
+90	541	\N
+446	44	\N
+68	635	\N
+425	178	\N
+222	302	\N
+158	234	\N
+128	697	\N
+128	224	\N
+128	221	\N
+266	714	\N
+266	496	\N
+266	499	\N
+266	719	\N
+173	42	\N
+177	469	\N
+177	667	\N
+283	320	\N
+283	410	\N
+133	495	\N
+258	423	\N
+416	92	\N
+131	605	\N
+131	203	\N
+184	579	\N
+447	592	\N
+172	30	\N
+338	689	\N
+338	138	\N
+356	670	\N
+54	660	\N
+351	679	\N
+351	699	\N
+251	690	\N
+251	548	\N
+165	641	\N
+165	479	\N
+165	717	\N
+241	66	\N
+392	442	\N
+392	260	\N
+336	682	\N
+143	581	\N
+221	604	\N
+185	580	\N
+115	116	\N
+206	694	\N
+178	84	\N
+178	627	\N
+178	75	\N
+29	559	\N
+5	1	\N
+354	37	\N
+354	24	\N
+111	601	\N
+111	243	\N
+124	728	\N
+124	311	\N
+233	527	\N
+440	102	\N
+140	688	\N
+422	590	\N
+201	637	\N
+201	466	\N
+181	712	\N
+181	476	\N
+18	630	\N
+182	362	\N
+182	564	\N
+288	233	\N
+331	375	\N
+147	198	\N
+406	514	\N
+451	20	\N
+161	19	\N
+234	305	\N
+234	506	\N
+160	300	\N
+160	317	\N
+49	629	\N
+217	572	\N
+217	640	\N
+429	591	\N
+314	227	\N
+434	324	\N
+59	246	\N
+355	280	\N
+300	10	\N
+14	50	\N
+442	379	\N
+8	649	\N
+8	204	\N
+69	28	\N
+290	755	\N
+93	330	\N
+439	153	\N
+197	5	\N
+364	700	\N
+364	523	\N
+67	7	\N
+67	133	\N
+125	733	\N
+137	254	\N
+62	12	\N
+62	119	\N
+243	36	\N
+243	159	\N
+84	25	\N
+84	446	\N
+350	168	\N
+350	108	\N
+227	658	\N
+227	488	\N
+289	403	\N
+289	191	\N
+240	434	\N
+326	623	\N
+260	266	\N
+2	615	\N
+2	713	\N
+450	413	\N
+226	229	\N
+226	746	\N
+370	672	\N
+99	561	\N
+329	252	\N
+329	546	\N
+226	230	\N
+61	133	\N
+61	11	\N
+333	329	\N
+275	307	\N
+275	315	\N
+317	602	\N
+317	513	\N
+317	599	\N
+317	237	\N
+1	609	\N
+410	435	\N
+117	13	\N
+100	633	\N
+135	378	\N
+135	554	\N
+186	180	\N
+231	343	\N
+231	414	\N
+301	374	\N
+301	238	\N
+365	184	\N
+82	405	\N
+151	169	\N
+216	536	\N
+216	570	\N
+337	212	\N
+382	716	\N
+382	626	\N
+383	478	\N
+383	219	\N
+148	477	\N
+148	218	\N
+383	173	\N
+383	170	\N
+228	162	\N
+228	752	\N
+244	376	\N
+244	385	\N
+367	587	\N
+414	157	\N
+30	638	\N
+259	113	\N
+259	147	\N
+341	101	\N
+341	86	\N
+341	726	\N
+60	412	\N
+26	432	\N
+26	430	\N
+316	47	\N
+316	21	\N
+386	58	\N
+22	614	\N
+22	373	\N
+359	408	\N
+359	503	\N
+246	354	\N
+246	549	\N
+245	732	\N
+245	494	\N
+245	735	\N
+245	124	\N
+144	165	\N
+144	126	\N
+277	122	\N
+78	448	\N
+395	505	\N
+23	301	\N
+83	64	\N
+83	63	\N
+75	80	\N
+75	140	\N
+42	272	\N
+146	451	\N
+127	220	\N
+132	594	\N
+132	558	\N
+132	274	\N
+132	471	\N
+202	695	\N
+393	115	\N
+379	678	\N
+271	164	\N
+141	436	\N
+16	650	\N
+16	259	\N
+149	303	\N
+7	738	\N
+7	150	\N
+420	56	\N
+65	443	\N
+396	406	\N
+396	321	\N
+76	722	\N
+76	517	\N
+76	518	\N
+76	351	\N
+183	181	\N
+437	182	\N
+371	347	\N
+371	522	\N
+120	335	\N
+361	651	\N
+35	146	\N
+35	105	\N
+35	144	\N
+403	490	\N
+398	487	\N
+310	453	\N
+310	563	\N
+261	222	\N
+261	216	\N
+20	525	\N
+402	490	\N
+190	643	\N
+190	209	\N
+381	365	\N
+381	535	\N
+390	3	\N
+357	16	\N
+357	139	\N
+13	334	\N
+323	551	\N
+323	334	\N
+175	729	\N
+175	319	\N
+188	308	\N
+188	449	\N
+199	663	\N
+199	636	\N
+346	589	\N
+334	607	\N
+384	747	\N
+263	673	\N
+263	245	\N
+263	624	\N
+263	206	\N
+306	418	\N
+394	397	\N
+394	521	\N
+394	241	\N
+366	400	\N
+91	644	\N
+57	631	\N
+323	341	\N
+349	394	\N
+349	555	\N
+39	582	\N
+285	668	\N
+285	568	\N
+12	465	\N
+176	57	\N
+176	41	\N
+19	745	\N
+254	470	\N
+254	617	\N
+66	396	\N
+66	249	\N
+109	134	\N
+109	70	\N
+74	489	\N
+74	501	\N
+268	344	\N
+268	537	\N
+267	402	\N
+267	534	\N
+203	353	\N
+203	262	\N
+321	327	\N
+167	55	\N
+330	23	\N
+419	342	\N
+419	395	\N
+419	201	\N
+419	232	\N
+347	589	\N
+375	613	\N
+375	665	\N
+15	158	\N
+15	130	\N
+311	425	\N
+308	390	\N
+248	680	\N
+253	723	\N
+253	560	\N
+284	72	\N
+284	132	\N
+389	484	\N
+32	338	\N
+32	46	\N
+427	31	\N
+273	409	\N
+273	447	\N
+427	27	\N
+213	540	\N
+213	332	\N
+207	349	\N
+225	333	\N
+377	588	\N
+229	584	\N
+443	380	\N
+242	628	\N
+242	199	\N
+332	461	\N
+401	103	\N
+292	192	\N
+409	127	\N
+409	123	\N
+103	404	\N
+97	88	\N
+136	93	\N
+438	59	\N
+358	737	\N
+107	9	\N
+270	79	\N
+432	160	\N
+413	160	\N
+432	111	\N
+433	81	\N
+11	621	\N
+215	467	\N
+215	659	\N
+340	598	\N
+340	85	\N
+96	141	\N
+72	463	\N
+72	569	\N
+58	705	\N
+58	247	\N
+435	357	\N
+435	268	\N
+309	676	\N
+348	367	\N
+348	381	\N
+423	368	\N
+238	543	\N
+87	2	\N
+327	2	\N
+169	411	\N
+169	457	\N
+232	498	\N
+278	583	\N
+320	433	\N
+380	287	\N
+380	526	\N
+116	118	\N
+116	117	\N
+168	619	\N
+168	211	\N
+189	565	\N
+119	646	\N
+119	542	\N
+304	360	\N
+247	603	\N
+247	468	\N
+195	355	\N
+239	721	\N
+239	197	\N
+298	226	\N
+219	366	\N
+400	51	\N
+274	652	\N
+274	556	\N
+421	428	\N
+421	90	\N
+344	298	\N
+102	65	\N
+102	309	\N
+6	492	\N
+24	512	\N
+418	610	\N
+418	145	\N
+430	166	\N
+17	692	\N
+\.
+
+
+--
 -- Data for Name: companies; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -1067,7 +1741,6 @@ COPY public.companies (id, name, contact_id) FROM stdin;
 121	Guy's Sign Co.	121
 122	H&H Construction	122
 123	H&R Block	123
-298	UPS	298
 124	Hagston Homes & Builders	124
 125	Hamilton Classics	125
 126	Hammond Construction	126
@@ -1242,6 +1915,7 @@ COPY public.companies (id, name, contact_id) FROM stdin;
 295	United Country	295
 296	United Insurance	296
 297	United-Bilt Homes	297
+298	UPS	298
 299	USDOT	299
 300	Valley Springs Fire Department	300
 301	Valley Springs School	301
@@ -5946,6 +6620,14 @@ SELECT pg_catalog.setval('public.websites_id_seq', 18, true);
 
 
 --
+-- Name: addresses_phone_numbers addresses_phone_numbers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addresses_phone_numbers
+    ADD CONSTRAINT addresses_phone_numbers_pkey PRIMARY KEY (address_id, phone_number_id);
+
+
+--
 -- Name: addresses addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6071,6 +6753,22 @@ ALTER TABLE ONLY public.status
 
 ALTER TABLE ONLY public.websites
     ADD CONSTRAINT websites_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: addresses_phone_numbers addresses_phone_numbers_address_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addresses_phone_numbers
+    ADD CONSTRAINT addresses_phone_numbers_address_id_fkey FOREIGN KEY (address_id) REFERENCES public.addresses(id);
+
+
+--
+-- Name: addresses_phone_numbers addresses_phone_numbers_phone_number_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addresses_phone_numbers
+    ADD CONSTRAINT addresses_phone_numbers_phone_number_id_fkey FOREIGN KEY (phone_number_id) REFERENCES public.phone_numbers(id);
 
 
 --

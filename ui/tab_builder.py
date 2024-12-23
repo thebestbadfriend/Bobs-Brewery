@@ -1,9 +1,9 @@
 import tkinter as tk
-from tkinter import ttk
-import brewery_db_accessor as bda
-from brewery_treeview import BreweryTreeview as btv
+from dal import BreweryDBAccessor
+from ui.brewery_treeview import BreweryTreeview as btv
+from ui import btn_commands
 
-import btn_commands
+bda = BreweryDBAccessor()
 
 
 def create_main_tab(tab_control):
