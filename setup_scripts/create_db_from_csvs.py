@@ -336,6 +336,16 @@ def populate_people_companies():
     print('People companies populated')
 
 
+def populate_addresses_phone_numbers():
+    print('Populating addresses phone numbers')
+    contact_details_csv = csv_folder + r'\contacts.csv'
+    with open(contact_details_csv, 'r', newline='') as file:
+        for line in file:
+            spline = line.strip().replace("'", "''").split(',')
+            address_id = spline[0]
+    print('Addresses phone numbers populated')
+
+
 def main():
     bda.drop_database()
     ldb.load()

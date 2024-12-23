@@ -11,8 +11,8 @@ pg_password = cv.COMMON_PASS
 pg_host = 'localhost'
 pg_port = '5432'
 db_name = 'bb_contacts'
-dump_directory = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\sql'
-dump_file = rf'{dump_directory}\gold_dumps\bb_contacts.gold.20241220.115627.dump'
+dump_directory = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\sql\dumps'
+dump_file = rf'{dump_directory}\bb_contacts.schema.20241220.104703.dump'
 
 # Set environment variable for password (optional, if password is needed)
 os.environ['PGPASSWORD'] = pg_password
