@@ -1,0 +1,19 @@
+{
+    "type": "Tk",
+    "properties": {
+        "title": "Bob's Brewery",
+        "min_width": 300,
+        "min_height": 300,
+        "max_width": 3000,
+        "max_height": 3000,
+        "xpos": 800,
+        "ypos": 200,
+        "geometry_string": "800x600",
+        "resizable": [true, true]
+    },
+    "children": {
+        "tabs": {
+            "files": "either an array of filenames or the string 'all'"
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "Frame",
+  "properties": {"bg": "lightgray", "width": 400, "height": 300},
+  "children": [
+    {
+      "type": "Label",
+      "properties": {"text": "Hello, World!", "bg": "white"}
+    },
+    {
+      "type": "Button",
+      "properties": {"text": "Click Me"}
+    }
+  ]
+}
