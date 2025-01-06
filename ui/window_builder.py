@@ -1,3 +1,4 @@
+import json
 import tkinter as tk
 from ui import NotebookBuilder
 
@@ -28,3 +29,54 @@ class WindowBuilder:
         tab_control.pack(expand=1, fill="both")
 
         return root
+
+    @staticmethod
+    def apply_layout(widget, layout):
+        if "pack" in layout:
+            widget.pack(**layout["pack"])
+        elif "grid" in layout:
+            widget.grid(**layout["grid"])
+        elif "place" in layout:
+            widget.place(**layout["place"])
+
+    @staticmethod
+    def create_window_from_file(file_path, parent=None):
+        with open(file_path, "r") as file:
+            ui_config = json.load(file)
+
+        widget_type = ui_config["type"]
+        properties = ui_config.get("properties", {})
+        children = ui_config.get("children", [])
+
+        # Create the root window if parent is None
+        widget = getattr(tk, widget_type)(parent, **properties) if parent else getattr(tk, widget_type)()
+
+        # Apply layout (if any)
+        # if parent and "pack" in ui_config:
+            # WindowBuilder.apply_layout(widget, {"pack": ui_config["pack"]})
+
+        # Recursively create child widgets
+        for child_config in children:
+            child_element = WindowBuilder.create_widget_from_json(child_config, widget)
+            if child_element:
+                child_element.pack()
+
+        return widget
+
+    @staticmethod
+    def create_widget_from_json(element, parent):
+        widget_type = element["type"]
+        properties = element.get("properties", {})
+        children = element.get("children", [])
+        widget = None
+
+        if widget_type == "file":
+            pass
+        else:
+            widget = getattr(tk, widget_type)(parent, **properties)
+
+        for child in children:
+            WindowBuilder.create_widget_from_json(child, widget)
+
+        if widget:
+            return widget

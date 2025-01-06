@@ -11,9 +11,19 @@
         "geometry_string": "800x600",
         "resizable": [true, true]
     },
-    "children": {
-        "tabs": {
-            "files": "either an array of filenames or the string 'all'"
+    "children": [
+        {
+            "name": "tc_main",
+            "type": "file",
+            "path": "C:\\Toolbox\\Coding\\Brewers Truss\\Bobs-Brewery\\ui\\ui_elements\\controls\\tc_main.json"
+        },
+        {
+            "name": "btn_exit",
+            "type": "Button",
+            "properties": {
+                "text": "Exit",
+                "command": "on_btn_exit_click"
+            }
         }
-    }
+    ]
 }

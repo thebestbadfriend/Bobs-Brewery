@@ -1,5 +1,7 @@
 import os
 import json
+import sys
+
 import concealed_vars as cv
 
 
@@ -19,3 +21,7 @@ def open_favorite_programs():
 
 def add_contact():
     pass
+
+
+def on_btn_exit_click():
+    sys.exit()
