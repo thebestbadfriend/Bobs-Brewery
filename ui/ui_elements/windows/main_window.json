@@ -1,24 +1,56 @@
 {
     "type": "Tk",
+    "library": "tk",
     "properties": {
         "title": "Bob's Brewery",
         "min_width": 300,
         "min_height": 300,
         "max_width": 3000,
         "max_height": 3000,
-        "xpos": 800,
-        "ypos": 200,
+        "xpos": 200,
+        "ypos": 100,
         "geometry_string": "800x600",
         "resizable": [true, true]
     },
     "children": [
         {
             "name": "tc_main",
-            "type": "file",
-            "path": "C:\\Toolbox\\Coding\\Brewers Truss\\Bobs-Brewery\\ui\\ui_elements\\controls\\tc_main.json"
+            "library": "ttk",
+            "type": "Notebook",
+            "children": [
+                {
+                    "name": "tab_main",
+                    "library": "tk",
+                    "type": "Frame",
+                    "title": "Main Tab",
+                    "children": [
+                        {
+                            "name": "btn_main",
+                            "library": "tk",
+                            "type": "Button",
+                            "properties": {
+                                "text": "Main Button"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "tab_favorite_apps",
+                    "library": "tk",
+                    "type": "Frame",
+                    "title": "Favorite Apps"
+                },
+                {
+                    "name": "tab_contacts",
+                    "library": "tk",
+                    "type": "Frame",
+                    "title": "Contacts"
+                }
+            ]
         },
         {
             "name": "btn_exit",
+            "library": "tk",
             "type": "Button",
             "properties": {
                 "text": "Exit",
