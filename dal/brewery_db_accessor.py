@@ -19,7 +19,7 @@ class BreweryDBAccessor:
     # Set environment variable for password (optional, if password is needed)
     os.environ['PGPASSWORD'] = pg_password
 
-    def connect_to_db(self, dbname):
+    def connect_to_db(self, dbname = db_name):
         conn = psycopg.connect(
             dbname=dbname,  # Connect to the default 'postgres' database
             user=self.pg_user,
@@ -31,8 +31,8 @@ class BreweryDBAccessor:
         return conn
 
     def execute_db_command(self, query, dbname='bb_contacts'):
+        results = None
         try:
-            results = None
             conn = self.connect_to_db(dbname)
             cur = conn.cursor()
             cur.execute(query)
@@ -42,11 +42,10 @@ class BreweryDBAccessor:
                 # an empty results set is a falsey value
                 # https://www.psycopg.org/docs/cursor.html#cursor.fetchall
                 results = cur.fetchall()
-
-            return results
         finally:
             cur.close()
             conn.close()
+            return results
 
     def check_database_exists(self):
         """Check if the database exists."""
