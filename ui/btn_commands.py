@@ -1,6 +1,7 @@
 import os
 import json
 import sys
+import subprocess
 
 import concealed_vars as cv
 
@@ -12,11 +13,11 @@ def fix_server_access():
 
 
 def open_favorite_programs():
-    with open('../dal/favorite_programs.json', 'r') as favorite_programs_file:
+    with open('dal/favorite_programs.json', 'r') as favorite_programs_file:
         data = json.load(favorite_programs_file)
 
         for program in data:
-            os.system(program['path'])
+            subprocess.Popen(program['path'], shell=True)
 
 
 def add_contact():

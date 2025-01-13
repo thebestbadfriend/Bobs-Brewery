@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 import importlib
 from ui import NotebookBuilder
+from ui import btn_commands
 
 
 class WindowBuilder:
@@ -80,18 +81,19 @@ class WindowBuilder:
 
         widget_library = WindowBuilder.get_widget_library(widget_library_name, widget_type)
 
+        if "command" in properties:
+            module_name, func_name = properties["command"].split('.')
+
+            module = globals().get(module_name)
+            if module:
+                func = getattr(module, func_name)
+                properties["command"] = func
+
         # Create the widget from the library and properties
         widget = getattr(widget_library, widget_type)(parent, **properties)
 
         if widget_type == "file":
             widget = WindowBuilder.create_widget_from_file(widget, parent)
-        else:
-            print("---")
-            print(widget_library)
-            print(widget_type)
-            print(parent)
-            print(properties)
-            widget = getattr(widget_library, widget_type)(parent, **properties)
 
         if widget_type == "Notebook":
             for child in children:

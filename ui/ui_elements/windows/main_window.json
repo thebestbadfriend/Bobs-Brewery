@@ -25,21 +25,32 @@
                     "title": "Main Tab",
                     "children": [
                         {
-                            "name": "btn_main",
+                            "name": "btn_fix_server_access",
                             "library": "tk",
                             "type": "Button",
                             "properties": {
-                                "text": "Main Button",
+                                "text": "Fix Server Access",
                                 "command": "btn_commands.fix_server_access"
                             }
                         }
                     ]
                 },
                 {
-                    "name": "tab_favorite_apps",
+                    "name": "tab_favorite_programs",
                     "library": "tk",
                     "type": "Frame",
-                    "title": "Favorite Apps"
+                    "title": "Favorite Programs",
+                    "children": [
+                        {
+                            "name": "btn_open_favorite_programs",
+                            "library": "tk",
+                            "type": "Button",
+                            "properties": {
+                                "text": "Open Favorite Programs",
+                                "command": "btn_commands.open_favorite_programs"
+                            }
+                        }
+                    ]
                 },
                 {
                     "name": "tab_contacts",
