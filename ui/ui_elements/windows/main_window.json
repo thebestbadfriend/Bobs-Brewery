@@ -17,6 +17,10 @@
             "name": "tc_main",
             "library": "ttk",
             "type": "Notebook",
+            "properties": {
+                "height": 500,
+                "width": 700
+            },
             "children": [
                 {
                     "name": "tab_main",
@@ -56,7 +60,21 @@
                     "name": "tab_contacts",
                     "library": "tk",
                     "type": "Frame",
-                    "title": "Contacts"
+                    "title": "Contacts",
+                    "children":[
+                        {
+                            "name": "tv_contacts",
+                            "library": "ttk",
+                            "type": "Treeview",
+                            "populate_function": "tv_populators.populate_contacts_treeview",
+                            "properties": {
+                            },
+                            "pack_properties": {
+                                "fill": "BOTH",
+                                "expand": 1
+                            }
+                        }
+                    ]
                 }
             ]
         },

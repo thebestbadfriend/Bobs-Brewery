@@ -2,12 +2,11 @@ import json
 import tkinter as tk
 from tkinter import ttk
 import importlib
-from ui import NotebookBuilder
 from ui import btn_commands
+from ui import tv_populators
 
 
 class WindowBuilder:
-    nb = NotebookBuilder()
 
     '''
     def create_window(self, title, min_width, min_height, max_width, max_height, xpos, ypos, geometry_string):
@@ -94,13 +93,20 @@ class WindowBuilder:
 
         if widget_type == "file":
             widget = WindowBuilder.create_widget_from_file(widget, parent)
-
-        if widget_type == "Notebook":
+        elif widget_type == "Notebook":
             for child in children:
                 WindowBuilder.create_tab_in_notebook(child, widget)
         else:
             for child in children:
                 WindowBuilder.create_widget_from_json(child, widget)
+
+        if "populate_function" in element:
+            module_name, func_name = element["populate_function"].split('.')
+
+            module = globals().get(module_name)
+            if module:
+                func = getattr(module, func_name)
+                func()
 
         return widget
 
@@ -147,6 +153,12 @@ class WindowBuilder:
 
         for child in children:
             print("got to child: " + str(child))
-            WindowBuilder.create_widget_from_json(child, tab).pack()
+            if "pack_properties" in child:
+                if "fill" in child["pack_properties"]:
+                    child["pack_properties"]["fill"] = getattr(tk, child["pack_properties"]["fill"])
+
+                WindowBuilder.create_widget_from_json(child, tab).pack(child["pack_properties"])
+            else:
+                WindowBuilder.create_widget_from_json(child, tab).pack()
 
         notebook.add(tab, text=tab_json["title"])
