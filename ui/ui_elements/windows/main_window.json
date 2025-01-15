@@ -66,8 +66,9 @@
                             "name": "tv_contacts",
                             "library": "ttk",
                             "type": "Treeview",
-                            "populate_function": "tv_populators.populate_contacts_treeview",
-                            "properties": {
+                            "populate_function": {
+                                "module": "TreeviewPopulators",
+                                "function_name": "populate_contacts_treeview"
                             },
                             "pack_properties": {
                                 "fill": "BOTH",

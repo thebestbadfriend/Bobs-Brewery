@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 import importlib
 from ui import btn_commands
-from ui import tv_populators
+from ui.treeview_populators import TreeviewPopulators
 
 
 class WindowBuilder:
@@ -101,12 +101,13 @@ class WindowBuilder:
                 WindowBuilder.create_widget_from_json(child, widget)
 
         if "populate_function" in element:
-            module_name, func_name = element["populate_function"].split('.')
+            module_name = element["populate_function"]["module"]
+            func_name = element["populate_function"]["function_name"]
 
             module = globals().get(module_name)
             if module:
                 func = getattr(module, func_name)
-                func()
+                func(widget)
 
         return widget
 
