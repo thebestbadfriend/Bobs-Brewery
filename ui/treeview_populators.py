@@ -27,3 +27,7 @@ class TreeviewPopulators:
                 }
 
                 company_iid = TreeviewPopulators.add_node_to_treeview(contacts_treeview, company_details['name'])
+                locations_iid = TreeviewPopulators.add_node_to_treeview(contacts_treeview, 'Locations', parent=str(company_iid))
+                people_without_locations_iid = TreeviewPopulators.add_node_to_treeview(contacts_treeview, 'People (no location)', parent=str(company_iid))
+                other_contact_info_iid = TreeviewPopulators.add_node_to_treeview(contacts_treeview, 'Other Contact Info', parent=str(company_iid))
+
