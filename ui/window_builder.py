@@ -3,48 +3,10 @@ import tkinter as tk
 from tkinter import ttk
 import importlib
 from ui import btn_commands
-from ui.treeview_populators import TreeviewPopulators
+from ui.contacts_treeview_populator import ContactsTreeviewPopulator
 
 
 class WindowBuilder:
-
-    '''
-    def create_window(self, title, min_width, min_height, max_width, max_height, xpos, ypos, geometry_string):
-        window = tk.Tk()
-        window.title(title)
-        window.minsize(min_width, min_height)
-        window.maxsize(max_width, max_height)
-        window.geometry(geometry_string)
-
-        return window
-
-    def create_main_window(self):
-        root = self.create_window(title="Bob's Brewery",
-                                  min_width=300,
-                                  min_height=300,
-                                  max_width=3000,
-                                  max_height=3000,
-                                  xpos=800,
-                                  ypos=200,
-                                  geometry_string="800x600")
-
-        tab_control = self.nb.create_main_window_tab_control(root)
-        tab_control.pack(expand=1, fill="both")
-
-        return root
-    '''
-
-    '''
-    @staticmethod
-    def apply_layout(widget, layout):
-        if "pack" in layout:
-            widget.pack(**layout["pack"])
-        elif "grid" in layout:
-            widget.grid(**layout["grid"])
-        elif "place" in layout:
-            widget.place(**layout["place"])
-    '''
-
     @staticmethod
     def create_widget_from_file(file_path, parent=None):
         with open(file_path, "r") as file:

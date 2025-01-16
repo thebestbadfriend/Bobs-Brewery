@@ -67,7 +67,7 @@
                             "library": "ttk",
                             "type": "Treeview",
                             "populate_function": {
-                                "module": "TreeviewPopulators",
+                                "module": "ContactsTreeviewPopulator",
                                 "function_name": "populate_contacts_treeview"
                             },
                             "pack_properties": {
