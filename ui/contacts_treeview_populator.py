@@ -58,7 +58,7 @@ class ContactsTreeviewPopulator:
 
                         company_location_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, address_string, parent=str(company_locations_iid))
 
-                        location_people_query = rf'''select first_name, last_name, suffix, nickname
+                        location_people_query = rf'''select people.contact_id, first_name, last_name, suffix, nickname
                                                      from people
                                                      join contacts_addresses on people.contact_id = contacts_addresses.contact_id
                                                      join addresses on addresses.id = contacts_addresses.address_id
@@ -68,10 +68,11 @@ class ContactsTreeviewPopulator:
                             location_people_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'People', parent=str(company_location_iid))
                             for person in location_people:
                                 person_details = {
-                                    'first_name': person[0],
-                                    'last_name': person[1],
-                                    'suffix': person[2],
-                                    'nickname': person[3]
+                                    'contact_id': person[0],
+                                    'first_name': person[1],
+                                    'last_name': person[2],
+                                    'suffix': person[3],
+                                    'nickname': person[4]
                                 }
                                 person_string = ''
                                 if person_details['first_name']:
@@ -87,6 +88,16 @@ class ContactsTreeviewPopulator:
 
                                 # person phone numbers
                                 person_phone_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Phone Numbers', parent=str(person_iid))
+                                phone_numbers_query = rf'''select phone_number
+                                                          from phone_numbers
+                                                          join contacts_phone_numbers
+                                                          on phone_numbers.id = contacts_phone_numbers.phone_number_id
+                                                          join people on contacts_phone_numbers.contact_id = people.contact_id
+                                                          where people.contact_id = {person_details['contact_id']}'''
+                                phone_numbers = ContactsTreeviewPopulator.bda.execute_db_command(phone_numbers_query)
+                                if phone_numbers:
+                                    phone_number = phone_numbers[0]
+                                    ContactsTreeviewPopulator.add_node(contacts_treeview, phone_number, parent=str(person_phone_numbers_iid))
 
                                 # person email addresses
                                 person_email_addresses_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Email Addresses', parent=str(person_iid))
