@@ -115,7 +115,6 @@ class WindowBuilder:
         children = tab_json.get("children",[])
 
         for child in children:
-            print("got to child: " + str(child))
             if "pack_properties" in child:
                 if "fill" in child["pack_properties"]:
                     child["pack_properties"]["fill"] = getattr(tk, child["pack_properties"]["fill"])

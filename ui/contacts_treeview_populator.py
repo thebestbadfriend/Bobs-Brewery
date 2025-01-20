@@ -98,8 +98,6 @@ class ContactsTreeviewPopulator:
                                 if phone_numbers:
                                     for number in phone_numbers:
                                         phone_number = number[0]
-                                        if phone_number.endswith('6696'):
-                                            print(company_details['name'] + ', ' + person_string + ', ' + phone_number)
                                         ContactsTreeviewPopulator.add_node(contacts_treeview, phone_number, parent=str(person_phone_numbers_iid))
 
                                 # person email addresses
@@ -135,6 +133,18 @@ class ContactsTreeviewPopulator:
                             'suffix': p[3],
                             'nickname': p[4]
                         }
+                        person_string = ''
+                        if person['first_name']:
+                            person_string = str(person['first_name'])
+                        if person['nickname']:
+                            person_string += ' "' + person['nickname'] + '"'
+                        if person['last_name']:
+                            person_string += ' ' + person['last_name']
+                        if person['suffix']:
+                            person_string += ' ' + person['suffix']
+
+                        person_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, person_string,
+                                                                        parent=str(people_without_locations_iid))
 
                 other_contact_info_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Other Contact Info', parent=str(company_iid))
                 other_phone_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Phone Numbers', parent=str(other_contact_info_iid))
