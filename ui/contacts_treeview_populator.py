@@ -127,7 +127,7 @@ class ContactsTreeviewPopulator:
                 if people_without_locations:
                     for p in people_without_locations:
                         person = {
-                            'id': p[0],
+                            'contact_id': p[0],
                             'first_name': p[1],
                             'last_name': p[2],
                             'suffix': p[3],
@@ -145,6 +145,22 @@ class ContactsTreeviewPopulator:
 
                         person_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, person_string,
                                                                         parent=str(people_without_locations_iid))
+
+                        phone_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Phone Numbers',
+                                                                        parent=str(person_iid))
+                        phone_numbers_query = rf'''select phone_number
+                                                   from phone_numbers
+                                                   join contacts_phone_numbers
+                                                   on phone_numbers.id = contacts_phone_numbers.phone_number_id
+                                                   where contacts_phone_numbers.contact_id = {person['contact_id']}'''
+                        phone_numbers = ContactsTreeviewPopulator.bda.execute_db_command(phone_numbers_query)
+                        if phone_numbers:
+                            for pn in phone_numbers:
+                                phone_number = pn[0]
+                                ContactsTreeviewPopulator.add_node(contacts_treeview, phone_number, parent=str(phone_numbers_iid))
+
+                        email_addresses_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Email Addresses',
+                                                                        parent=str(person_iid))
 
                 other_contact_info_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Other Contact Info', parent=str(company_iid))
                 other_phone_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Phone Numbers', parent=str(other_contact_info_iid))
