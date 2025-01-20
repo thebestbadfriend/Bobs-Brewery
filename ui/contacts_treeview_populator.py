@@ -161,6 +161,16 @@ class ContactsTreeviewPopulator:
 
                         email_addresses_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Email Addresses',
                                                                         parent=str(person_iid))
+                        email_addresses_query = rf'''select email_address
+                                                     from email_addresses
+                                                     join contacts_email_addresses
+                                                     on email_addresses.id = contacts_email_addresses.email_address_id
+                                                     where contacts_email_addresses.contact_id = {person['contact_id']}'''
+                        email_addresses = ContactsTreeviewPopulator.bda.execute_db_command(email_addresses_query)
+                        if email_addresses:
+                            for e in email_addresses:
+                                email_address = e[0]
+                                ContactsTreeviewPopulator.add_node(contacts_treeview, email_address, parent=str(email_addresses_iid))
 
                 other_contact_info_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Other Contact Info', parent=str(company_iid))
                 other_phone_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Phone Numbers', parent=str(other_contact_info_iid))
