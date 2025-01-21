@@ -17,6 +17,14 @@ class ContactsTreeviewPopulator:
     def populate_contacts_treeview(contacts_treeview):
         contacts_treeview.heading('#0', text='Companies', anchor=tk.W)
 
+        # might put a top level of
+        # Companies ->
+        # and
+        # People ->
+        # and then just put all the stuff I currently have under companies
+        # and put all the people, whether they are attached to companies or not also under People
+        # so the people who are attached to companies will be listed in both places, but the people not attached to companies will only be listed under People
+
         companies = ContactsTreeviewPopulator.bda.execute_db_command('select id, name, contact_id from companies')
         if companies:
             for company in companies:
