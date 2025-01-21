@@ -55,11 +55,16 @@ class WindowBuilder:
         elif widget_type == "Scrollbar":
             container, view = properties["command"].split('.')
             container = WindowBuilder.widget_registry.get(container)
-            properties["command"] = getattr(container, view)
-            parent = container if container else parent
+            if container:
+                properties["command"] = getattr(container, view)
+                parent = container
+
 
         # Create the widget from the library and properties
         widget = getattr(widget_library, widget_type)(parent, **properties)
+
+        if widget_type == "Scrollbar":
+            parent.configure(yscrollcommand=widget.set)
 
         if widget_type == "file":
             widget = WindowBuilder.create_widget_from_file(widget, parent)
