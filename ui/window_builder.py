@@ -31,7 +31,7 @@ class WindowBuilder:
         for child_config in children:
             child_element = WindowBuilder.create_widget_from_json(child_config, widget)
             if child_element:
-                child_element.pack()
+                child_element["widget"].pack()
 
         return widget
 
@@ -54,11 +54,9 @@ class WindowBuilder:
                 properties["command"] = func
         elif widget_type == "Scrollbar":
             container, view = properties["command"].split('.')
-            print(f"container name: {container}")
-            print(f"view name: {view}")
             container = WindowBuilder.widget_registry.get(container)
-            print(container)
             properties["command"] = getattr(container, view)
+            parent = container if container else parent
 
         # Create the widget from the library and properties
         widget = getattr(widget_library, widget_type)(parent, **properties)
@@ -87,7 +85,7 @@ class WindowBuilder:
             "widget": widget,
             "dict": element,
         }
-        
+
         return widget_dict
 
     @staticmethod
@@ -138,8 +136,8 @@ class WindowBuilder:
                 if "side" in child["pack_properties"]:
                     child["pack_properties"]["side"] = getattr(tk, child["pack_properties"]["side"])
 
-                WindowBuilder.create_widget_from_json(child, tab).pack(**child["pack_properties"])
+                WindowBuilder.create_widget_from_json(child, tab)["widget"].pack(**child["pack_properties"])
             else:
-                WindowBuilder.create_widget_from_json(child, tab).pack()
+                WindowBuilder.create_widget_from_json(child, tab)["widget"].pack()
 
         notebook.add(tab, text=tab_json["title"])
