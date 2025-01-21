@@ -177,7 +177,7 @@ class ContactsTreeviewPopulator:
                 other_email_addresses_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Email Addresses', parent=str(other_contact_info_iid))
 
         # get unattached people
-        unattached_people_query = rf'''select first_name, last_name, suffix, nickname
+        unattached_people_query = rf'''select first_name, last_name, suffix, nickname, contact_id
                                        from people
                                        left join people_companies on people.id = people_companies.person_id
                                        where people_companies.company_id is null'''
@@ -186,13 +186,60 @@ class ContactsTreeviewPopulator:
         if unattached_people:
             unattached_people_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'People Not Attached To Companies')
             # for person in unattached people
-            for person in []:
+            for p in unattached_people:
                 # unattached person
-                person_details = {}
-                person_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, '', parent=str(unattached_people_iid))
+                person = {
+                    'first_name': p[0],
+                    'last_name': p[1],
+                    'suffix': p[2],
+                    'nickname': p[3],
+                    'contact_id': p[4]
+                }
+
+                person_string = ''
+                if person['first_name']:
+                    person_string = str(person['first_name'])
+                if person['nickname']:
+                    person_string += ' "' + person['nickname'] + '"'
+                if person['last_name']:
+                    person_string += ' ' + person['last_name']
+                if person['suffix']:
+                    person_string += ' ' + person['suffix']
+
+                person_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, person_string, parent=str(unattached_people_iid))
 
                 # address(es)
-                person_addresses_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Address(es)', parent=str(unattached_people_iid))
+                person_addresses_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Address(es)', parent=str(person_iid))
+                addresses_query = rf'''select id, street_address, po_box, city, state, zip_code
+                                       from addresses
+                                       join contacts_addresses on
+                                       addresses.id = contacts_addresses.address_id
+                                       where contacts_addresses.contact_id = {person['contact_id']}'''
+                addresses = ContactsTreeviewPopulator.bda.execute_db_command(addresses_query)
+                if addresses:
+                    for a in addresses:
+                        address = {
+                            'id': a[0],
+                            'street_address': a[1],
+                            'po_box': a[2],
+                            'city': a[3],
+                            'state': a[4],
+                            'zip_code': a[5]
+                        }
+
+
+                        address_string = ''
+
+                        for k, v in list(address.items())[1:]:
+                            if v:
+                                if not address_string:
+                                    address_string = str(v)
+                                elif k == 'zip_code':
+                                    address_string = address_string + ' ' + str(v)
+                                else:
+                                    address_string = address_string + ', ' + str(v)
+
+                        ContactsTreeviewPopulator.add_node(contacts_treeview, address_string, parent=str(person_addresses_iid))
 
                 # phone numbers
                 person_phone_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Phone Numbers', parent=str(person_iid))

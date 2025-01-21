@@ -74,6 +74,19 @@
                                 "fill": "BOTH",
                                 "expand": 1
                             }
+                        },
+                        {
+                            "name": "ctv_vert_scroll",
+                            "library": "ttk",
+                            "type": "Scrollbar",
+                            "properties": {
+                                "orient": "vertical",
+                                "command": "tv_contacts.yview"
+                            },
+                            "pack_properties": {
+                                "side": "RIGHT",
+                                "fill": "Y"
+                            }
                         }
                     ]
                 }

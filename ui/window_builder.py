@@ -7,6 +7,8 @@ from ui.contacts_treeview_populator import ContactsTreeviewPopulator
 
 
 class WindowBuilder:
+    widget_registry = {}
+
     @staticmethod
     def create_widget_from_file(file_path, parent=None):
         with open(file_path, "r") as file:
@@ -35,6 +37,7 @@ class WindowBuilder:
 
     @staticmethod
     def create_widget_from_json(element, parent):
+        widget_name = element["name"]
         widget_library_name = element["library"]
         widget_type = element["type"]
         properties = element.get("properties", {})
@@ -42,13 +45,20 @@ class WindowBuilder:
 
         widget_library = WindowBuilder.get_widget_library(widget_library_name, widget_type)
 
-        if "command" in properties:
+        if widget_type == "Button":
             module_name, func_name = properties["command"].split('.')
 
             module = globals().get(module_name)
             if module:
                 func = getattr(module, func_name)
                 properties["command"] = func
+        elif widget_type == "Scrollbar":
+            container, view = properties["command"].split('.')
+            print(f"container name: {container}")
+            print(f"view name: {view}")
+            container = WindowBuilder.widget_registry.get(container)
+            print(container)
+            properties["command"] = getattr(container, view)
 
         # Create the widget from the library and properties
         widget = getattr(widget_library, widget_type)(parent, **properties)
@@ -71,7 +81,14 @@ class WindowBuilder:
                 func = getattr(module, func_name)
                 func(widget)
 
-        return widget
+        WindowBuilder.widget_registry[widget_name] = widget
+
+        widget_dict = {
+            "widget": widget,
+            "dict": element,
+        }
+        
+        return widget_dict
 
     @staticmethod
     def get_widget_library(widget_library_name, widget_type):
@@ -118,8 +135,10 @@ class WindowBuilder:
             if "pack_properties" in child:
                 if "fill" in child["pack_properties"]:
                     child["pack_properties"]["fill"] = getattr(tk, child["pack_properties"]["fill"])
+                if "side" in child["pack_properties"]:
+                    child["pack_properties"]["side"] = getattr(tk, child["pack_properties"]["side"])
 
-                WindowBuilder.create_widget_from_json(child, tab).pack(child["pack_properties"])
+                WindowBuilder.create_widget_from_json(child, tab).pack(**child["pack_properties"])
             else:
                 WindowBuilder.create_widget_from_json(child, tab).pack()
 
