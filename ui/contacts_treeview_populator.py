@@ -4,12 +4,16 @@ import tkinter as tk
 
 class ContactsTreeviewPopulator:
     bda = BreweryDBAccessor()
+    data = {}
     next_iid = 0
 
     @staticmethod
     def add_node(treeview, text, parent=''):
         iid = ContactsTreeviewPopulator.next_iid
         treeview.insert(parent, tk.END, text=text, iid=iid, open=False)
+
+        ContactsTreeviewPopulator.data[iid] = (text, parent)
+
         ContactsTreeviewPopulator.next_iid += 1
         return iid
 
@@ -19,9 +23,6 @@ class ContactsTreeviewPopulator:
 
         companies_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Companies')
         people_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'People')
-
-        # Probably put all the people, whether they are attached to companies or not also under People
-        # so the people who are attached to companies will be listed in both places, but the people not attached to companies will only be listed under People
 
         companies = ContactsTreeviewPopulator.bda.execute_db_command('select id, name, contact_id from companies')
         if companies:
@@ -247,7 +248,34 @@ class ContactsTreeviewPopulator:
             phone_numbers_query = rf'''select phone_number
                                        from phone_numbers
                                        join contacts_phone_numbers
-                                       on phone_numbers.id = contacts_phone_numbers.phone_number_id'''
+                                       on phone_numbers.id = contacts_phone_numbers.phone_number_id
+                                       where contacts_phone_numbers.contact_id = {person['contact_id']}'''
+            phone_numbers = ContactsTreeviewPopulator.bda.execute_db_command(phone_numbers_query)
+            if phone_numbers:
+                for pn in phone_numbers:
+                    phone_number = pn[0]
+                    ContactsTreeviewPopulator.add_node(contacts_treeview, phone_number, parent=str(person_phone_numbers_iid))
 
             # email addresses
             person_email_addresses_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Email Addresses', parent=str(person_iid))
+            email_addresses_query = rf'''select email_address
+                                         from email_addresses
+                                         join contacts_email_addresses
+                                         on email_addresses.id = contacts_email_addresses.email_address_id
+                                         where contacts_email_addresses.contact_id = {person['contact_id']}'''
+            email_addresses = ContactsTreeviewPopulator.bda.execute_db_command(email_addresses_query)
+            if email_addresses:
+                for e in email_addresses:
+                    email_address = e[0]
+                    ContactsTreeviewPopulator.add_node(contacts_treeview, email_address, parent=str(person_email_addresses_iid))
+
+    @staticmethod
+    def filter_contacts_treeview(filter_text=''):
+        if not filter_text:
+            ContactsTreeviewPopulator.clear_contacts_treeview_filter()
+        else:
+            pass
+
+    @staticmethod
+    def clear_contacts_treeview_filter():
+        pass
