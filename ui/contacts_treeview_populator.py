@@ -3,6 +3,11 @@ import tkinter as tk
 
 
 class ContactsTreeviewPopulator:
+    # probably de-static the methods here and make this class more instance-dependant
+    # this will allow different populators for different treeviews and will make it easier to just
+    # set a `treeview` var at initialization which binds each populator to its associated treeview.
+    # should make everything a lot simpler.
+
     bda = BreweryDBAccessor()
     data = {}
     next_iid = 0
@@ -270,7 +275,7 @@ class ContactsTreeviewPopulator:
                     ContactsTreeviewPopulator.add_node(contacts_treeview, email_address, parent=str(person_email_addresses_iid))
 
     @staticmethod
-    def filter_contacts_treeview(filter_text=''):
+    def filter_contacts_treeview(filter_by, filter_text=''):
         if not filter_text:
             ContactsTreeviewPopulator.clear_contacts_treeview_filter()
         else:

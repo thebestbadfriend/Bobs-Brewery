@@ -63,6 +63,50 @@
                     "title": "Contacts",
                     "children":[
                         {
+                            "name": "lbl_search_companies",
+                            "library": "tk",
+                            "type": "Label",
+                            "properties": {
+                                "text": "Search by company name"
+                            }
+                        },
+                        {
+                            "name": "txt_search_companies",
+                            "library": "ttk",
+                            "type": "Entry",
+                            "binds": {
+                                "<KeyRelease>": {
+                                    "module": "ContactsTreeviewPopulator",
+                                    "function": "filter_contacts_treeview",
+                                    "args": {
+                                        "filter_by": "companies"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "lbl_search_people",
+                            "library": "tk",
+                            "type": "Label",
+                            "properties": {
+                                "text": "Search by person name"
+                            }
+                        },
+                        {
+                            "name": "txt_search_people",
+                            "library": "ttk",
+                            "type": "Entry",
+                            "binds": {
+                                "<KeyRelease>": {
+                                    "module": "ContactsTreeviewPopulator",
+                                    "function": "filter_contacts_treeview",
+                                    "args": {
+                                        "filter_by": "people"
+                                    }
+                                }
+                            }
+                        },
+                        {
                             "name": "tv_contacts",
                             "library": "ttk",
                             "type": "Treeview",
