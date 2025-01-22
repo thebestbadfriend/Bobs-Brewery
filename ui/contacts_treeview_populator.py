@@ -7,23 +7,26 @@ class ContactsTreeviewPopulator:
     # this will allow different populators for different treeviews and will make it easier to just
     # set a `treeview` var at initialization which binds each populator to its associated treeview.
     # should make everything a lot simpler.
-
+    treeview = None
     bda = BreweryDBAccessor()
-    data = {}
+    contact_data = {}
     next_iid = 0
 
     @staticmethod
-    def add_node(treeview, text, parent=''):
-        iid = ContactsTreeviewPopulator.next_iid
+    def add_node(treeview, text, parent='', iid=None):
+        if not iid:
+            iid = ContactsTreeviewPopulator.next_iid
+
         treeview.insert(parent, tk.END, text=text, iid=iid, open=False)
 
-        ContactsTreeviewPopulator.data[iid] = (text, parent)
+        ContactsTreeviewPopulator.contact_data[iid] = (text, parent)
 
         ContactsTreeviewPopulator.next_iid += 1
         return iid
 
     @staticmethod
     def populate_contacts_treeview(contacts_treeview):
+        treeview = contacts_treeview
         contacts_treeview.heading('#0', text='Contacts', anchor=tk.W)
 
         companies_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Companies')
@@ -275,12 +278,31 @@ class ContactsTreeviewPopulator:
                     ContactsTreeviewPopulator.add_node(contacts_treeview, email_address, parent=str(person_email_addresses_iid))
 
     @staticmethod
-    def filter_contacts_treeview(filter_by, filter_text=''):
+    def filter_contacts_treeview(event, filter_by, filter_text=''):
         if not filter_text:
             ContactsTreeviewPopulator.clear_contacts_treeview_filter()
         else:
-            pass
+            filtered_data_set = {}
+            for iid in ContactsTreeviewPopulator.contact_data.keys():
+                text = ContactsTreeviewPopulator.contact_data[iid][0]
+                # Filter by company or people appropriately
+
+                filtered_data_set[iid] = text
+
+            for item in ContactsTreeviewPopulator.treeview:
+                ContactsTreeviewPopulator.treeview.remove(item)
+
+            for iid in filtered_data_set.keys():
+                # add the items in the filtered set back to the treeview
+                # with their lineage (upwards and downwards) intact
+                pass
+
 
     @staticmethod
     def clear_contacts_treeview_filter():
-        pass
+        for item in ContactsTreeviewPopulator.treeview:
+            ContactsTreeviewPopulator.treeview.remove(item)
+
+        for iid in ContactsTreeviewPopulator.contact_data.keys():
+            text, parent = ContactsTreeviewPopulator.contact_data[iid]
+            ContactsTreeviewPopulator.add_node(ContactsTreeviewPopulator.treeview, text, parent, iid)

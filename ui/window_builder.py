@@ -65,6 +65,9 @@ class WindowBuilder:
 
         if widget_type == "Scrollbar":
             parent.configure(yscrollcommand=widget.set)
+        if "binds" in element:
+            for b in element["binds"]:
+                widget.bind(b)
 
         if widget_type == "file":
             widget = WindowBuilder.create_widget_from_file(widget, parent)
