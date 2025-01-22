@@ -10,6 +10,8 @@ class ContactsTreeviewPopulator:
     treeview = None
     bda = BreweryDBAccessor()
     contact_data = {}
+    companies_iid = None
+    people_iid = None
     next_iid = 0
 
     @staticmethod
@@ -26,11 +28,14 @@ class ContactsTreeviewPopulator:
 
     @staticmethod
     def populate_contacts_treeview(contacts_treeview):
-        treeview = contacts_treeview
+        ContactsTreeviewPopulator.treeview = contacts_treeview
         contacts_treeview.heading('#0', text='Contacts', anchor=tk.W)
 
-        companies_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Companies')
-        people_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'People')
+        ContactsTreeviewPopulator.companies_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Companies')
+        companies_iid = ContactsTreeviewPopulator.companies_iid
+
+        ContactsTreeviewPopulator.people_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'People')
+        people_iid = ContactsTreeviewPopulator.people_iid
 
         companies = ContactsTreeviewPopulator.bda.execute_db_command('select id, name, contact_id from companies')
         if companies:
@@ -282,15 +287,25 @@ class ContactsTreeviewPopulator:
         if not filter_text:
             ContactsTreeviewPopulator.clear_contacts_treeview_filter()
         else:
+            treeview = ContactsTreeviewPopulator.treeview
             filtered_data_set = {}
-            for iid in ContactsTreeviewPopulator.contact_data.keys():
-                text = ContactsTreeviewPopulator.contact_data[iid][0]
-                # Filter by company or people appropriately
 
-                filtered_data_set[iid] = text
+            # Filter by company or people appropriately
+            if filter_by == 'companies':
+                companies_iid = ContactsTreeviewPopulator.companies_iid
+                companies = treeview.get_children(companies_iid)
+
+                for company_iid in companies:
+                    company_name = treeview.item(company_iid, 'text')
+                    if company_name.contains(filter_text):
+                        filtered_data_set[company_iid] = company_name
+                        # rather than go through mapping parents and children, maybe I should make children
+                        # subitems of their parents in the dict to begin with?
+            else:
+                pass
 
             for item in ContactsTreeviewPopulator.treeview:
-                ContactsTreeviewPopulator.treeview.remove(item)
+                treeview.remove(item)
 
             for iid in filtered_data_set.keys():
                 # add the items in the filtered set back to the treeview
