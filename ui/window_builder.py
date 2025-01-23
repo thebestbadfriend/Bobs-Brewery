@@ -65,9 +65,14 @@ class WindowBuilder:
 
         if widget_type == "Scrollbar":
             parent.configure(yscrollcommand=widget.set)
+
         if "binds" in element:
-            for b in element["binds"]:
-                widget.bind(b)
+            for event, config in element["binds"].items():
+                config['module'] = globals().get(config["module"])
+                func = getattr(config['module'], config['function'])
+                args = config['args']
+                args['widget'] = widget
+                widget.bind(event, lambda e: func(e, **args))
 
         if widget_type == "file":
             widget = WindowBuilder.create_widget_from_file(widget, parent)
