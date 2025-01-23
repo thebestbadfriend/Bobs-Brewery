@@ -299,8 +299,7 @@ class ContactsTreeviewPopulator:
                     company_name = treeview.item(company_iid, 'text')
                     if company_name.contains(filter_text):
                         filtered_data_set[company_iid] = company_name
-                        # rather than go through mapping parents and children, maybe I should make children
-                        # subitems of their parents in the dict to begin with?
+                        
             else:
                 pass
 
