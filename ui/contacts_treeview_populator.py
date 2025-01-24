@@ -294,23 +294,22 @@ class ContactsTreeviewPopulator:
             print('No widget found')
 
         if not filter_text:
-            print('No filter text')
             ContactsTreeviewPopulator.clear_contacts_treeview_filter()
         else:
             if filter_by == 'companies':
                 companies_iid = ContactsTreeviewPopulator.companies_iid
-                print(rf'companies_iid = {companies_iid}')
                 companies = treeview.get_children(companies_iid)
-                print(rf'companies_iid children: {companies}')
 
                 filtered_data_set[companies_iid] = ('Companies', '')
                 for company_iid in companies:
                     company_name = treeview.item(company_iid, 'text')
                     if filter_text.upper() in company_name.upper():
-                        print(rf'company_name: {company_name}')
                         filtered_data_set[company_iid] = (company_name, companies_iid)
-                    else:
-                        pass
+                        all_descendents = ContactsTreeviewPopulator.get_all_descendants(ContactsTreeviewPopulator.treeview, company_iid)
+                        for descendent_iid in all_descendents:
+                            descendent_name = treeview.item(descendent_iid, 'text')
+                            parent = treeview.parent(descendent_iid)
+                            filtered_data_set[descendent_iid] = (descendent_name, parent)
             else:
                 pass
 
@@ -331,3 +330,12 @@ class ContactsTreeviewPopulator:
         for iid in ContactsTreeviewPopulator.contact_data.keys():
             text, parent = ContactsTreeviewPopulator.contact_data[iid]
             ContactsTreeviewPopulator.add_node(ContactsTreeviewPopulator.treeview, text, parent, iid)
+
+    @staticmethod
+    def get_all_descendants(treeview, parent_iid):
+        descendants = []
+        children = treeview.get_children(parent_iid)
+        for child in children:
+            descendants.append(child)  # Add the immediate child
+            descendants.extend(ContactsTreeviewPopulator.get_all_descendants(treeview, child))  # Add its descendants
+        return descendants
