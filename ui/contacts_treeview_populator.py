@@ -10,6 +10,7 @@ class ContactsTreeviewPopulator:
     treeview = None
     bda = BreweryDBAccessor()
     contact_data = {}
+    current_filtered_data = {}
     companies_iid = None
     people_iid = None
     next_iid = 1
@@ -23,7 +24,8 @@ class ContactsTreeviewPopulator:
 
         ContactsTreeviewPopulator.contact_data[iid] = (text, parent)
 
-        ContactsTreeviewPopulator.next_iid += 1
+        ContactsTreeviewPopulator.next_iid = ContactsTreeviewPopulator.next_iid + 1
+
         return iid
 
     @staticmethod
@@ -285,7 +287,7 @@ class ContactsTreeviewPopulator:
     @staticmethod
     def filter_contacts_treeview(event, filter_by, widget=None):
         treeview = ContactsTreeviewPopulator.treeview
-        filtered_data_set = {}
+        filtered_data_set = ContactsTreeviewPopulator.current_filtered_data
 
         filter_text = ''
         if widget:
@@ -294,8 +296,11 @@ class ContactsTreeviewPopulator:
             print('No widget found')
 
         if not filter_text:
+            print('No filter text found')
             ContactsTreeviewPopulator.clear_contacts_treeview_filter()
+            filtered_data_set.clear()
         else:
+            filtered_data_set.clear()
             if filter_by == 'companies':
                 companies_iid = ContactsTreeviewPopulator.companies_iid
                 companies = treeview.get_children(companies_iid)
@@ -311,7 +316,19 @@ class ContactsTreeviewPopulator:
                             parent = treeview.parent(descendent_iid)
                             filtered_data_set[descendent_iid] = (descendent_name, parent)
             else:
-                pass
+                people_iid = ContactsTreeviewPopulator.people_iid
+                people = treeview.get_children(people_iid)
+
+                filtered_data_set[people_iid] = ('People', '')
+                for person_iid in people:
+                    person_name = treeview.item(person_iid, 'text')
+                    if filter_text.upper() in person_name.upper():
+                        filtered_data_set[person_iid] = (person_name, people_iid)
+                        all_descendents = ContactsTreeviewPopulator.get_all_descendants(ContactsTreeviewPopulator.treeview, person_iid)
+                        for descendent_iid in all_descendents:
+                            descendent_name = treeview.item(descendent_iid, 'text')
+                            parent = treeview.parent(descendent_iid)
+                            filtered_data_set[descendent_iid] = (descendent_name, parent)
 
             for item in ContactsTreeviewPopulator.treeview.get_children():
                 treeview.delete(item)
@@ -319,7 +336,6 @@ class ContactsTreeviewPopulator:
             for iid in filtered_data_set.keys():
                 text, parent = filtered_data_set[iid]
                 ContactsTreeviewPopulator.add_node(treeview, text, parent, iid)
-
 
     @staticmethod
     def clear_contacts_treeview_filter():
