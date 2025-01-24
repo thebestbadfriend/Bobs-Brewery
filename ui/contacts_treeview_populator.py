@@ -20,11 +20,17 @@ class ContactsTreeviewPopulator:
         if not iid:
             iid = ContactsTreeviewPopulator.next_iid
 
+            while iid in ContactsTreeviewPopulator.contact_data.keys():
+                iid += 1
+
+            ContactsTreeviewPopulator.next_iid = iid + 1
+
+
         treeview.insert(parent, tk.END, text=text, iid=iid, open=False)
 
-        ContactsTreeviewPopulator.contact_data[iid] = (text, parent)
-
-        ContactsTreeviewPopulator.next_iid = ContactsTreeviewPopulator.next_iid + 1
+        iid_exists = ContactsTreeviewPopulator.contact_data.get(iid)
+        if not iid_exists:
+            ContactsTreeviewPopulator.contact_data[iid] = (text, parent)
 
         return iid
 
