@@ -304,14 +304,19 @@ class ContactsTreeviewPopulator:
 
         filtered_data_set.clear()
 
-        if not filter_text:
-            ContactsTreeviewPopulator.clear_contacts_treeview_filter()
-        else:
+        ContactsTreeviewPopulator.clear_contacts_treeview_filter()
+
+        if filter_text:
             if filter_by == 'companies':
                 companies_iid = ContactsTreeviewPopulator.companies_iid
+                filtered_data_set[companies_iid] = ('Companies', '')
+
+                '''for iid, values in ContactsTreeviewPopulator.contact_data.items():
+                    if values[1] == companies_iid:
+                        filtered_data_set[iid] = (values[0], values[1])'''
+
                 companies = treeview.get_children(companies_iid)
 
-                filtered_data_set[companies_iid] = ('Companies', '')
                 for company_iid in companies:
                     company_name = treeview.item(company_iid, 'text')
                     if filter_text.upper() in company_name.upper():
@@ -326,6 +331,7 @@ class ContactsTreeviewPopulator:
                 people = treeview.get_children(people_iid)
 
                 filtered_data_set[people_iid] = ('People', '')
+
                 for person_iid in people:
                     person_name = treeview.item(person_iid, 'text')
                     if filter_text.upper() in person_name.upper():
@@ -345,7 +351,6 @@ class ContactsTreeviewPopulator:
 
     @staticmethod
     def clear_contacts_treeview_filter():
-        print('Clearing contacts treeview filter')
         for item in ContactsTreeviewPopulator.treeview.get_children():
             ContactsTreeviewPopulator.treeview.delete(item)
 
