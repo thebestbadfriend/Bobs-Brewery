@@ -143,8 +143,30 @@ class ContactsTreeviewPopulator:
                                         email_address = e[0]
                                         ContactsTreeviewPopulator.add_node(contacts_treeview, email_address, parent=str(person_email_addresses_iid))
 
-                        # location phone numbers not assigned to person ("other phone numbers")
-                        personless_phone_numbers_iid = ""
+                                # person fax numbers
+                                person_fax_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Fax Numbers', parent=str(person_iid))
+                                fax_numbers_query = rf'''select fax_number
+                                                         from fax_numbers
+                                                         join contacts_fax_numbers
+                                                         on fax_numbers.id = contacts_fax_numbers.fax_number_id
+                                                         join people on contacts_fax_numbers.contact_id = people.contact_id
+                                                         where people.contact_id = {person_details['contact_id']}'''
+                                fax_numbers = ContactsTreeviewPopulator.bda.execute_db_command(fax_numbers_query)
+                                if fax_numbers:
+                                    for fn in fax_numbers:
+                                        fax_number = fn[0]
+                                        ContactsTreeviewPopulator.add_node(contacts_treeview, fax_number,parent=str(person_fax_numbers_iid))
+
+                        # Location contact info sans people
+                        location_other_contact_info_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Other Contact Info', parent=str(company_location_iid))
+                        phone_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Phone Numbers', parent=str(company_location_iid))
+                        phone_numbers_query = rf''''''
+
+                        email_addresses_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Email Addresses', parent=str(company_location_iid))
+                        email_addresses_query = rf''''''
+
+                        fax_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Fax Numbers', parent=str(company_location_iid))
+                        fax_numbers_query = rf''''''
 
                 people_without_locations_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'People (no location)', parent=str(company_iid))
                 people_without_locations_query = rf'''select p.contact_id, first_name, last_name, suffix, nickname
@@ -201,11 +223,12 @@ class ContactsTreeviewPopulator:
                                 email_address = e[0]
                                 ContactsTreeviewPopulator.add_node(contacts_treeview, email_address, parent=str(email_addresses_iid))
 
+                # contact info for company not for specific location
                 other_contact_info_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Other Contact Info', parent=str(company_iid))
                 other_phone_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Phone Numbers', parent=str(other_contact_info_iid))
                 other_email_addresses_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Email Addresses', parent=str(other_contact_info_iid))
 
-        # get unattached people
+        # populate people tree
         people_query = rf'''select first_name, last_name, suffix, nickname, contact_id from people'''
         people = ContactsTreeviewPopulator.bda.execute_db_command(people_query)
 
@@ -291,6 +314,19 @@ class ContactsTreeviewPopulator:
                     email_address = e[0]
                     ContactsTreeviewPopulator.add_node(contacts_treeview, email_address, parent=str(person_email_addresses_iid))
 
+            # fax numbers
+            person_fax_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Fax Numbers', parent=str(person_iid))
+            fax_numbers_query = rf'''select fax_number
+                                     from fax_numbers
+                                     join contacts_fax_numbers
+                                     on fax_numbers.id = contacts_fax_numbers.fax_number_id
+                                     where contacts_fax_numbers.contact_id = {person['contact_id']}'''
+            fax_numbers = ContactsTreeviewPopulator.bda.execute_db_command(fax_numbers_query)
+            if fax_numbers:
+                for f in fax_numbers:
+                    fax_number = f[0]
+                    ContactsTreeviewPopulator.add_node(contacts_treeview, fax_number, parent=str(person_fax_numbers_iid))
+
     @staticmethod
     def filter_contacts_treeview(event, filter_by, widget=None):
         treeview = ContactsTreeviewPopulator.treeview
@@ -310,10 +346,6 @@ class ContactsTreeviewPopulator:
             if filter_by == 'companies':
                 companies_iid = ContactsTreeviewPopulator.companies_iid
                 filtered_data_set[companies_iid] = ('Companies', '')
-
-                '''for iid, values in ContactsTreeviewPopulator.contact_data.items():
-                    if values[1] == companies_iid:
-                        filtered_data_set[iid] = (values[0], values[1])'''
 
                 companies = treeview.get_children(companies_iid)
 
