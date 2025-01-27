@@ -25,6 +25,7 @@ class ContactsTreeviewPopulator:
 
             ContactsTreeviewPopulator.next_iid = iid + 1
 
+        iid = int(iid)
 
         treeview.insert(parent, tk.END, text=text, iid=iid, open=False)
 
@@ -301,12 +302,11 @@ class ContactsTreeviewPopulator:
         else:
             print('No widget found')
 
+        filtered_data_set.clear()
+
         if not filter_text:
-            print('No filter text found')
             ContactsTreeviewPopulator.clear_contacts_treeview_filter()
-            filtered_data_set.clear()
         else:
-            filtered_data_set.clear()
             if filter_by == 'companies':
                 companies_iid = ContactsTreeviewPopulator.companies_iid
                 companies = treeview.get_children(companies_iid)
