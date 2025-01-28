@@ -289,7 +289,24 @@ class ContactsTreeviewPopulator:
                 other_contact_info_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Other Contact Info', parent=str(company_iid))
 
                 other_phone_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Phone Numbers', parent=str(other_contact_info_iid))
-                phone_numbers_query = rf''''''''
+                phone_numbers_query = rf'''/* get all phone numbers which are not included in the results of the two queries after this one */
+
+
+
+/* get all phone numbers which are associated with at least one address */
+select cpn.phone_number_id
+from contacts_phone_numbers cpn
+join contacts_addresses ca
+on cpn.contact_id = ca.contact_id; /* this is where I left off */
+
+
+
+/* get all phone numbers which are associated with at least one person */
+select cpn.phone_number_id
+from contacts_phone_numbers cpn
+join contacts c
+on cpn.contact_id = c.contact_id
+where c.person_id is not null;'''
                 phone_numbers = ContactsTreeviewPopulator.bda.execute_db_command(phone_numbers_query)
                 if phone_numbers:
                     for p in phone_numbers:
