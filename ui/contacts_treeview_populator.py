@@ -287,9 +287,30 @@ class ContactsTreeviewPopulator:
 
                 # contact info for company not for specific locations or people
                 other_contact_info_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Other Contact Info', parent=str(company_iid))
+
                 other_phone_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Phone Numbers', parent=str(other_contact_info_iid))
+                phone_numbers_query = rf''''''''
+                phone_numbers = ContactsTreeviewPopulator.bda.execute_db_command(phone_numbers_query)
+                if phone_numbers:
+                    for p in phone_numbers:
+                        phone_number = p[0]
+                        ContactsTreeviewPopulator.add_node(contacts_treeview, phone_number, parent=str(other_phone_numbers_iid))
+
                 other_email_addresses_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Email Addresses', parent=str(other_contact_info_iid))
+                email_addresses_query = rf''''''''
+                email_addresses = ContactsTreeviewPopulator.bda.execute_db_command(email_addresses_query)
+                if email_addresses:
+                    for e in email_addresses:
+                        email_address = e[0]
+                        ContactsTreeviewPopulator.add_node(contacts_treeview, email_address, parent=str(other_email_addresses_iid))
+
                 other_fax_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Fax Numbers', parent=str(other_contact_info_iid))
+                fax_numbers_query = rf''''''''
+                fax_numbers = ContactsTreeviewPopulator.bda.execute_db_command(fax_numbers_query)
+                if fax_numbers:
+                    for fn in fax_numbers:
+                        fax_number = fn[0]
+                        ContactsTreeviewPopulator.add_node(contacts_treeview, fax_number, parent=str(other_fax_numbers_iid))
 
         # populate people tree
         people_query = rf'''select first_name, last_name, suffix, nickname, contact_id from people'''
