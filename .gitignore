@@ -4,7 +4,6 @@ dist/
 build/
 
 requirements.txt
-main.spec
 *.pyc
 /concealed_vars.py
 /dal/csv_data/.~lock.addresses.csv#
@@ -15,6 +14,5 @@ main.spec
 /dal/csv_data/.~lock.phone_numbers.csv#
 /dal/csv_data/.~lock.websites.csv#
 dal/csv_data/.~lock.contacts.csv\#
-nuitka-crash-report.xml
 /main.dist
 /venv3.12
