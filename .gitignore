@@ -16,3 +16,5 @@ main.spec
 /dal/csv_data/.~lock.websites.csv#
 dal/csv_data/.~lock.contacts.csv\#
 nuitka-crash-report.xml
+/main.dist
+/venv3.12

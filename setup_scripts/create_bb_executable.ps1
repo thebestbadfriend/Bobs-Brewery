@@ -1,1 +1,1 @@
-nuitka --standalone --onefile --include-package=psycopg main.py
+nuitka --standalone --onefile --enable-plugin=tk-inter --include-package=psycopg main.py
