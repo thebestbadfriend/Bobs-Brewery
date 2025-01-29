@@ -55,7 +55,7 @@ class ContactsTreeviewPopulator:
                     "contact_id": company[2]
                 }
 
-                company_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, company_details['name'], companies_iid)
+                company_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, company_details['name'], str(companies_iid))
 
                 company_locations_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Locations', parent=str(company_iid))
                 company_locations_query = (rf'''select id, street_address, po_box, city, state, zip_code
@@ -289,24 +289,28 @@ class ContactsTreeviewPopulator:
                 other_contact_info_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Other Contact Info', parent=str(company_iid))
 
                 other_phone_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Phone Numbers', parent=str(other_contact_info_iid))
-                phone_numbers_query = rf'''/* get all phone numbers which are not included in the results of the two queries after this one */
-
-
-
-/* get all phone numbers which are associated with at least one address */
-select cpn.phone_number_id
-from contacts_phone_numbers cpn
-join contacts_addresses ca
-on cpn.contact_id = ca.contact_id; /* this is where I left off */
-
-
-
-/* get all phone numbers which are associated with at least one person */
-select cpn.phone_number_id
-from contacts_phone_numbers cpn
-join contacts c
-on cpn.contact_id = c.contact_id
-where c.person_id is not null;'''
+                phone_numbers_query = rf'''select pn.phone_number
+                                           from phone_numbers pn
+                                           join contacts_phone_numbers cpn
+                                           on pn.id = cpn.phone_number_id
+                                           where
+                                           cpn.contact_id = {company_details['contact_id']}
+                                           and not exists (
+                                               select 1
+                                               from contacts_phone_numbers cpn
+                                               inner join contacts_addresses ca
+                                               on cpn.contact_id = ca.contact_id
+                                               where cpn.phone_number_id = pn.id
+                                               )
+                                           and not exists (
+                                               select 1
+                                               from contacts_phone_numbers cpn
+                                               join contacts c
+                                               on cpn.contact_id = c.contact_id
+                                               where
+                                               cpn.phone_number_id = pn.id
+                                               and c.person_id is not null
+                                               );'''
                 phone_numbers = ContactsTreeviewPopulator.bda.execute_db_command(phone_numbers_query)
                 if phone_numbers:
                     for p in phone_numbers:
@@ -314,7 +318,28 @@ where c.person_id is not null;'''
                         ContactsTreeviewPopulator.add_node(contacts_treeview, phone_number, parent=str(other_phone_numbers_iid))
 
                 other_email_addresses_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Email Addresses', parent=str(other_contact_info_iid))
-                email_addresses_query = rf''''''''
+                email_addresses_query = rf'''select ea.email_address
+                                             from email_addresses ea
+                                             join contacts_email_addresses cea
+                                             on ea.id = cea.email_address_id
+                                             where
+                                             cea.contact_id = {company_details['contact_id']}
+                                             and not exists (
+                                                 select 1
+                                                 from contacts_email_addresses cea
+                                                 inner join contacts_addresses ca
+                                                 on cea.contact_id = ca.contact_id
+                                                 where cea.email_address_id = ea.id
+                                                 )
+                                             and not exists (
+                                                 select 1
+                                                 from contacts_email_addresses cea
+                                                 join contacts c
+                                                 on cea.contact_id = c.contact_id
+                                                 where
+                                                     cea.email_address_id = ea.id
+                                                     and c.person_id is not null
+                                                 );'''
                 email_addresses = ContactsTreeviewPopulator.bda.execute_db_command(email_addresses_query)
                 if email_addresses:
                     for e in email_addresses:
@@ -322,7 +347,28 @@ where c.person_id is not null;'''
                         ContactsTreeviewPopulator.add_node(contacts_treeview, email_address, parent=str(other_email_addresses_iid))
 
                 other_fax_numbers_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Fax Numbers', parent=str(other_contact_info_iid))
-                fax_numbers_query = rf''''''''
+                fax_numbers_query = rf'''select fn.fax_number
+                                         from fax_numbers fn
+                                         join contacts_fax_numbers cfn
+                                         on fn.id = cfn.fax_number_id
+                                         where
+                                         cfn.contact_id = {company_details['contact_id']}
+                                         and not exists (
+                                             select 1
+                                             from contacts_fax_numbers cfn
+                                             inner join contacts_addresses ca
+                                             on cfn.contact_id = ca.contact_id
+                                             where cfn.fax_number_id = fn.id
+                                             )
+                                         and not exists (
+                                             select 1
+                                             from contacts_fax_numbers cfn
+                                             join contacts c
+                                             on cfn.contact_id = c.contact_id
+                                             where
+                                                 cfn.fax_number_id = fn.id
+                                                 and c.person_id is not null
+                                             );'''
                 fax_numbers = ContactsTreeviewPopulator.bda.execute_db_command(fax_numbers_query)
                 if fax_numbers:
                     for fn in fax_numbers:
@@ -429,7 +475,7 @@ where c.person_id is not null;'''
                     ContactsTreeviewPopulator.add_node(contacts_treeview, fax_number, parent=str(person_fax_numbers_iid))
 
     @staticmethod
-    def filter_contacts_treeview(event, filter_by, widget=None):
+    def filter_contacts_treeview(_event, filter_by, widget=None):
         treeview = ContactsTreeviewPopulator.treeview
         filtered_data_set = ContactsTreeviewPopulator.current_filtered_data
 
