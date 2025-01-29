@@ -1,1 +1,1 @@
-pyinstaller.exe --onefile ..\main.py
+nuitka --standalone --onefile --include-package=psycopg main.py

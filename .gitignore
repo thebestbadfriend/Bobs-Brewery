@@ -15,3 +15,4 @@ main.spec
 /dal/csv_data/.~lock.phone_numbers.csv#
 /dal/csv_data/.~lock.websites.csv#
 dal/csv_data/.~lock.contacts.csv\#
+nuitka-crash-report.xml
