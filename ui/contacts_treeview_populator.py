@@ -54,6 +54,7 @@ class ContactsTreeviewPopulator:
                     "name": company[1],
                     "contact_id": company[2]
                 }
+                print(company_details['name'])
 
                 company_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, company_details['name'], str(companies_iid))
 

@@ -1,12 +1,14 @@
 class Address:
-    def __init__(self):
-        pass
-
     street_address = ""
     po_box = ""
     city = ""
     state = ""
     zip_code = ""
+    contacts = []
 
-    phone_number_ids = []
-    people_ids = []
+    def __init__(self, street, po_box, city, state, zipcode):
+        self.street = street
+        self.po_box = po_box
+        self.city = city
+        self.state = state
+        self.zipcode = zipcode
