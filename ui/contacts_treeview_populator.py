@@ -7,6 +7,12 @@ class ContactsTreeviewPopulator:
     # this will allow different populators for different treeviews and will make it easier to just
     # set a `treeview` var at initialization which binds each populator to its associated treeview.
     # should make everything a lot simpler.
+    #
+    # Only thing is, that will mean the data hierarchy has to be described in the yaml or that the data will have to be
+    # put together into a list or dictionary or some such in a file unique to each module and then this class will
+    # exclusively handle throwing that data into the treeview, not actually collecting and formatting it.
+    # Though, come to think of it, that would be a more proper separation of concerns anyway and more modular
+
     treeview = None
     bda = BreweryDBAccessor()
     contact_data = {}
@@ -54,7 +60,6 @@ class ContactsTreeviewPopulator:
                     "name": company[1],
                     "contact_id": company[2]
                 }
-                print(company_details['name'])
 
                 company_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, company_details['name'], str(companies_iid))
 
