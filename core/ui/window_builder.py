@@ -2,8 +2,8 @@ import json
 import tkinter as tk
 from tkinter import ttk
 import importlib
-from ui import btn_commands
-from ui.contacts_treeview_populator import ContactsTreeviewPopulator
+from core.ui import btn_commands
+from core.ui.contacts_treeview_populator import ContactsTreeviewPopulator
 
 
 class WindowBuilder:
