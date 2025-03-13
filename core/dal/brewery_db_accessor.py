@@ -10,8 +10,7 @@ class BreweryDBAccessor:
     # Configuration - update these variables
     pg_user = cv.DB_USER
     pg_password = cv.COMMON_PASS
-    # pg_host = cv.DB_HOST
-    pg_host = "71.31.104.78"
+    pg_host = cv.DB_HOST
     pg_port = '5432'
     db_name = 'bb_contacts'
     dump_directory = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\dal\dumps'
