@@ -1,6 +1,7 @@
 $scriptPath = $MyInvocation.MyCommand.Path
 $dir = Split-Path $scriptPath
 
+
 $python3Check = Get-Command python -all 2>$null | Where-Object {$_.Version -Like "3.*"} 2>$null
 
 
@@ -22,3 +23,31 @@ else {
     Install-Python
     "python installed"
 }
+
+
+function Install-BBDependencies {
+    python -m pip install -r "$($dir)\requirements.txt"
+    python -m pip freeze
+}
+
+
+Install-BBDependencies
+
+
+function Create-DesktopShortcut {
+    $ShortcutTarget= "powershell.exe"
+    $ShortcutArgs = "-NoExit -File ""$($dir)\..\Bob's Brewery.ps1"""
+    $ShortcutFile = (New-Object -ComObject Shell.Application).Namespace('shell:Desktop').Self.Path + "\Bob's Brewery.lnk"
+    $WScriptShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
+    $Shortcut.TargetPath = $ShortcutTarget
+    $Shortcut.Arguments = $ShortcutArgs
+    $Shortcut.IconLocation = "$($dir)\..\desktop.ico"
+    $Shortcut.Save()
+    "created shortcut"
+}
+
+
+Create-DesktopShortcut
+
+
