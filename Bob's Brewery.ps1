@@ -1,5 +1,7 @@
 # Execute the bob's brewery program without all the compilation hassle
-$python_path = ".\.venv3.12\Scripts\python.exe"
-$bb_entry_point = ".\main.py"
+$scriptPath = $MyInvocation.MyCommand.Path
+$dir = Split-Path $scriptPath
 
-& $python_path $bb_entry_point
+$BBEntryPoint = "main.py"
+
+python "$($dir)\\$($BBEntryPoint)"
