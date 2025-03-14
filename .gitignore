@@ -1,6 +1,5 @@
 .idea/
 .venv/
-dist/
 build/
 
 requirements.txt
