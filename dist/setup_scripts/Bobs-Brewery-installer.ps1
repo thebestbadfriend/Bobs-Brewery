@@ -11,8 +11,8 @@ $downloadsPath = (New-Object -ComObject Shell.Application).Namespace('shell:Down
 
 
 $python3Check = Get-Command python -all 2>$null | Where-Object {$_.Version -Like "3.*"} 2>$null
-$postgresql17Check = Get-Command asdf -all 2>$null | Where-Object {$_.Version -Like "17.*"} 2>$null
-$postgresInstalledPath = "C:\Program Files\PostgreSQL\17asdfasdf"
+$postgresql17Check = Get-Command psql -all 2>$null | Where-Object {$_.Version -Like "17.*"} 2>$null
+$postgresInstalledPath = "C:\Program Files\PostgreSQL\17"
 
 
 function Install-Python {
