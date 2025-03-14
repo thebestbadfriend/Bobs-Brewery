@@ -90,7 +90,7 @@ function Install-BBDependencies {
 
 function Create-DesktopShortcut {
     $ShortcutTarget= "powershell.exe"
-    $ShortcutArgs = "-NoExit -File ""$($dir)\..\Bob's Brewery.bat"""
+    $ShortcutArgs = "-ExecutionPolicy ByPass -NoExit -File ""$($dir)\..\Bob's Brewery.bat"""
     $ShortcutFile = (New-Object -ComObject Shell.Application).Namespace('shell:Desktop').Self.Path + "\Bob's Brewery.lnk"
     $WScriptShell = New-Object -ComObject WScript.Shell
     $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
