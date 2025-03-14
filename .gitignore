@@ -5,7 +5,8 @@ build/
 
 requirements.txt
 *.pyc
-/concealed_vars.py
+concealed_vars.py
+
 /core/dal/csv_data/.~lock.addresses.csv#
 /core/dal/csv_data/.~lock.companies.csv#
 /core/dal/csv_data/.~lock.email_addresses.csv#
