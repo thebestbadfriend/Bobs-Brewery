@@ -4,7 +4,7 @@ import sys
 import subprocess
 import config
 
-import dist.concealed_vars as cv
+import concealed_vars as cv
 
 
 

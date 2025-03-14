@@ -2,7 +2,6 @@
 .venv/
 build/
 
-requirements.txt
 *.pyc
 concealed_vars.py
 
