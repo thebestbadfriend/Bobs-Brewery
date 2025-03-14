@@ -1,6 +1,6 @@
 # Check if running as admin and  prompt for admin privileges if not
 if(!([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
- Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList "-File `"$($MyInvocation.MyCommand.Path)`"  `"$($MyInvocation.MyCommand.UnboundArguments)`""
+ Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList "-ExecutionPolicy ByPass -File `"$($MyInvocation.MyCommand.Path)`"  `"$($MyInvocation.MyCommand.UnboundArguments)`""
  Exit
 }
 
@@ -90,7 +90,7 @@ function Install-BBDependencies {
 
 function Create-DesktopShortcut {
     $ShortcutTarget= "powershell.exe"
-    $ShortcutArgs = "-NoExit -File ""$($dir)\..\Bob's Brewery.ps1"""
+    $ShortcutArgs = "-NoExit -File ""$($dir)\..\Bob's Brewery.bat"""
     $ShortcutFile = (New-Object -ComObject Shell.Application).Namespace('shell:Desktop').Self.Path + "\Bob's Brewery.lnk"
     $WScriptShell = New-Object -ComObject WScript.Shell
     $Shortcut = $WScriptShell.CreateShortcut($ShortcutFile)
