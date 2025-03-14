@@ -1,4 +1,4 @@
 import os
 
 
-project_root = os.path.dirname(os.path.abspath(__file__))
+source_root = os.path.dirname(os.path.abspath(__file__))

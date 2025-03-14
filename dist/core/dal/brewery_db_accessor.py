@@ -4,6 +4,7 @@ import psycopg
 import subprocess
 import sys
 import concealed_vars as cv
+import config as cfg
 
 
 class BreweryDBAccessor:
@@ -13,7 +14,7 @@ class BreweryDBAccessor:
     pg_host = cv.DB_HOST
     pg_port = '5432'
     db_name = 'bb_contacts'
-    dump_directory = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\dal\dumps'
+    dump_directory = rf'{cfg.source_root}\dal\dumps'
     dump_file = rf'{dump_directory}\gold_dumps\bb_contacts.gold.20241223.110753.dump'
 
     # Set environment variable for password (optional, if password is needed)
