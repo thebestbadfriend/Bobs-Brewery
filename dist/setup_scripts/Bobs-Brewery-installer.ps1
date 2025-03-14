@@ -47,7 +47,7 @@ function Install-Postgresql {
     }
 
     # Extract PostgreSQL 17 to its proper path
-    Expand-Archive -Path $installerFilePath -DestinationPath $postgresInstalledPath
+    Expand-Archive -Path $installerFilePath -DestinationPath $postgresInstalledPath -ErrorAction SilentlyContinue
     
     
     # Add C:\Program Files\PostgreSQL\17\bin to the path
@@ -62,13 +62,23 @@ function Install-Postgresql {
         New-Item -ItemType Directory -Force -Path $pathBackupDir
         "created ""$($pathBackupDir)"""
     }
-    "backing up system path"
-    $env:Path > "$($pathBackupDir)\system_path_backup.bak"
-    "system path backed up"
 
-    "adding PostgreSQL 17 to path"
-    setx PATH "$($env:Path);\$($postgresInstalledPath)\pgsql\lib"
-    "PostgreSQL 17 added to path"
+
+    $pathToAdd = "$($postgresInstalledPath)\pgsql\bin"
+    $currentPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+
+    "Backing up current system path to ""$($pathBackupDir)\system_path_backup.bak"""
+    $currentPath > "$($pathBackupDir)\system_path_backup.bak"
+    "Current system path backed up"
+
+    if ($currentPath -notcontains $pathToAdd) {
+        "adding PostgreSQL 17 to path"
+        [Environment]::SetEnvironmentVariable("Path", "$($currentPath);$($pathToAdd)", "Machine")
+        Write-Host "Added '$pathToAdd' to the system PATH."
+    }
+    else {
+        Write-Host """$($pathToAdd)"" is already in the system PATH."
+    }
 }
 
 
