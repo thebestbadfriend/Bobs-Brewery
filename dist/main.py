@@ -4,6 +4,8 @@ from core.ui import WindowBuilder as wb
 
 
 def main():
+    print('If this window is open, then the program is running.')
+    print("It can take a few minutes to load. I'm working on improving that.")
     root = wb.create_widget_from_file(rf"{cfg.source_root}\core\ui\ui_elements\windows\main_window.json")
     print('window should display in <1s')
     root.mainloop()
