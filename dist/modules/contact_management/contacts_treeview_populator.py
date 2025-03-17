@@ -1,0 +1,137 @@
+from core.dal import BreweryDBAccessor
+import tkinter as tk
+
+
+class ContactsTreeviewPopulator:
+    # probably de-static the methods here and make this class more instance-dependant
+    # this will allow different populators for different treeviews and will make it easier to just
+    # set a `treeview` var at initialization which binds each populator to its associated treeview.
+    # should make everything a lot simpler.
+    #
+    # Only thing is, that will mean the data hierarchy has to be described in the yaml or that the data will have to be
+    # put together into a list or dictionary or some such in a file unique to each module and then this class will
+    # exclusively handle throwing that data into the treeview, not actually collecting and formatting it.
+    # Though, come to think of it, that would be a more proper separation of concerns anyway and more modular
+
+    treeview = None
+    bda = BreweryDBAccessor()
+    contact_data = {}
+    current_filtered_data = {}
+    companies_iid = None
+    people_iid = None
+    next_iid = 1
+
+    @staticmethod
+    def add_node(treeview, text, parent='', iid=None):
+        if not iid:
+            iid = ContactsTreeviewPopulator.next_iid
+
+            while iid in ContactsTreeviewPopulator.contact_data.keys():
+                iid += 1
+
+            ContactsTreeviewPopulator.next_iid = iid + 1
+
+        iid = int(iid)
+
+        treeview.insert(parent, tk.END, text=text, iid=iid, open=False)
+
+        iid_exists = ContactsTreeviewPopulator.contact_data.get(iid)
+        if not iid_exists:
+            ContactsTreeviewPopulator.contact_data[iid] = (text, parent)
+
+        return iid
+
+    @staticmethod
+    def populate_contacts_treeview(contacts_treeview):
+        ContactsTreeviewPopulator.treeview = contacts_treeview
+        contacts_treeview.heading('#0', text='Contacts', anchor=tk.W)
+
+        ContactsTreeviewPopulator.companies_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'Companies')
+        companies_iid = ContactsTreeviewPopulator.companies_iid
+
+        ContactsTreeviewPopulator.people_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, 'People')
+        people_iid = ContactsTreeviewPopulator.people_iid
+
+        companies = ContactsTreeviewPopulator.bda.execute_db_command('select id, name, contact_id from companies')
+        if companies:
+            for company in companies:
+                company_details = {
+                    "id": company[0],
+                    "name": company[1],
+                    "contact_id": company[2]
+                }
+
+                company_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, company_details['name'],
+                                                                 str(companies_iid))
+
+    @staticmethod
+    def filter_contacts_treeview(_event, filter_by, widget=None):
+        treeview = ContactsTreeviewPopulator.treeview
+        filtered_data_set = ContactsTreeviewPopulator.current_filtered_data
+
+        filter_text = ''
+        if widget:
+            filter_text = widget.get()
+        else:
+            print('No widget found')
+
+        filtered_data_set.clear()
+
+        ContactsTreeviewPopulator.clear_contacts_treeview_filter()
+
+        if filter_text:
+            if filter_by == 'companies':
+                companies_iid = ContactsTreeviewPopulator.companies_iid
+                filtered_data_set[companies_iid] = ('Companies', '')
+
+                companies = treeview.get_children(companies_iid)
+
+                for company_iid in companies:
+                    company_name = treeview.item(company_iid, 'text')
+                    if filter_text.upper() in company_name.upper():
+                        filtered_data_set[company_iid] = (company_name, companies_iid)
+                        all_descendents = ContactsTreeviewPopulator.get_all_descendants(ContactsTreeviewPopulator.treeview, company_iid)
+                        for descendent_iid in all_descendents:
+                            descendent_name = treeview.item(descendent_iid, 'text')
+                            parent = treeview.parent(descendent_iid)
+                            filtered_data_set[descendent_iid] = (descendent_name, parent)
+            else:
+                people_iid = ContactsTreeviewPopulator.people_iid
+                people = treeview.get_children(people_iid)
+
+                filtered_data_set[people_iid] = ('People', '')
+
+                for person_iid in people:
+                    person_name = treeview.item(person_iid, 'text')
+                    if filter_text.upper() in person_name.upper():
+                        filtered_data_set[person_iid] = (person_name, people_iid)
+                        all_descendents = ContactsTreeviewPopulator.get_all_descendants(ContactsTreeviewPopulator.treeview, person_iid)
+                        for descendent_iid in all_descendents:
+                            descendent_name = treeview.item(descendent_iid, 'text')
+                            parent = treeview.parent(descendent_iid)
+                            filtered_data_set[descendent_iid] = (descendent_name, parent)
+
+            for item in ContactsTreeviewPopulator.treeview.get_children():
+                treeview.delete(item)
+
+            for iid in filtered_data_set.keys():
+                text, parent = filtered_data_set[iid]
+                ContactsTreeviewPopulator.add_node(treeview, text, parent, iid)
+
+    @staticmethod
+    def clear_contacts_treeview_filter():
+        for item in ContactsTreeviewPopulator.treeview.get_children():
+            ContactsTreeviewPopulator.treeview.delete(item)
+
+        for iid in ContactsTreeviewPopulator.contact_data.keys():
+            text, parent = ContactsTreeviewPopulator.contact_data[iid]
+            ContactsTreeviewPopulator.add_node(ContactsTreeviewPopulator.treeview, text, parent, iid)
+
+    @staticmethod
+    def get_all_descendants(treeview, parent_iid):
+        descendants = []
+        children = treeview.get_children(parent_iid)
+        for child in children:
+            descendants.append(child)  # Add the immediate child
+            descendants.extend(ContactsTreeviewPopulator.get_all_descendants(treeview, child))  # Add its descendants
+        return descendants
