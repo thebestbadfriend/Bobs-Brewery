@@ -132,3 +132,5 @@ Install-BBDependencies
 "creating desktop shortcut"
 Create-DesktopShortcut
 "desktop shortcut created"
+
+Read-Host "Press Enter to exit"
