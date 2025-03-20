@@ -135,10 +135,10 @@ class ContactsTreeviewPopulator:
 
                     company_location_iid = ContactsTreeviewPopulator.add_node(treeview, address_string, parent=str(contact_locations_iid))
 
-        if node_type == 'company':
-            pass
-        elif node_type == 'person':
-            pass
+                    if node_type == 'company':
+                        pass
+                    elif node_type == 'person':
+                        pass
 
     @staticmethod
     def filter_contacts_treeview(_event, filter_by, widget=None):
