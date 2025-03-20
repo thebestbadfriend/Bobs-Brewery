@@ -22,7 +22,7 @@ class ContactsTreeviewPopulator:
     next_iid = 1
 
     @staticmethod
-    def add_node(treeview, text, parent='', iid=None, node_type='Detail'):
+    def add_node(treeview, text, parent='', iid=None, node_type='bb_contacts_treeview_default_node_type', contact_id=None):
         if not iid:
             iid = ContactsTreeviewPopulator.next_iid
 
@@ -37,7 +37,7 @@ class ContactsTreeviewPopulator:
 
         iid_exists = ContactsTreeviewPopulator.contact_data.get(iid)
         if not iid_exists:
-            ContactsTreeviewPopulator.contact_data[iid] = (text, parent, node_type)
+            ContactsTreeviewPopulator.contact_data[iid] = (text, parent, node_type, contact_id)
 
         return iid
 
@@ -62,7 +62,7 @@ class ContactsTreeviewPopulator:
                 }
 
                 company_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, company_details['name'],
-                                                                 str(companies_iid), node_type='company')
+                                                                 str(companies_iid), node_type='company', contact_id=company_details['contact_id'])
 
                 ContactsTreeviewPopulator.add_node(contacts_treeview, 'Loading company details...', str(company_iid))
 
@@ -88,7 +88,7 @@ class ContactsTreeviewPopulator:
                     person_string += ' ' + person_details['suffix']
 
                 person_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, person_string,
-                                                                str(people_iid), node_type='person')
+                                                                str(people_iid), node_type='person', contact_id=person_details['contact_id'])
 
                 ContactsTreeviewPopulator.add_node(contacts_treeview, 'Loading person details...', str(person_iid))
 
@@ -96,8 +96,17 @@ class ContactsTreeviewPopulator:
     def load_details_for_contact(_event, widget=None):
         treeview = widget
         selected_node_iid = treeview.focus()
-        print(treeview.item(selected_node_iid)['text'])
-        print('node expanded')
+        node_type = ContactsTreeviewPopulator.contact_data[int(selected_node_iid)][2]
+        node_contact_id = ContactsTreeviewPopulator.contact_data[int(selected_node_iid)][3]
+
+        if node_type in ('company', 'person'):
+            '''clear children before adding nodes (not implemented yet, obviously)'''
+            ContactsTreeviewPopulator.add_node(treeview, 'Addresses', str(selected_node_iid))
+
+        if node_type == 'company':
+            company_info_query = rf''''''
+        elif node_type == 'person':
+            pass
 
     @staticmethod
     def filter_contacts_treeview(_event, filter_by, widget=None):
