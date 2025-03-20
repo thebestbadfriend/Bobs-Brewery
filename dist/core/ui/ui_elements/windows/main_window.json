@@ -114,6 +114,15 @@
                                 "module": "ContactsTreeviewPopulator",
                                 "function_name": "populate_contacts_treeview"
                             },
+                            "binds": {
+                                "<<TreeviewOpen>>": {
+                                    "module": "ContactsTreeviewPopulator",
+                                    "function": "load_details_for_contact",
+                                    "args": {
+
+                                    }
+                                }
+                            },
                             "pack_properties": {
                                 "fill": "BOTH",
                                 "expand": 1

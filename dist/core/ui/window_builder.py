@@ -72,7 +72,8 @@ class WindowBuilder:
                 func = getattr(config['module'], config['function'])
                 args = config['args']
                 args['widget'] = widget
-                widget.bind(event, lambda e: func(e, **args))
+
+                widget.bind(event, lambda e, function=func, arguments=args.copy(): function(e, **arguments))
 
         if widget_type == "file":
             widget = WindowBuilder.create_widget_from_file(widget, parent)

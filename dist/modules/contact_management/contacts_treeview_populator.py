@@ -22,7 +22,7 @@ class ContactsTreeviewPopulator:
     next_iid = 1
 
     @staticmethod
-    def add_node(treeview, text, parent='', iid=None):
+    def add_node(treeview, text, parent='', iid=None, node_type='Detail'):
         if not iid:
             iid = ContactsTreeviewPopulator.next_iid
 
@@ -37,7 +37,7 @@ class ContactsTreeviewPopulator:
 
         iid_exists = ContactsTreeviewPopulator.contact_data.get(iid)
         if not iid_exists:
-            ContactsTreeviewPopulator.contact_data[iid] = (text, parent)
+            ContactsTreeviewPopulator.contact_data[iid] = (text, parent, node_type)
 
         return iid
 
@@ -62,7 +62,42 @@ class ContactsTreeviewPopulator:
                 }
 
                 company_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, company_details['name'],
-                                                                 str(companies_iid))
+                                                                 str(companies_iid), node_type='company')
+
+                ContactsTreeviewPopulator.add_node(contacts_treeview, 'Loading company details...', str(company_iid))
+
+        people = ContactsTreeviewPopulator.bda.execute_db_command('select first_name, last_name, suffix, nickname, contact_id from people')
+        if people:
+            for person in people:
+                person_details = {
+                    'first_name': person[0],
+                    'last_name': person[1],
+                    'suffix': person[2],
+                    'nickname': person[3],
+                    'contact_id': person[4]
+                }
+
+                person_string = ''
+                if person_details['first_name']:
+                    person_string = str(person_details['first_name'])
+                if person_details['nickname']:
+                    person_string += ' "' + person_details['nickname'] + '"'
+                if person_details['last_name']:
+                    person_string += ' ' + person_details['last_name']
+                if person_details['suffix']:
+                    person_string += ' ' + person_details['suffix']
+
+                person_iid = ContactsTreeviewPopulator.add_node(contacts_treeview, person_string,
+                                                                str(people_iid), node_type='person')
+
+                ContactsTreeviewPopulator.add_node(contacts_treeview, 'Loading person details...', str(person_iid))
+
+    @staticmethod
+    def load_details_for_contact(_event, widget=None):
+        treeview = widget
+        selected_node_iid = treeview.focus()
+        print(treeview.item(selected_node_iid)['text'])
+        print('node expanded')
 
     @staticmethod
     def filter_contacts_treeview(_event, filter_by, widget=None):
