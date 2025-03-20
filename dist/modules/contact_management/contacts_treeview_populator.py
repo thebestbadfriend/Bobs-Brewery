@@ -100,11 +100,43 @@ class ContactsTreeviewPopulator:
         node_contact_id = ContactsTreeviewPopulator.contact_data[int(selected_node_iid)][3]
 
         if node_type in ('company', 'person'):
-            '''clear children before adding nodes (not implemented yet, obviously)'''
-            ContactsTreeviewPopulator.add_node(treeview, 'Addresses', str(selected_node_iid))
+            children = ContactsTreeviewPopulator.treeview.get_children(selected_node_iid)
+            for child in children:
+                treeview.delete(child)
+
+            contact_locations_query = rf'''select id, street_address, po_box, city, state, zip_code
+                                              from addresses
+                                              join contacts_addresses on
+                                              addresses.id = contacts_addresses.address_id
+                                              where contacts_addresses.contact_id = {node_contact_id}'''
+            contact_locations = ContactsTreeviewPopulator.bda.execute_db_command(contact_locations_query)
+
+            if contact_locations:
+                contact_locations_iid = ContactsTreeviewPopulator.add_node(treeview, 'Locations', selected_node_iid)
+                for contact_location in contact_locations:
+                    contact_location_details = {
+                        "id": contact_location[0],
+                        "street_address": contact_location[1],
+                        "po_box": contact_location[2],
+                        "city": contact_location[3],
+                        "state": contact_location[4],
+                        "zip_code": contact_location[5]
+                    }
+
+                    address_string = ''
+                    for k, v in list(contact_location_details.items())[1:]:
+                        if v:
+                            if not address_string:
+                                address_string = str(v)
+                            elif k == 'zip_code':
+                                address_string = address_string + ' ' + str(v)
+                            else:
+                                address_string = address_string + ', ' + str(v)
+
+                    company_location_iid = ContactsTreeviewPopulator.add_node(treeview, address_string, parent=str(contact_locations_iid))
 
         if node_type == 'company':
-            company_info_query = rf''''''
+            pass
         elif node_type == 'person':
             pass
 
