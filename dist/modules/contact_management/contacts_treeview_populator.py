@@ -155,6 +155,12 @@ class ContactsTreeviewPopulator:
                 ContactsTreeviewPopulator.add_node(treeview, phone_number, parent=str(person_phone_numbers_iid))
 
         # load fax numbers
+        fax_numbers = ContactsTreeviewPopulator.load_fax_numbers_by_contact_id(node_contact_id)
+        if fax_numbers:
+            person_fax_numbers_iid = ContactsTreeviewPopulator.add_node(treeview, 'Fax Numbers', str(person_node_iid))
+            for fax_number in fax_numbers:
+                ContactsTreeviewPopulator.add_node(treeview, fax_number, parent=str(person_fax_numbers_iid))
+        
         # load email addresses
         # load websites
 
@@ -196,15 +202,20 @@ class ContactsTreeviewPopulator:
         return addresses
 
     @staticmethod
-    def load_phone_numbers_by_contact_id(contact_id):
+    def load_phone_numbers_by_contact_id(contact_id, locationless=False):
         phone_numbers_list = []
+        phone_numbers_query = ""
 
-        phone_numbers_query = rf'''select phone_number
-                                   from phone_numbers
-                                   join contacts_phone_numbers
-                                   on phone_numbers.id = contacts_phone_numbers.phone_number_id
-                                   join people on contacts_phone_numbers.contact_id = people.contact_id
-                                   where people.contact_id = {contact_id}'''
+        if not locationless:
+            phone_numbers_query = rf'''select phone_number
+                                       from phone_numbers
+                                       join contacts_phone_numbers
+                                       on phone_numbers.id = contacts_phone_numbers.phone_number_id
+                                       join people on contacts_phone_numbers.contact_id = people.contact_id
+                                       where people.contact_id = {contact_id}'''
+        else:
+            pass
+
         phone_numbers = ContactsTreeviewPopulator.bda.execute_db_command(phone_numbers_query)
 
         if phone_numbers:
@@ -212,6 +223,29 @@ class ContactsTreeviewPopulator:
                 phone_numbers_list.append(phone_number[0])
 
         return phone_numbers
+
+    @staticmethod
+    def load_fax_numbers_by_contact_id(contact_id, locationless=False):
+        fax_numbers_list = []
+        fax_numbers_query = ""
+
+        if not locationless:
+            fax_numbers_query = rf'''select fax_number
+                                     from fax_numbers
+                                     join contacts_fax_numbers
+                                     on fax_numbers.id = contacts_fax_numbers.fax_number_id
+                                     join people on contacts_fax_numbers.contact_id = people.contact_id
+                                     where people.contact_id = {contact_id}'''
+        else:
+            pass
+
+        fax_numbers = ContactsTreeviewPopulator.bda.execute_db_command(fax_numbers_query)
+
+        if fax_numbers:
+            for fax_number in fax_numbers:
+                fax_numbers_list.append(fax_number[0])
+
+        return fax_numbers
 
     @staticmethod
     def load_people_by_address_id(address_id):
