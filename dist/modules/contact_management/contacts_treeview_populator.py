@@ -110,42 +110,57 @@ class ContactsTreeviewPopulator:
                 ContactsTreeviewPopulator.populate_person_node_details(treeview, selected_node_iid, node_contact_id)
 
     @staticmethod
-    def populate_company_node_details(treeview, company_node_iid, node_contact_id):
-        addresses = ContactsTreeviewPopulator.load_addresses_for_contact(node_contact_id)
+    def populate_company_node_details(treeview, company_node_iid, company_contact_id):
+        addresses = ContactsTreeviewPopulator.load_addresses_by_contact_id(company_contact_id)
 
         if addresses:
             contact_locations_iid = ContactsTreeviewPopulator.add_node(treeview, 'Locations', company_node_iid)
 
             for address in addresses:
+                address_id = address['id']
                 address_string = address['address_string']
                 company_location_iid = ContactsTreeviewPopulator.add_node(treeview, address_string, parent=str(contact_locations_iid))
 
-                # load people and their contact info
-                # after loading people, if done properly, something like
-                #
-                # for person in people: populate_person_node_details
-                #
-                # ought to work. Only, there will need to be a boolean passed into populate_person_node_details that
-                # tells it whether it is a standalone person node or a company person node, since it would be
-                # sub-optimal to display addresses again under company person nodes which are already under an
-                # address node associated with the company unless they do not have an address associated with them, in
-                # which case there'd be no address to load for them anyway, so in any event, a standalone person node
-                # will need addresses loaded if there are any, but a company person node will not need it whether
-                # there are any or not.
+                # load people
+                people = ContactsTreeviewPopulator.load_people_by_address_id(address_id)
+                if people:
+                    location_people_iid = ContactsTreeviewPopulator.add_node(treeview, 'People', str(company_location_iid))
+                    for person in people:
+                        location_person_iid = ContactsTreeviewPopulator.add_node(treeview, person['person_string'], parent=str(location_people_iid))
+                        ContactsTreeviewPopulator.populate_person_node_details(treeview, location_person_iid, person['contact_id'], standalone=False)
 
                 # load non-peopled contact info
 
-        # load non-addressed contact info (phone, fax, email, website, etc)
+        # load non-addressed contact info (phone, fax, email, website, etc) along with non-addressed people and their
+        # info
 
     @staticmethod
-    def populate_person_node_details(treeview, person_node_iid, node_contact_id):
-        addresses = ContactsTreeviewPopulator.load_addresses_for_contact(node_contact_id)
-        for address in addresses:
-            pass
+    def populate_person_node_details(treeview, person_node_iid, node_contact_id, standalone=True):
+        if standalone:
+            # load companies (no contact details necessary for companies in this context, just a list of companies the
+            # person is associated with)
+
+            # load addresses
+            addresses = ContactsTreeviewPopulator.load_addresses_by_contact_id(node_contact_id)
+            if addresses:
+                contact_locations_iid = ContactsTreeviewPopulator.add_node(treeview, 'Locations', person_node_iid)
+                for address in addresses:
+                    pass
+
+        # load phone numbers
+        phone_numbers = ContactsTreeviewPopulator.load_phone_numbers_by_contact_id(node_contact_id)
+        if phone_numbers:
+            person_phone_numbers_iid = ContactsTreeviewPopulator.add_node(treeview, 'Phone Numbers', str(person_node_iid))
+            for phone_number in phone_numbers:
+                ContactsTreeviewPopulator.add_node(treeview, phone_number, parent=str(person_phone_numbers_iid))
+
+        # load fax numbers
+        # load email addresses
+        # load websites
 
     @staticmethod
-    def load_addresses_for_contact(contact_id):
-        address_ids = []
+    def load_addresses_by_contact_id(contact_id):
+        addresses = []
 
         contact_locations_query = rf'''select id, street_address, po_box, city, state, zip_code
                                           from addresses
@@ -176,9 +191,61 @@ class ContactsTreeviewPopulator:
                             address_string = address_string + ', ' + str(v)
 
                 contact_location_details['address_string'] = address_string
-                address_ids.append(contact_location_details)
+                addresses.append(contact_location_details)
 
-        return address_ids
+        return addresses
+
+    @staticmethod
+    def load_phone_numbers_by_contact_id(contact_id):
+        phone_numbers_list = []
+
+        phone_numbers_query = rf'''select phone_number
+                                   from phone_numbers
+                                   join contacts_phone_numbers
+                                   on phone_numbers.id = contacts_phone_numbers.phone_number_id
+                                   join people on contacts_phone_numbers.contact_id = people.contact_id
+                                   where people.contact_id = {contact_id}'''
+        phone_numbers = ContactsTreeviewPopulator.bda.execute_db_command(phone_numbers_query)
+
+        if phone_numbers:
+            for phone_number in phone_numbers:
+                phone_numbers_list.append(phone_number[0])
+
+        return phone_numbers
+
+    @staticmethod
+    def load_people_by_address_id(address_id):
+        people = []
+
+        location_people_query = rf'''select people.contact_id, first_name, last_name, suffix, nickname
+                                     from people
+                                     join contacts_addresses on people.contact_id = contacts_addresses.contact_id
+                                     join addresses on addresses.id = contacts_addresses.address_id
+                                     where addresses.id = {address_id}'''
+        location_people = ContactsTreeviewPopulator.bda.execute_db_command(location_people_query)
+        if location_people:
+            for person in location_people:
+                person_details = {
+                    'contact_id': person[0],
+                    'first_name': person[1],
+                    'last_name': person[2],
+                    'suffix': person[3],
+                    'nickname': person[4]
+                }
+
+                person_string = ''
+                if person_details['first_name']:
+                    person_string = str(person_details['first_name'])
+                if person_details['nickname']:
+                    person_string += ' "' + person_details['nickname'] + '"'
+                if person_details['last_name']:
+                    person_string += ' ' + person_details['last_name']
+                if person_details['suffix']:
+                    person_string += ' ' + person_details['suffix']
+
+                person_details['person_string'] = person_string
+                people.append(person_details)
+        return people
 
     @staticmethod
     def filter_contacts_treeview(_event, filter_by, widget=None):
