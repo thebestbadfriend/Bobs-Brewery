@@ -83,6 +83,13 @@ function Install-Postgresql {
 
 
 function Install-BBDependencies {
+    # The installer not installing the python packages using pip on the same run in which it installs python is caused by the
+    # fact that python - and therefore pip - is not in the path prior to installing python (naturally), and even after the path
+    # is updated when python is installed, that change is not reflected in powershell until powershell is reloaded (such as by
+    # opening a new shell).
+
+    # Need to either not rely on the path (less ideal I think) or run the pip installs in a subshell (better I think) or find a
+    # way to pull in the updated path into the current shell (best I think)
     python -m pip install -r "$($dir)\requirements.txt"
     python -m pip freeze
 }
