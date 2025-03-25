@@ -139,13 +139,26 @@ class ContactsTreeviewPopulator:
         if standalone:
             # load companies (no contact details necessary for companies in this context, just a list of companies the
             # person is associated with)
+            person_id_query = rf'select id from people where contact_id={node_contact_id}'
+            person_id = ContactsTreeviewPopulator.bda.execute_db_command(person_id_query)
+            person_id = person_id[0][0]
+
+            if person_id:
+                print(rf'contact_id: {node_contact_id} || person_id: {person_id}')
+                companies = ContactsTreeviewPopulator.load_companies_by_person_id(person_id)
+                if companies:
+                    companies_iid = ContactsTreeviewPopulator.add_node(treeview, 'Companies', parent=str(person_node_iid))
+                    for company in companies:
+                        ContactsTreeviewPopulator.add_node(treeview, company, parent=str(companies_iid))
+            else:
+                print('could not find person_id')
 
             # load addresses
             addresses = ContactsTreeviewPopulator.load_addresses_by_contact_id(node_contact_id)
             if addresses:
                 contact_locations_iid = ContactsTreeviewPopulator.add_node(treeview, 'Locations', person_node_iid)
                 for address in addresses:
-                    pass
+                    ContactsTreeviewPopulator.add_node(treeview, address['address_string'], parent=str(contact_locations_iid))
 
         # load phone numbers
         phone_numbers = ContactsTreeviewPopulator.load_phone_numbers_by_contact_id(node_contact_id)
@@ -162,8 +175,18 @@ class ContactsTreeviewPopulator:
                 ContactsTreeviewPopulator.add_node(treeview, fax_number, parent=str(person_fax_numbers_iid))
 
         # load email addresses
+        email_addresses = ContactsTreeviewPopulator.load_email_addresses_by_contact_id(node_contact_id)
+        if email_addresses:
+            person_email_addresses_iid = ContactsTreeviewPopulator.add_node(treeview, 'Email Addresses', str(person_node_iid))
+            for email_address in email_addresses:
+                ContactsTreeviewPopulator.add_node(treeview, email_address, parent=str(person_email_addresses_iid))
 
         # load websites
+        websites = ContactsTreeviewPopulator.load_websites_by_contact_id(node_contact_id)
+        if websites:
+            person_websites_iid = ContactsTreeviewPopulator.add_node(treeview, 'Websites', str(person_node_iid))
+            for website in websites:
+                ContactsTreeviewPopulator.add_node(treeview, website, parent=str(person_websites_iid))
 
     @staticmethod
     def load_addresses_by_contact_id(contact_id):
@@ -258,11 +281,55 @@ class ContactsTreeviewPopulator:
 
     @staticmethod
     def load_email_addresses_by_contact_id(contact_id, personless_only=False, locationless_only=False):
-        pass
+        email_addresses_list = []
+        email_addresses_query = ""
+
+        if personless_only and locationless_only:
+            pass
+        elif locationless_only:
+            pass
+        elif personless_only:
+            pass
+        else:
+            email_addresses_query = rf'''select email_address
+                                         from email_addresses
+                                         join contacts_email_addresses
+                                         on email_addresses.id = contacts_email_addresses.email_address_id
+                                         join people on contacts_email_addresses.contact_id = people.contact_id
+                                         where people.contact_id = {contact_id}'''
+
+        email_addresses = ContactsTreeviewPopulator.bda.execute_db_command(email_addresses_query)
+        if email_addresses:
+            for email_address in email_addresses:
+                email_addresses_list.append(email_address[0])
+
+        return email_addresses_list
 
     @staticmethod
-    def load_websites_by_contact_id(contact_id):
-        pass
+    def load_websites_by_contact_id(contact_id, personless_only=False, locationless_only=False):
+        websites_list = []
+        websites_query = ""
+
+        if personless_only and locationless_only:
+            pass
+        elif locationless_only:
+            pass
+        elif personless_only:
+            pass
+        else:
+            websites_query = rf'''select url
+                                  from websites w
+                                  where exists (select 1
+                                      from contacts_websites cw
+                                      where w.id = cw.website_id
+                                      and cw.contact_id = {contact_id})'''
+
+        websites = ContactsTreeviewPopulator.bda.execute_db_command(websites_query)
+        if websites:
+            for website in websites:
+                websites_list.append(website[0])
+
+        return websites_list
 
     @staticmethod
     def load_people_by_address_id(address_id):
@@ -297,6 +364,28 @@ class ContactsTreeviewPopulator:
                 person_details['person_string'] = person_string
                 people.append(person_details)
         return people
+
+    @staticmethod
+    def load_companies_by_person_id(person_id):
+        companies_list = []
+        companies_query = rf'''select name
+                               from companies
+                               where id  in (
+                                   select company_id
+                                   from people_companies
+                                   where person_id = {person_id}
+                               )'''
+
+        companies = ContactsTreeviewPopulator.bda.execute_db_command(companies_query)
+        if companies:
+            for company in companies:
+                companies_list.append(company[0])
+
+        return companies_list
+
+    @staticmethod
+    def load_people_by_company_id(company_id, locationless_only=False):
+        pass
 
     @staticmethod
     def filter_contacts_treeview(_event, filter_by, widget=None):
@@ -358,7 +447,7 @@ class ContactsTreeviewPopulator:
             ContactsTreeviewPopulator.treeview.delete(item)
 
         for iid in ContactsTreeviewPopulator.contact_data.keys():
-            text, parent = ContactsTreeviewPopulator.contact_data[iid]
+            text, parent, _, _ = ContactsTreeviewPopulator.contact_data[iid]
             ContactsTreeviewPopulator.add_node(ContactsTreeviewPopulator.treeview, text, parent, iid)
 
     @staticmethod
