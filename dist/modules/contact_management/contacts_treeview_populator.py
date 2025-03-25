@@ -169,6 +169,48 @@ class ContactsTreeviewPopulator:
         # load non-addressed, non-peopled contact info (phone, fax, email, websites) along with non-addressed people and their
         # info
 
+        locationless_personless_phone_numbers = ContactsTreeviewPopulator.load_phone_numbers_by_contact_id(company_contact_id,
+                                                                                              personless_only=True, locationless_only=True)
+
+        locationless_personless_fax_numbers = ContactsTreeviewPopulator.load_fax_numbers_by_contact_id(company_contact_id,
+                                                                                          personless_only=True, locationless_only=True)
+
+        locationless_personless_email_addresses = ContactsTreeviewPopulator.load_email_addresses_by_contact_id(company_contact_id,
+                                                                                                  personless_only=True, locationless_only=True)
+
+        locationless_personless_websites = ContactsTreeviewPopulator.load_websites_by_contact_id(company_contact_id,
+                                                                                    personless_only=True, locationless_only=True)
+
+        company_id_query = rf'select id from companies where contact_id={company_contact_id}'
+        company_id = ContactsTreeviewPopulator.bda.execute_db_command(company_id_query)
+        company_id = company_id[0][0]
+        locationless_people = ContactsTreeviewPopulator.load_people_by_company_id(company_id, locationless_only=True)
+
+        if (
+                locationless_personless_phone_numbers
+                or locationless_personless_fax_numbers
+                or locationless_personless_email_addresses
+                or locationless_personless_websites
+                or locationless_people
+        ):
+            locationless_contact_info_iid = ContactsTreeviewPopulator.add_node(treeview, 'Non-Location-Specific Company Info', str(company_node_iid))
+
+            if locationless_personless_phone_numbers:
+                pass
+
+            if locationless_personless_fax_numbers:
+                pass
+
+            if locationless_personless_email_addresses:
+                pass
+
+            if locationless_personless_websites:
+                pass
+
+            if locationless_people:
+                pass
+
+
     @staticmethod
     def populate_person_node_details(treeview, person_node_iid, node_contact_id, standalone=True):
         if standalone:
