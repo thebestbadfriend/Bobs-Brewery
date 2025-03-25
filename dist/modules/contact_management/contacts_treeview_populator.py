@@ -196,19 +196,19 @@ class ContactsTreeviewPopulator:
             locationless_contact_info_iid = ContactsTreeviewPopulator.add_node(treeview, 'Non-Location-Specific Company Info', str(company_node_iid))
 
             if locationless_personless_phone_numbers:
-                pass
+                locationless_personless_phone_numbers_iid = ContactsTreeviewPopulator.add_node(treeview, 'Phone Numbers', str(locationless_contact_info_iid))
 
             if locationless_personless_fax_numbers:
-                pass
+                locationless_personless_fax_numbers_iid = ContactsTreeviewPopulator.add_node(treeview, 'Fax Numbers', str(locationless_contact_info_iid))
 
             if locationless_personless_email_addresses:
-                pass
+                locationless_personless_email_addresses_iid = ContactsTreeviewPopulator.add_node(treeview, 'Email Addresses', str(locationless_contact_info_iid))
 
             if locationless_personless_websites:
-                pass
+                locationless_personless_websites_iid = ContactsTreeviewPopulator.add_node(treeview, 'Websites', str(locationless_contact_info_iid))
 
             if locationless_people:
-                pass
+                locationless_people_iid = ContactsTreeviewPopulator.add_node(treeview, 'People', str(locationless_contact_info_iid))
 
 
     @staticmethod
