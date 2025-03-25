@@ -130,8 +130,43 @@ class ContactsTreeviewPopulator:
                         ContactsTreeviewPopulator.populate_person_node_details(treeview, location_person_iid, person['contact_id'], standalone=False)
 
                 # load non-peopled contact info
+                # # phone, fax, email, websites
+                personless_phone_numbers = ContactsTreeviewPopulator.load_phone_numbers_by_contact_id(company_contact_id, personless_only=True)
 
-        # load non-addressed contact info (phone, fax, email, website, etc) along with non-addressed people and their
+                personless_fax_numbers = ContactsTreeviewPopulator.load_fax_numbers_by_contact_id(company_contact_id, personless_only=True)
+
+                personless_email_addresses = ContactsTreeviewPopulator.load_email_addresses_by_contact_id(company_contact_id, personless_only=True)
+
+                personless_websites = ContactsTreeviewPopulator.load_websites_by_contact_id(company_contact_id, personless_only=True)
+
+                if (
+                        personless_phone_numbers
+                        or personless_fax_numbers
+                        or personless_email_addresses
+                        or personless_websites
+                ):
+                    personless_contact_info_iid = ContactsTreeviewPopulator.add_node(treeview, 'Other Location Info', str(company_location_iid))
+                    if personless_phone_numbers:
+                        personless_phone_numbers_iid = ContactsTreeviewPopulator.add_node(treeview, 'Phone Numbers', str(personless_contact_info_iid))
+                        for phone_number in personless_phone_numbers:
+                            ContactsTreeviewPopulator.add_node(treeview, phone_number, parent=str(personless_phone_numbers_iid))
+
+                    if personless_fax_numbers:
+                        personless_fax_numbers_iid = ContactsTreeviewPopulator.add_node(treeview, 'Fax Numbers', str(personless_contact_info_iid))
+                        for fax_number in personless_fax_numbers:
+                            ContactsTreeviewPopulator.add_node(treeview, fax_number, parent=str(personless_fax_numbers_iid))
+
+                    if personless_email_addresses:
+                        personless_email_addresses_iid = ContactsTreeviewPopulator.add_node(treeview, 'Email Addresses', str(personless_contact_info_iid))
+                        for email_address in personless_email_addresses:
+                            ContactsTreeviewPopulator.add_node(treeview, email_address, parent=str(personless_email_addresses_iid))
+
+                    if personless_websites:
+                        personless_websites_iid = ContactsTreeviewPopulator.add_node(treeview, 'Websites', str(personless_contact_info_iid))
+                        for website in personless_websites:
+                            ContactsTreeviewPopulator.add_node(treeview, website, parent=str(personless_websites_iid))
+
+        # load non-addressed, non-peopled contact info (phone, fax, email, websites) along with non-addressed people and their
         # info
 
     @staticmethod
@@ -144,7 +179,6 @@ class ContactsTreeviewPopulator:
             person_id = person_id[0][0]
 
             if person_id:
-                print(rf'contact_id: {node_contact_id} || person_id: {person_id}')
                 companies = ContactsTreeviewPopulator.load_companies_by_person_id(person_id)
                 if companies:
                     companies_iid = ContactsTreeviewPopulator.add_node(treeview, 'Companies', parent=str(person_node_iid))
