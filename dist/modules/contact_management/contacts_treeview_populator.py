@@ -315,21 +315,30 @@ class ContactsTreeviewPopulator:
     @staticmethod
     def load_phone_numbers_by_contact_id(contact_id, personless_only=False, locationless_only=False):
         phone_numbers_list = []
-        phone_numbers_query = ""
+        phone_numbers_query = rf'''select phone_number
+                                   from phone_numbers pn
+                                   where exists (select 1
+                                                 from contacts_phone_numbers cpn
+                                                 where pn.id = cpn.phone_number_id
+                                                 and cpn.contact_id = {contact_id})'''
 
-        if personless_only and locationless_only:
-            pass
-        elif locationless_only:
-            pass
-        elif personless_only:
-            pass
-        else:
-            phone_numbers_query = rf'''select phone_number
-                                       from phone_numbers
-                                       join contacts_phone_numbers
-                                       on phone_numbers.id = contacts_phone_numbers.phone_number_id
-                                       join people on contacts_phone_numbers.contact_id = people.contact_id
-                                       where people.contact_id = {contact_id}'''
+        if locationless_only:
+            query_addition = rf'''and not exists (select 1
+                                                  from addresses_phone_numbers apn
+                                                  where pn.id = apn.phone_number_id)'''
+            phone_numbers_query += rf' {query_addition}'
+
+        if personless_only:
+            query_addition = rf'''and not exists (select 1
+                                                  from people p
+                                                  where exists (select 1
+                                                                from contacts_phone_numbers cpn
+                                                                where cpn.phone_number_id = pn.id
+                                                                and cpn.contact_id = p.contact_id
+                                                                )
+                                                 )
+                                    '''
+            phone_numbers_query += rf' {query_addition}'
 
         phone_numbers = ContactsTreeviewPopulator.bda.execute_db_command(phone_numbers_query)
 
