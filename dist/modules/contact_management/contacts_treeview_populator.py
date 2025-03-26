@@ -197,18 +197,29 @@ class ContactsTreeviewPopulator:
 
             if locationless_personless_phone_numbers:
                 locationless_personless_phone_numbers_iid = ContactsTreeviewPopulator.add_node(treeview, 'Phone Numbers', str(locationless_contact_info_iid))
+                for phone_number in locationless_personless_phone_numbers:
+                    ContactsTreeviewPopulator.add_node(treeview, phone_number,parent=str(locationless_personless_phone_numbers_iid))
 
             if locationless_personless_fax_numbers:
                 locationless_personless_fax_numbers_iid = ContactsTreeviewPopulator.add_node(treeview, 'Fax Numbers', str(locationless_contact_info_iid))
+                for fax_number in locationless_personless_fax_numbers:
+                    ContactsTreeviewPopulator.add_node(treeview, fax_number, parent=str(locationless_personless_fax_numbers_iid))
 
             if locationless_personless_email_addresses:
                 locationless_personless_email_addresses_iid = ContactsTreeviewPopulator.add_node(treeview, 'Email Addresses', str(locationless_contact_info_iid))
+                for email_address in locationless_personless_email_addresses:
+                    ContactsTreeviewPopulator.add_node(treeview, email_address, parent=str(locationless_personless_email_addresses_iid))
 
             if locationless_personless_websites:
                 locationless_personless_websites_iid = ContactsTreeviewPopulator.add_node(treeview, 'Websites', str(locationless_contact_info_iid))
+                for website in locationless_personless_websites:
+                    ContactsTreeviewPopulator.add_node(treeview, website, parent=str(locationless_personless_websites_iid))
 
             if locationless_people:
                 locationless_people_iid = ContactsTreeviewPopulator.add_node(treeview, 'People', str(locationless_contact_info_iid))
+                for person in locationless_people:
+                    locationless_person_iid = ContactsTreeviewPopulator.add_node(treeview, person['person_string'], parent=str(locationless_people_iid))
+                    ContactsTreeviewPopulator.populate_person_node_details(treeview, locationless_person_iid, person['contact_id'], standalone=False)
 
 
     @staticmethod
@@ -461,7 +472,10 @@ class ContactsTreeviewPopulator:
 
     @staticmethod
     def load_people_by_company_id(company_id, locationless_only=False):
-        pass
+        people_list = []
+        people_query = ""
+
+        return people_list
 
     @staticmethod
     def filter_contacts_treeview(_event, filter_by, widget=None):
