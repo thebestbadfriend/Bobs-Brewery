@@ -475,6 +475,49 @@ class ContactsTreeviewPopulator:
         people_list = []
         people_query = ""
 
+        if locationless_only:
+            people_query = rf'''select p.contact_id, first_name, last_name, suffix, nickname
+                                from people p
+                                where
+                                    exists (select 1
+                                              from people_companies pc
+                                              where p.id = pc.person_id
+                                              and pc.company_id = {company_id})
+                                    and not exists (select 1
+                                                    from contacts_addresses ca
+                                                    where p.contact_id = ca.contact_id)'''
+        else:
+            people_query = rf'''select p.contact_id, first_name, last_name, suffix, nickname
+                                from people p
+                                where exists (select 1
+                                              from people_companies pc
+                                              where p.id = pc.person_id
+                                              and pc.company_id = {company_id})'''
+
+        people = ContactsTreeviewPopulator.bda.execute_db_command(people_query)
+        if people:
+            for person in people:
+                person_details = {
+                    'contact_id': person[0],
+                    'first_name': person[1],
+                    'last_name': person[2],
+                    'suffix': person[3],
+                    'nickname': person[4]
+                }
+
+                person_string = ''
+                if person_details['first_name']:
+                    person_string = str(person_details['first_name'])
+                if person_details['nickname']:
+                    person_string += ' "' + person_details['nickname'] + '"'
+                if person_details['last_name']:
+                    person_string += ' ' + person_details['last_name']
+                if person_details['suffix']:
+                    person_string += ' ' + person_details['suffix']
+
+                person_details['person_string'] = person_string
+                people_list.append(person_details)
+
         return people_list
 
     @staticmethod
