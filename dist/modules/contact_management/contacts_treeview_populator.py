@@ -384,21 +384,27 @@ class ContactsTreeviewPopulator:
     @staticmethod
     def load_email_addresses_by_contact_id(contact_id, personless_only=False, locationless_only=False):
         email_addresses_list = []
-        email_addresses_query = ""
+        email_addresses_query = rf'''select email_address
+                                     from email_addresses ea
+                                     where exists (select 1
+                                                   from contacts_email_addresses cea
+                                                   where cea.email_address_id = ea.id
+                                                   and cea.contact_id = {contact_id})'''
 
-        if personless_only and locationless_only:
-            pass
-        elif locationless_only:
-            pass
-        elif personless_only:
-            pass
-        else:
-            email_addresses_query = rf'''select email_address
-                                         from email_addresses
-                                         join contacts_email_addresses
-                                         on email_addresses.id = contacts_email_addresses.email_address_id
-                                         join people on contacts_email_addresses.contact_id = people.contact_id
-                                         where people.contact_id = {contact_id}'''
+        if locationless_only:
+            query_addition = rf'''and not exists (select 1
+                                                  from addresses_email_addresses aea
+                                                  where aea.email_address_id = ea.id)'''
+            email_addresses_query += rf' {query_addition}'
+
+        if personless_only:
+            query_addition = rf'''and not exists (select 1
+                                                  from people p
+                                                  where exists (select 1
+                                                                from contacts_email_addresses cea
+                                                                where cea.contact_id = p.contact_id
+                                                                and cea.email_address_id = ea.id)'''
+            email_addresses_query += rf' {query_addition}'
 
         email_addresses = ContactsTreeviewPopulator.bda.execute_db_command(email_addresses_query)
         if email_addresses:
@@ -410,21 +416,20 @@ class ContactsTreeviewPopulator:
     @staticmethod
     def load_websites_by_contact_id(contact_id, personless_only=False, locationless_only=False):
         websites_list = []
-        websites_query = ""
+        websites_query = rf'''select url
+                              from websites w
+                              where exists (select 1
+                                  from contacts_websites cw
+                                  where w.id = cw.website_id
+                                  and cw.contact_id = {contact_id})'''
 
-        if personless_only and locationless_only:
-            pass
-        elif locationless_only:
-            pass
-        elif personless_only:
-            pass
-        else:
-            websites_query = rf'''select url
-                                  from websites w
-                                  where exists (select 1
-                                      from contacts_websites cw
-                                      where w.id = cw.website_id
-                                      and cw.contact_id = {contact_id})'''
+        if locationless_only:
+            query_addition = rf''''''
+            websites_query += rf' {query_addition}'
+
+        if personless_only:
+            query_addition = rf''''''
+            websites_query += rf' {query_addition}'
 
         websites = ContactsTreeviewPopulator.bda.execute_db_command(websites_query)
         if websites:
