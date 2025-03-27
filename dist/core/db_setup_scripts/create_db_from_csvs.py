@@ -1,8 +1,8 @@
-from dal import BreweryDBAccessor
+from core.dal import BreweryDBAccessor
 import load_database as ldb
 
 bda = BreweryDBAccessor()
-csv_folder = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\dal\csv_data'
+csv_folder = r'C:\Toolbox\Coding\Brewers Truss\Bobs-Brewery\dist\core\dal\csv_data'
 
 
 def populate_companies():
@@ -360,6 +360,54 @@ def populate_addresses_phone_numbers():
     print('Addresses phone numbers populated')
 
 
+def populate_addresses_fax_numbers():
+    print('Populating addresses fax numbers')
+    contact_details_csv = csv_folder + r'\contacts.csv'
+    with (open(contact_details_csv, 'r', newline='') as file):
+        for line in file:
+            spline = line.strip().replace("'", "''").split(',')
+            address_id = spline[7]
+            fax_number_id = spline[4]
+            if address_id:
+                if fax_number_id:
+                    query = rf"""insert into addresses_fax_numbers(address_id, fax_number_id)
+                                 values ('{address_id}', '{fax_number_id}')
+                                 on conflict do nothing"""
+                    bda.execute_db_command(query)
+
+
+def populate_addresses_email_addresses():
+    print('Populating addresses email addresses')
+    contact_details_csv = csv_folder + r'\contacts.csv'
+    with (open(contact_details_csv, 'r', newline='') as file):
+        for line in file:
+            spline = line.strip().replace("'", "''").split(',')
+            address_id = spline[7]
+            email_address_id = spline[6]
+            if address_id:
+                if email_address_id:
+                    query = rf"""insert into addresses_email_addresses(address_id, email_address_id)
+                                 values ('{address_id}', '{email_address_id}')
+                                 on conflict do nothing"""
+                    bda.execute_db_command(query)
+
+
+def populate_addresses_websites():
+    print('Populating addresses websites')
+    contact_details_csv = csv_folder + r'\contacts.csv'
+    with (open(contact_details_csv, 'r', newline='') as file):
+        for line in file:
+            spline = line.strip().replace("'", "''").split(',')
+            address_id = spline[7]
+            website_id = spline[5]
+            if address_id:
+                if website_id:
+                    query = rf"""insert into addresses_websites(address_id, website_id)
+                                 values ('{address_id}', '{website_id}')
+                                 on conflict do nothing"""
+                    bda.execute_db_command(query)
+
+
 def main():
     bda.drop_database()
     ldb.load()
@@ -381,6 +429,9 @@ def main():
     populate_contacts_fax_numbers()
     populate_contacts_websites()
     populate_addresses_phone_numbers()
+    populate_addresses_fax_numbers()
+    populate_addresses_email_addresses()
+    populate_addresses_websites()
 
 
 if __name__ == "__main__":
