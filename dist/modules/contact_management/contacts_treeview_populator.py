@@ -221,7 +221,6 @@ class ContactsTreeviewPopulator:
                     locationless_person_iid = ContactsTreeviewPopulator.add_node(treeview, person['person_string'], parent=str(locationless_people_iid))
                     ContactsTreeviewPopulator.populate_person_node_details(treeview, locationless_person_iid, person['contact_id'], standalone=False)
 
-
     @staticmethod
     def populate_person_node_details(treeview, person_node_iid, node_contact_id, standalone=True):
         if standalone:
