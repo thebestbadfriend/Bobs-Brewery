@@ -424,11 +424,18 @@ class ContactsTreeviewPopulator:
                                   and cw.contact_id = {contact_id})'''
 
         if locationless_only:
-            query_addition = rf''''''
+            query_addition = rf'''and note exists (select 1
+                                                   from addresses_websites aw
+                                                   where aw.website_id = w.website_id'''
             websites_query += rf' {query_addition}'
 
         if personless_only:
-            query_addition = rf''''''
+            query_addition = rf'''and not exists (select 1
+                                                  from people p
+                                                  where exists (select 1
+                                                                from contacts_websites cw
+                                                                where cw.contact_id = p.id
+                                                                and cw.website_id = w.website_id)'''
             websites_query += rf' {query_addition}'
 
         websites = ContactsTreeviewPopulator.bda.execute_db_command(websites_query)
