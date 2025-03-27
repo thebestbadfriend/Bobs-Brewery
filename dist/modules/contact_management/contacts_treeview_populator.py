@@ -351,20 +351,27 @@ class ContactsTreeviewPopulator:
     def load_fax_numbers_by_contact_id(contact_id, personless_only=False, locationless_only=False):
         fax_numbers_list = []
         fax_numbers_query = ""
+        fax_numbers_query = rf'''select fax_number
+                                 from fax_numbers fn
+                                 where exists (select 1
+                                               from contacts_fax_numbers cfn
+                                               where cfn.fax_number_id = fn.id
+                                               and cfn.contact_id = {contact_id})'''
 
-        if personless_only and locationless_only:
-            pass
-        elif locationless_only:
-            pass
-        elif personless_only:
-            pass
-        else:
-            fax_numbers_query = rf'''select fax_number
-                                     from fax_numbers
-                                     join contacts_fax_numbers
-                                     on fax_numbers.id = contacts_fax_numbers.fax_number_id
-                                     join people on contacts_fax_numbers.contact_id = people.contact_id
-                                     where people.contact_id = {contact_id}'''
+        if locationless_only:
+            query_addition = rf'''and not exists (select 1
+                                                  from addresses_fax_numbers afn
+                                                  where fn.id = afn.fax_number_id)'''
+            fax_numbers_query += rf' {query_addition}'
+
+        if personless_only:
+            query_addition = rf'''and not exists (select 1
+                                                  from people p
+                                                  where exists (select 1
+                                                                from contacts_fax_numbers cfn
+                                                                where cfn.contact_id = p.contact_id
+                                                                and cfn.fax_number_id = fn.id)'''
+            fax_numbers_query += rf' {query_addition}'
 
         fax_numbers = ContactsTreeviewPopulator.bda.execute_db_command(fax_numbers_query)
 
