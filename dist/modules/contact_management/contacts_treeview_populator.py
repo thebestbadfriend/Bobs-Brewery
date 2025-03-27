@@ -370,7 +370,8 @@ class ContactsTreeviewPopulator:
                                                   where exists (select 1
                                                                 from contacts_fax_numbers cfn
                                                                 where cfn.contact_id = p.contact_id
-                                                                and cfn.fax_number_id = fn.id)'''
+                                                                and cfn.fax_number_id = fn.id)
+                                                  )'''
             fax_numbers_query += rf' {query_addition}'
 
         fax_numbers = ContactsTreeviewPopulator.bda.execute_db_command(fax_numbers_query)
@@ -403,7 +404,8 @@ class ContactsTreeviewPopulator:
                                                   where exists (select 1
                                                                 from contacts_email_addresses cea
                                                                 where cea.contact_id = p.contact_id
-                                                                and cea.email_address_id = ea.id)'''
+                                                                and cea.email_address_id = ea.id)
+                                                 )'''
             email_addresses_query += rf' {query_addition}'
 
         email_addresses = ContactsTreeviewPopulator.bda.execute_db_command(email_addresses_query)
@@ -426,7 +428,7 @@ class ContactsTreeviewPopulator:
         if locationless_only:
             query_addition = rf'''and note exists (select 1
                                                    from addresses_websites aw
-                                                   where aw.website_id = w.website_id'''
+                                                   where aw.website_id = w.website_id)'''
             websites_query += rf' {query_addition}'
 
         if personless_only:
@@ -435,7 +437,8 @@ class ContactsTreeviewPopulator:
                                                   where exists (select 1
                                                                 from contacts_websites cw
                                                                 where cw.contact_id = p.id
-                                                                and cw.website_id = w.website_id)'''
+                                                                and cw.website_id = w.website_id)
+                                                 )'''
             websites_query += rf' {query_addition}'
 
         websites = ContactsTreeviewPopulator.bda.execute_db_command(websites_query)
