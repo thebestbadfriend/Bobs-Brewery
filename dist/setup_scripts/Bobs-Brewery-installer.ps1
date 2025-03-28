@@ -23,6 +23,7 @@ function Install-Python {
 
     # Install Python 13
     cmd /c $installerFilePath /passive PrependPath=1
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 }
 
 
