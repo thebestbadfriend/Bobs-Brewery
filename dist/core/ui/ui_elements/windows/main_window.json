@@ -63,6 +63,15 @@
                     "title": "Contacts",
                     "children":[
                         {
+                            "name": "btn_add_contacts",
+                            "library": "tk",
+                            "type": "Button",
+                            "properties": {
+                                "text": "Add Contact(s)",
+                                "command": "btn_commands.open_favorite_programs"
+                            }
+                        },
+                        {
                             "name": "lbl_search_companies",
                             "library": "tk",
                             "type": "Label",

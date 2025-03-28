@@ -3,7 +3,8 @@ import tkinter as tk
 from tkinter import ttk
 import importlib
 from core.ui import btn_commands
-from modules.contact_management.contacts_treeview_populator import ContactsTreeviewPopulator
+import modules.contact_management as cm
+from modules.contact_management import ContactsTreeviewPopulator
 
 
 class WindowBuilder:
