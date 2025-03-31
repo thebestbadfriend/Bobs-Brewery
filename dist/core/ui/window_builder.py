@@ -11,7 +11,7 @@ class WindowBuilder:
     widget_registry = {}
 
     @staticmethod
-    def create_widget_from_file(file_path, parent=None):
+    def create_widget_from_file(file_path, parent=None, is_modal_window=False):
         with open(file_path, "r") as file:
             ui_config = json.load(file)
 
@@ -23,7 +23,7 @@ class WindowBuilder:
         widget_library = WindowBuilder.get_widget_library(widget_library_name, widget_type)
 
         if widget_type == "Tk":
-            widget = WindowBuilder.create_window(properties)
+            widget = WindowBuilder.create_window(properties, is_modal_window)
         else:
             # For non-Tk types, initialize widget normally
             widget = getattr(widget_library, widget_type)(parent, **properties)
@@ -35,6 +35,11 @@ class WindowBuilder:
                 child_element["widget"].pack()
 
         return widget
+
+    @staticmethod
+    def create_modal_window_from_file(file_path):
+        window = WindowBuilder.create_widget_from_file(file_path)
+        return window
 
     @staticmethod
     def create_widget_from_json(element, parent):
@@ -124,7 +129,7 @@ class WindowBuilder:
         return widget_library
 
     @staticmethod
-    def create_window(properties):
+    def create_window(properties, modal=False):
         # Create the Tk instance first, then set properties separately
         widget = tk.Tk()
         widget.title(properties.get("title", ""))
