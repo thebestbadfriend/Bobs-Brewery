@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 import importlib
 from core.ui import btn_commands
-import modules.contact_management as cm
+import modules.contact_management as contact_management
 from modules.contact_management import ContactsTreeviewPopulator
 
 
@@ -20,7 +20,7 @@ class WindowBuilder:
         properties = ui_config.get("properties", {})
         children = ui_config.get("children", [])
 
-        widget_library = WindowBuilder.get_widget_library(widget_library_name, widget_type)
+        widget_library = WindowBuilder.get_or_import_library(widget_library_name)
 
         if widget_type == "Tk":
             widget = WindowBuilder.create_window(properties, True)
@@ -54,16 +54,21 @@ class WindowBuilder:
         properties = element.get("properties", {})
         children = element.get("children", [])
 
-        widget_library = WindowBuilder.get_widget_library(widget_library_name, widget_type)
+        widget_library = WindowBuilder.get_or_import_library(widget_library_name)
 
         if widget_type == "Button":
-            module_name = ''.join(properties["command"].split('.')[:-1])
+            module_name = '.'.join(properties["command"].split('.')[:-1])
             func_name = properties["command"].split('.')[-1]
 
-            module = globals().get(module_name)
+            print(rf'module name: {module_name}')
+            print(rf'func name: {func_name}')
+
+            module = WindowBuilder.get_or_import_library(module_name)
             if module:
                 func = getattr(module, func_name)
                 properties["command"] = func
+            else:
+                print(rf'could not find module: {module_name}')
         elif widget_type == "Scrollbar":
             container, view = properties["command"].split('.')
             container = WindowBuilder.widget_registry.get(container)
@@ -115,22 +120,19 @@ class WindowBuilder:
         return widget_dict
 
     @staticmethod
-    def get_widget_library(widget_library_name, widget_type):
+    def get_or_import_library(library_name):
         widget_library = None
 
         try:
             # If the library is already imported, use it directly
-            widget_library = globals().get(widget_library_name)  # Get the module from the globals() dictionary
+            widget_library = globals().get(library_name)  # Get the module from the globals() dictionary
 
             if widget_library is None:
                 # If it's not imported, we can either raise an error or try to import it dynamically
-                raise ImportError(f"Module '{widget_library_name}' not found in the global scope.")
+                raise ImportError(f"Module '{library_name}' not found in the global scope.")
 
         except ImportError:
-            widget_library = importlib.import_module(widget_library_name)
-
-        except AttributeError:
-            print(f"Error: The widget type '{widget_type}' is not found in the library '{widget_library_name}'.")
+            widget_library = importlib.import_module(library_name)
 
         return widget_library
 

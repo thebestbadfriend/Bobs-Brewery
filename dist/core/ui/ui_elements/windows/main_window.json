@@ -68,7 +68,7 @@
                             "type": "Button",
                             "properties": {
                                 "text": "Add Contact(s)",
-                                "command": "btn_commands.open_favorite_programs"
+                                "command": "modules.contact_management.event_handlers.btn_add_contacts_clicked"
                             }
                         },
                         {
