@@ -37,6 +37,11 @@
                           }
                       },
                       {
+                          "name": "txt_company_name",
+                          "library": "tk",
+                          "type": "Entry"
+                      },
+                      {
                           "name": "btn_add_company",
                           "library": "tk",
                           "type": "Button",
@@ -52,7 +57,30 @@
                   "library": "tk",
                   "type": "Frame",
                   "title": "Add Person",
-                  "children": []
+                  "children": [
+                      {
+                          "name": "lbl_person_name",
+                          "library": "tk",
+                          "type": "Label",
+                          "properties": {
+                              "text": "Person Name"
+                          }
+                      },
+                      {
+                          "name": "txt_person_name",
+                          "library": "tk",
+                          "type": "Entry"
+                      },
+                      {
+                          "name": "btn_add_person",
+                          "library": "tk",
+                          "type": "Button",
+                          "properties": {
+                              "text": "Add Person",
+                              "command": "btn_commands.open_favorite_programs"
+                          }
+                      }
+                  ]
               }
           ]
         }
