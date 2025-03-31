@@ -11,7 +11,7 @@ class WindowBuilder:
     widget_registry = {}
 
     @staticmethod
-    def create_widget_from_file(file_path, parent=None, is_modal_window=False):
+    def create_widget_from_file(file_path, parent=None):
         with open(file_path, "r") as file:
             ui_config = json.load(file)
 
@@ -23,7 +23,7 @@ class WindowBuilder:
         widget_library = WindowBuilder.get_widget_library(widget_library_name, widget_type)
 
         if widget_type == "Tk":
-            widget = WindowBuilder.create_window(properties, is_modal_window)
+            widget = WindowBuilder.create_window(properties)
         else:
             # For non-Tk types, initialize widget normally
             widget = getattr(widget_library, widget_type)(parent, **properties)
@@ -37,9 +37,17 @@ class WindowBuilder:
         return widget
 
     @staticmethod
-    def create_modal_window_from_file(file_path):
-        window = WindowBuilder.create_widget_from_file(file_path)
-        return window
+    def create_modal_window_from_file(file_path, parent_window):
+        modal_root = WindowBuilder.create_widget_from_file(file_path)
+        modal = tk.Toplevel(parent_window)
+        modal.transient(parent_window)
+        modal.grab_set()
+        modal.title("This is a modal window")
+        modal.geometry("400x300")
+
+        tk.Label(modal, text="A super modal window").pack()
+
+        return modal
 
     @staticmethod
     def create_widget_from_json(element, parent):
