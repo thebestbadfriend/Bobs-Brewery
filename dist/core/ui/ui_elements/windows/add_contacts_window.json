@@ -27,7 +27,25 @@
                   "library": "tk",
                   "type": "Frame",
                   "title": "Add Company",
-                  "children": []
+                  "children": [
+                      {
+                          "name": "lbl_company_name",
+                          "library": "tk",
+                          "type": "Label",
+                          "properties": {
+                              "text": "Company Name"
+                          }
+                      },
+                      {
+                          "name": "btn_add_company",
+                          "library": "tk",
+                          "type": "Button",
+                          "properties": {
+                              "text": "Add Company",
+                              "command": "btn_commands.open_favorite_programs"
+                          }
+                      }
+                  ]
               },
               {
                   "name": "tab_add_person",

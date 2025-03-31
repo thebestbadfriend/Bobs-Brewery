@@ -60,9 +60,6 @@ class WindowBuilder:
             module_name = '.'.join(properties["command"].split('.')[:-1])
             func_name = properties["command"].split('.')[-1]
 
-            print(rf'module name: {module_name}')
-            print(rf'func name: {func_name}')
-
             module = WindowBuilder.get_or_import_library(module_name)
             if module:
                 func = getattr(module, func_name)
@@ -140,10 +137,8 @@ class WindowBuilder:
     def create_window(properties, is_root=False):
         # Create the Tk instance first, then set properties separately
         if is_root:
-            print("root")
             widget = tk.Tk()
         else:
-            print("not root")
             widget = tk.Toplevel()
         widget.title(properties.get("title", ""))
         widget.minsize(properties.get("min_width", 200), properties.get("min_height", 200))
