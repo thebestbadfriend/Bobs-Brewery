@@ -13,13 +13,30 @@
         "resizable": [true, true]
     },
     "children": [
-      {
-        "name": "add_contacts_window",
-        "library": "tk",
-        "type": "Label",
-        "properties": {
-          "text": "this is the add contacts window."
+        {
+          "name": "tc_add_contacts",
+          "library": "ttk",
+          "type": "Notebook",
+          "properties": {
+              "height": 200,
+              "width": 400
+          },
+          "children": [
+              {
+                  "name": "tab_add_company",
+                  "library": "tk",
+                  "type": "Frame",
+                  "title": "Add Company",
+                  "children": []
+              },
+              {
+                  "name": "tab_add_person",
+                  "library": "tk",
+                  "type": "Frame",
+                  "title": "Add Person",
+                  "children": []
+              }
+          ]
         }
-      }
     ]
 }
