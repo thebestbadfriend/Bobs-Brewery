@@ -1,2 +1,2 @@
 from .contacts_treeview_populator import ContactsTreeviewPopulator
-import modules.contact_management.event_handlers
+import modules.contact_management.event_handlers as event_handlers

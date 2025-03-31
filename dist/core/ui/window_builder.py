@@ -23,6 +23,8 @@ class WindowBuilder:
         widget_library = WindowBuilder.get_widget_library(widget_library_name, widget_type)
 
         if widget_type == "Tk":
+            widget = WindowBuilder.create_window(properties, True)
+        elif widget_type == "Toplevel":
             widget = WindowBuilder.create_window(properties)
         else:
             # For non-Tk types, initialize widget normally
@@ -37,17 +39,12 @@ class WindowBuilder:
         return widget
 
     @staticmethod
-    def create_modal_window_from_file(file_path, parent_window):
+    def create_modal_window_from_file(file_path):
         modal_root = WindowBuilder.create_widget_from_file(file_path)
-        modal = tk.Toplevel(parent_window)
-        modal.transient(parent_window)
-        modal.grab_set()
-        modal.title("This is a modal window")
-        modal.geometry("400x300")
+        modal_root.transient(tk._default_root)
+        modal_root.grab_set()
 
-        tk.Label(modal, text="A super modal window").pack()
-
-        return modal
+        return modal_root
 
     @staticmethod
     def create_widget_from_json(element, parent):
@@ -60,7 +57,8 @@ class WindowBuilder:
         widget_library = WindowBuilder.get_widget_library(widget_library_name, widget_type)
 
         if widget_type == "Button":
-            module_name, func_name = properties["command"].split('.')
+            module_name = ''.join(properties["command"].split('.')[:-1])
+            func_name = properties["command"].split('.')[-1]
 
             module = globals().get(module_name)
             if module:
@@ -137,9 +135,14 @@ class WindowBuilder:
         return widget_library
 
     @staticmethod
-    def create_window(properties, modal=False):
+    def create_window(properties, is_root=False):
         # Create the Tk instance first, then set properties separately
-        widget = tk.Tk()
+        if is_root:
+            print("root")
+            widget = tk.Tk()
+        else:
+            print("not root")
+            widget = tk.Toplevel()
         widget.title(properties.get("title", ""))
         widget.minsize(properties.get("min_width", 200), properties.get("min_height", 200))
         widget.maxsize(properties.get("max_width", 3000), properties.get("max_height", 3000))

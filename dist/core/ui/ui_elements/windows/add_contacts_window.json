@@ -1,0 +1,25 @@
+{
+    "type": "Toplevel",
+    "library": "tk",
+    "properties": {
+        "title": "Add Contacts",
+        "min_width": 300,
+        "min_height": 300,
+        "max_width": 3000,
+        "max_height": 3000,
+        "xpos": 200,
+        "ypos": 100,
+        "geometry_string": "500x300",
+        "resizable": [true, true]
+    },
+    "children": [
+      {
+        "name": "add_contacts_window",
+        "library": "tk",
+        "type": "Label",
+        "properties": {
+          "text": "this is the add contacts window."
+        }
+      }
+    ]
+}
