@@ -14,71 +14,124 @@
     },
     "children": [
         {
-            "name": "tc_add_contacts",
+            "name": "lbf_contact_name",
             "library": "ttk",
-            "type": "Notebook",
+            "type": "LabelFrame",
             "properties": {
-                "height": 200,
-                "width": 400
+                "text": "Contact Name"
+            },
+            "pack_properties": {
+                "fill": "both",
+                "expand": "True"
             },
             "children": [
                 {
-                    "name": "tab_add_company",
-                    "library": "tk",
-                    "type": "Frame",
-                    "title": "Add Company",
+                    "name": "tc_contact_name",
+                    "library": "ttk",
+                    "type": "Notebook",
+                    "properties": {
+                        "height": 200,
+                        "width": 400
+                    },
                     "children": [
                         {
-                            "name": "lbl_company_name",
+                            "name": "tab_company_name",
                             "library": "tk",
-                            "type": "Label",
-                            "properties": {
-                                "text": "Company Name"
-                            }
+                            "type": "Frame",
+                            "title": "Company",
+                            "children": [
+                                {
+                                    "name": "lbl_company_name",
+                                    "library": "tk",
+                                    "type": "Label",
+                                    "properties": {
+                                        "text": "Company Name"
+                                    }
+                                },
+                                {
+                                    "name": "txt_company_name",
+                                    "library": "tk",
+                                    "type": "Entry"
+                                },
+                                {
+                                    "name": "btn_add_company",
+                                    "library": "tk",
+                                    "type": "Button",
+                                    "properties": {
+                                        "text": "Add Company",
+                                        "command": "btn_commands.open_favorite_programs"
+                                    }
+                                }
+                            ]
                         },
                         {
-                            "name": "txt_company_name",
+                            "name": "tab_person_name",
                             "library": "tk",
-                            "type": "Entry"
-                        },
-                        {
-                            "name": "btn_add_company",
-                            "library": "tk",
-                            "type": "Button",
-                            "properties": {
-                                "text": "Add Company",
-                                "command": "btn_commands.open_favorite_programs"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "tab_add_person",
-                    "library": "tk",
-                    "type": "Frame",
-                    "title": "Add Person",
-                    "children": [
-                        {
-                            "name": "lbl_person_name",
-                            "library": "tk",
-                            "type": "Label",
-                            "properties": {
-                                "text": "Person Name"
-                            }
-                        },
-                        {
-                            "name": "txt_person_name",
-                            "library": "tk",
-                            "type": "Entry"
-                        },
-                        {
-                            "name": "btn_add_person",
-                            "library": "tk",
-                            "type": "Button",
-                            "properties": {
-                                "text": "Add Person",
-                                "command": "btn_commands.open_favorite_programs"
-                            }
+                            "type": "Frame",
+                            "title": "Person",
+                            "children": [
+                                {
+                                    "name": "lbl_person_first_name",
+                                    "library": "tk",
+                                    "type": "Label",
+                                    "properties": {
+                                        "text": "First Name"
+                                    }
+                                },
+                                {
+                                    "name": "txt_person_first_name",
+                                    "library": "tk",
+                                    "type": "Entry"
+                                },
+                                {
+                                    "name": "lbl_person_last_name",
+                                    "library": "tk",
+                                    "type": "Label",
+                                    "properties": {
+                                        "text": "Last Name"
+                                    }
+                                },
+                                {
+                                    "name": "txt_person_last_name",
+                                    "library": "tk",
+                                    "type": "Entry"
+                                },
+                                {
+                                    "name": "lbl_person_suffix",
+                                    "library": "tk",
+                                    "type": "Label",
+                                    "properties": {
+                                        "text": "Suffix"
+                                    }
+                                },
+                                {
+                                    "name": "txt_person_suffix",
+                                    "library": "tk",
+                                    "type": "Entry"
+                                },
+                                {
+                                    "name": "lbl_person_nickname",
+                                    "library": "tk",
+                                    "type": "Label",
+                                    "properties": {
+                                        "text": "Nickname"
+                                    }
+                                },
+                                {
+                                    "name": "txt_person_nickname",
+                                    "library": "tk",
+                                    "type": "Entry"
+                                },
+                                {
+                                    "name": "btn_add_person",
+                                    "library": "tk",
+                                    "type": "Button",
+                                    "properties": {
+                                        "text": "Add Person",
+                                        "command": "btn_commands.open_favorite_programs"
+                                    }
+                                }
+                            ]
                         }
                     ]
                 }
