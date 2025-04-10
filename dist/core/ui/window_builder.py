@@ -40,6 +40,7 @@ class WindowBuilder:
 
     @staticmethod
     def create_modal_window_from_file(file_path):
+        print('\n\n\n\n')
         modal_root = WindowBuilder.create_widget_from_file(file_path)
         modal_root.transient(tk._default_root)
         modal_root.grab_set()
@@ -113,6 +114,8 @@ class WindowBuilder:
             "widget": widget,
             "dict": element,
         }
+
+        print(widget_dict)
 
         return widget_dict
 

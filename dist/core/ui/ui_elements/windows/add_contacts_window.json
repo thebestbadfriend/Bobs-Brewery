@@ -18,11 +18,9 @@
             "library": "ttk",
             "type": "LabelFrame",
             "properties": {
-                "text": "Contact Name"
-            },
-            "pack_properties": {
-                "fill": "both",
-                "expand": "True"
+                "text": "Contact Name",
+                "width": 300,
+                "height": 300
             },
             "children": [
                 {
