@@ -177,4 +177,9 @@ class WindowBuilder:
 
     @staticmethod
     def convert_json_props(props):
+        return_props = {}
+
+        for prop in props:
+            pass
+
         return props
