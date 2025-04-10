@@ -172,3 +172,7 @@ class WindowBuilder:
                 WindowBuilder.create_widget_from_json(child, tab)["widget"].pack()
 
         notebook.add(tab, text=tab_json["title"])
+
+    @staticmethod
+    def str_to_bool(value):
+        return value == "True"
