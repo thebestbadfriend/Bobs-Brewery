@@ -17,18 +17,19 @@ class WindowBuilder:
 
         widget_library_name = ui_config["library"]
         widget_type = ui_config["type"]
-        properties = ui_config.get("properties", {})
+        json_properties = ui_config.get("properties", {})
+        converted_properties = WindowBuilder.convert_json_props(json_properties)
         children = ui_config.get("children", [])
 
         widget_library = WindowBuilder.get_or_import_library(widget_library_name)
 
         if widget_type == "Tk":
-            widget = WindowBuilder.create_window(properties, True)
+            widget = WindowBuilder.create_window(converted_properties, True)
         elif widget_type == "Toplevel":
-            widget = WindowBuilder.create_window(properties)
+            widget = WindowBuilder.create_window(converted_properties)
         else:
             # For non-Tk types, initialize widget normally
-            widget = getattr(widget_library, widget_type)(parent, **properties)
+            widget = getattr(widget_library, widget_type)(parent, **converted_properties)
 
         # Recursively create child widgets
         for child_config in children:
@@ -52,31 +53,32 @@ class WindowBuilder:
         widget_name = element["name"]
         widget_library_name = element["library"]
         widget_type = element["type"]
-        properties = element.get("properties", {})
+        json_properties = element.get("properties", {})
+        converted_properties = WindowBuilder.convert_json_props(json_properties)
         children = element.get("children", [])
 
         widget_library = WindowBuilder.get_or_import_library(widget_library_name)
 
         if widget_type == "Button":
-            module_name = '.'.join(properties["command"].split('.')[:-1])
-            func_name = properties["command"].split('.')[-1]
+            module_name = '.'.join(converted_properties["command"].split('.')[:-1])
+            func_name = converted_properties["command"].split('.')[-1]
 
             module = WindowBuilder.get_or_import_library(module_name)
             if module:
                 func = getattr(module, func_name)
-                properties["command"] = func
+                converted_properties["command"] = func
             else:
                 print(rf'could not find module: {module_name}')
         elif widget_type == "Scrollbar":
-            container, view = properties["command"].split('.')
+            container, view = converted_properties["command"].split('.')
             container = WindowBuilder.widget_registry.get(container)
             if container:
-                properties["command"] = getattr(container, view)
+                converted_properties["command"] = getattr(container, view)
                 parent = container
 
 
         # Create the widget from the library and properties
-        widget = getattr(widget_library, widget_type)(parent, **properties)
+        widget = getattr(widget_library, widget_type)(parent, **converted_properties)
 
         if widget_type == "Scrollbar":
             parent.configure(yscrollcommand=widget.set)
@@ -174,5 +176,5 @@ class WindowBuilder:
         notebook.add(tab, text=tab_json["title"])
 
     @staticmethod
-    def str_to_bool(value):
-        return value == "True"
+    def convert_json_props(props):
+        return props
