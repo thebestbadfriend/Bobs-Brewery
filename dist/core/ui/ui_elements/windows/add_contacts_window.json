@@ -10,7 +10,10 @@
         "xpos": 200,
         "ypos": 100,
         "geometry_string": "500x300",
-        "resizable": [true, true]
+        "resizable": [
+            true,
+            true
+        ]
     },
     "children": [
         {
@@ -19,14 +22,22 @@
             "type": "LabelFrame",
             "properties": {
                 "text": "Contact Name",
-                "width": 300,
-                "height": 300
+                "width": 500,
+                "height": 500
             },
             "pack_properties": {
                 "fill": "both",
                 "expand": true
             },
             "children": [
+                {
+                    "name": "lbl_test",
+                    "library": "tk",
+                    "type": "Label",
+                    "properties": {
+                        "text": "this is a test label"
+                    }
+                },
                 {
                     "name": "tc_contact_name",
                     "library": "ttk",

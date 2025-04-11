@@ -113,6 +113,8 @@ class WindowBuilder:
 
         WindowBuilder.widget_registry[widget_name] = widget
 
+        print(rf'widget {widget_name} type is {widget_type}')
+
         widget_dict = {
             "widget": widget,
             "dict": element,
@@ -144,6 +146,7 @@ class WindowBuilder:
             widget = tk.Tk()
         else:
             widget = tk.Toplevel()
+
         widget.title(properties.get("title", ""))
         widget.minsize(properties.get("min_width", 200), properties.get("min_height", 200))
         widget.maxsize(properties.get("max_width", 3000), properties.get("max_height", 3000))
