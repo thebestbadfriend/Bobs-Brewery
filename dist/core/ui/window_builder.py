@@ -41,7 +41,6 @@ class WindowBuilder:
 
     @staticmethod
     def create_modal_window_from_file(file_path):
-        print('\n\n\n\n')
         modal_root = WindowBuilder.create_widget_from_file(file_path)
         modal_root.transient(tk._default_root)
         modal_root.grab_set()
@@ -117,8 +116,6 @@ class WindowBuilder:
             "dict": element,
         }
 
-        print(widget_dict)
-
         return widget_dict
 
     @staticmethod
@@ -180,6 +177,9 @@ class WindowBuilder:
         return_props = {}
 
         for prop in props:
-            pass
+            prop_name = prop["name"]
+            prop_type = prop["type"]
+            prop_value = prop["value"]
+            return_props[prop] = props[prop]
 
         return props
