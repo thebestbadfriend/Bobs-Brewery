@@ -34,7 +34,6 @@ class WindowBuilder:
         for child_config in children:
             child_element = WindowBuilder.create_widget_from_json(child_config, widget)
             if child_element:
-                print(rf'packing {child_element["widget"]}')
                 child_element["widget"].pack()
 
         return widget
@@ -120,6 +119,26 @@ class WindowBuilder:
             "dict": element,
         }
 
+        parent_type = type(parent)
+        print(rf"{widget_name}'s parent type is {parent_type}")
+        is_child_of_window = parent_type in (tk.Tk, tk.Toplevel)
+
+        '''
+        This is the hard part of the "things not packing" issue.
+        Tkinter does not provide anything like a .parent() function to get the parent of a widget,
+        so I might need to change the registry to store each widget's parent too (leaning that way).
+        
+        actually, I think that is what I will do. I already do it with IIDs, so it wouldn't be a huge change
+        from how the code already tends to like to work, and it's probably not all that difficult if I just
+        sit down and get my head around it from th at perspective.
+        '''
+        is_child_of_notebook_tab = "something"
+
+        if not (is_child_of_window or is_child_of_notebook_tab):
+            print(rf'{widget_name} is not a direct descendent of a window or of a notebook tab')
+        else:
+            print(rf'{widget_name} is a direct descendent of a window or of a notebook tab')
+
         return widget_dict
 
     @staticmethod
@@ -173,10 +192,8 @@ class WindowBuilder:
 
                 w = WindowBuilder.create_widget_from_json(child, tab)["widget"]
                 w.pack(**child["pack_properties"])
-                print(rf'{child} is {w}')
             else:
                 w = WindowBuilder.create_widget_from_json(child, tab)["widget"]
                 w.pack()
-                print(rf'{child} is {w}')
 
         notebook.add(tab, text=tab_json["title"])
