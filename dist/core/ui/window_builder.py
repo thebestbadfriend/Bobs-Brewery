@@ -18,32 +18,35 @@ class WindowBuilder:
         widget_library_name = ui_config["library"]
         widget_type = ui_config["type"]
         json_properties = ui_config.get("properties", {})
-        converted_properties = WindowBuilder.convert_json_props(json_properties)
         children = ui_config.get("children", [])
 
         widget_library = WindowBuilder.get_or_import_library(widget_library_name)
 
         if widget_type == "Tk":
-            widget = WindowBuilder.create_window(converted_properties, True)
+            widget = WindowBuilder.create_window(json_properties, True)
         elif widget_type == "Toplevel":
-            widget = WindowBuilder.create_window(converted_properties)
+            widget = WindowBuilder.create_window(json_properties)
         else:
             # For non-Tk types, initialize widget normally
-            widget = getattr(widget_library, widget_type)(parent, **converted_properties)
+            widget = getattr(widget_library, widget_type)(parent, **json_properties)
 
         # Recursively create child widgets
         for child_config in children:
             child_element = WindowBuilder.create_widget_from_json(child_config, widget)
             if child_element:
+                print(rf'packing {child_element["widget"]}')
                 child_element["widget"].pack()
 
         return widget
 
     @staticmethod
     def create_modal_window_from_file(file_path):
+        print('\n\n\n\n')
         modal_root = WindowBuilder.create_widget_from_file(file_path)
         modal_root.transient(tk._default_root)
         modal_root.grab_set()
+
+        print(f'\n\n\n\n modal root is {modal_root}')
 
         return modal_root
 
@@ -53,31 +56,30 @@ class WindowBuilder:
         widget_library_name = element["library"]
         widget_type = element["type"]
         json_properties = element.get("properties", {})
-        converted_properties = WindowBuilder.convert_json_props(json_properties)
         children = element.get("children", [])
 
         widget_library = WindowBuilder.get_or_import_library(widget_library_name)
 
         if widget_type == "Button":
-            module_name = '.'.join(converted_properties["command"].split('.')[:-1])
-            func_name = converted_properties["command"].split('.')[-1]
+            module_name = '.'.join(json_properties["command"].split('.')[:-1])
+            func_name = json_properties["command"].split('.')[-1]
 
             module = WindowBuilder.get_or_import_library(module_name)
             if module:
                 func = getattr(module, func_name)
-                converted_properties["command"] = func
+                json_properties["command"] = func
             else:
                 print(rf'could not find module: {module_name}')
         elif widget_type == "Scrollbar":
-            container, view = converted_properties["command"].split('.')
+            container, view = json_properties["command"].split('.')
             container = WindowBuilder.widget_registry.get(container)
             if container:
-                converted_properties["command"] = getattr(container, view)
+                json_properties["command"] = getattr(container, view)
                 parent = container
 
 
         # Create the widget from the library and properties
-        widget = getattr(widget_library, widget_type)(parent, **converted_properties)
+        widget = getattr(widget_library, widget_type)(parent, **json_properties)
 
         if widget_type == "Scrollbar":
             parent.configure(yscrollcommand=widget.set)
@@ -166,20 +168,12 @@ class WindowBuilder:
                 if "side" in child["pack_properties"]:
                     child["pack_properties"]["side"] = getattr(tk, child["pack_properties"]["side"])
 
-                WindowBuilder.create_widget_from_json(child, tab)["widget"].pack(**child["pack_properties"])
+                w = WindowBuilder.create_widget_from_json(child, tab)["widget"]
+                w.pack(**child["pack_properties"])
+                print(rf'{child} is {w}')
             else:
-                WindowBuilder.create_widget_from_json(child, tab)["widget"].pack()
+                w = WindowBuilder.create_widget_from_json(child, tab)["widget"]
+                w.pack()
+                print(rf'{child} is {w}')
 
         notebook.add(tab, text=tab_json["title"])
-
-    @staticmethod
-    def convert_json_props(props):
-        return_props = {}
-
-        for prop in props:
-            prop_name = prop["name"]
-            prop_type = prop["type"]
-            prop_value = prop["value"]
-            return_props[prop] = props[prop]
-
-        return props

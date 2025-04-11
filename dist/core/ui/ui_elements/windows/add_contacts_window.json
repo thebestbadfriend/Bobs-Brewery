@@ -24,7 +24,7 @@
             },
             "pack_properties": {
                 "fill": "both",
-                "expand": "True"
+                "expand": true
             },
             "children": [
                 {
@@ -34,6 +34,10 @@
                     "properties": {
                         "height": 200,
                         "width": 400
+                    },
+                    "pack_properties": {
+                        "fill": "both",
+                        "expand": true
                     },
                     "children": [
                         {
