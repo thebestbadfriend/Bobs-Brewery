@@ -138,6 +138,16 @@ class WindowBuilder:
         actually, I think that is what I will do. I already do it with IIDs, so it wouldn't be a huge change
         from how the code already tends to like to work, and it's probably not all that difficult if I just
         sit down and get my head around it from th at perspective.
+        ---
+        after working on this a little and not getting much accomplished, I begin to realize that a bb_widget or similar
+        class is probably prudent. Then objects of that class can be added to the registry and accessed - as appropriate
+        - through the registry or by something like my_widget.parent.parent
+        ---
+        I suppose a temporary "force_pack" argument could work until I make it more testable whether something should
+        pack here (i.e. whether it is a widget with a non-tk, non-toplevel, and non-notebook parent?)
+        
+        Then again, that is a bandaid, and I wonder whether it would be better to just go ahead and detour into making
+        the bb_widget class and save the tech debt
         '''
         is_child_of_notebook_tab = "something"
 
