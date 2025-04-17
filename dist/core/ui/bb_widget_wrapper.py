@@ -24,11 +24,15 @@ class BBWidgetWrapper:
         self.full_dict = full_dict
         self.create_widget()
         self.create_children()
+        self.pack()
 
     def create_widget(self):
         widget_library_name = self.full_dict.get("library")
         widget_library = self.get_or_import_library(widget_library_name)
         widget_type = self.full_dict.get("type")
+        properties = self.full_dict.get("properties", {})
+
+        self.widget = getattr(widget_library, widget_type)(self.parent, **properties)
 
     def create_children(self):
         child_list = self.full_dict.get('children', [])
