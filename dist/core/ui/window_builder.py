@@ -7,7 +7,12 @@ from core.ui import btn_commands
 import modules.contact_management as contact_management
 from modules.contact_management import ContactsTreeviewPopulator
 
+'''
+probably will rename this to BBWindow or similar and unstatic it
 
+really it makes more sense for each window to be its own object of this class
+rather than just create the windows all muddled together from a static class
+'''
 class WindowBuilder:
     widget_registry = {}
 
