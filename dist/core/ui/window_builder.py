@@ -14,7 +14,8 @@ really it makes more sense for each window to be its own object of this class
 rather than just create the windows all muddled together from a static class
 '''
 class WindowBuilder:
-    widget_registry = {}
+    widget_registry = {} # To be replaced by the widgets list
+    widgets = []
 
     @staticmethod
     def create_widget_from_file(file_path, parent=None):
