@@ -42,6 +42,7 @@ class BBWidgetWrapper:
         child = BBWidgetWrapper(full_dict=child_dict, parent=self)
         self.children.append(child)
 
+    @staticmethod
     def get_objectified_dict(self, dictionary):
         objectified_dict = dictionary.copy()
 
@@ -51,6 +52,7 @@ class BBWidgetWrapper:
 
         return objectified_dict
 
+    @staticmethod
     def get_or_import_library(self, library_name):
         widget_library = None
 
