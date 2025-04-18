@@ -1,13 +1,9 @@
 import importlib
+import tkinter
+from tkinter import ttk
 
 class BBWidgetWrapper:
     '''
-    probably use most or all of the json stuff here. So like, in the json, there is a children list for many widgets.
-    That should translate to a children list here. Pack_props there = pack_props here. Etc
-
-    yeah! And then self can be passed into populate children which can call a create function and pass self as the
-    parent. Should, I think, create a proper traversable family tree.
-
     up to now, windows have been treated more or less as widgets. Now, windows should be their own class and should have
     widgets as children. Window creation is to be handled by the window class. Again, they are /not/ to be treated as
     regular widgets anymore.
@@ -44,6 +40,15 @@ class BBWidgetWrapper:
         child = BBWidgetWrapper(full_dict=child_dict, parent=self)
         self.children.append(child)
 
+    def get_objectified_dict(self, dictionary):
+        objectified_dict = dictionary.copy()
+
+        for key, val in dictionary.items():
+            if isinstance(val, str) and hasattr(tkinter, val):
+                objectified_dict[key] = getattr(tkinter, val)
+
+        return objectified_dict
+
     def get_or_import_library(self, library_name):
         widget_library = None
 
@@ -61,4 +66,10 @@ class BBWidgetWrapper:
         return widget_library
 
     def pack(self):
-        pass
+        if self.parent.full_dict.get('type', '') == 'Notebook':
+            notebook = self.parent.widget
+            tab = tkinter.Frame(notebook)
+            notebook.add(tab, text=self.full_dict.get("title"))
+        else:
+            pack_props = self.get_objectified_dict(self.full_dict.get("pack_properties", {}))
+            self.widget.pack(**pack_props)
