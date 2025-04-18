@@ -2,6 +2,8 @@ import importlib
 import tkinter
 from tkinter import ttk
 
+tk = tkinter
+
 class BBWidgetWrapper:
     '''
     up to now, windows have been treated more or less as widgets. Now, windows should be their own class and should have
@@ -26,7 +28,7 @@ class BBWidgetWrapper:
         widget_library_name = self.full_dict.get("library")
         widget_library = self.get_or_import_library(widget_library_name)
         widget_type = self.full_dict.get("type")
-        properties = self.full_dict.get("properties", {})
+        properties = self.get_objectified_dict(self.full_dict.get("properties", {}))
 
         self.widget = getattr(widget_library, widget_type)(self.parent, **properties)
 

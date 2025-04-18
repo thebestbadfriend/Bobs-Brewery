@@ -1,11 +1,13 @@
 import json
-import tkinter as tk
+import tkinter
 from tkinter import ttk
 import importlib
-from bb_widget_wrapper import BBWidgetWrapper
+from core.ui.bb_widget_wrapper import BBWidgetWrapper
 from core.ui import btn_commands
 import modules.contact_management as contact_management
 from modules.contact_management import ContactsTreeviewPopulator
+
+tk = tkinter
 
 '''
 probably will rename this to BBWindow or similar and unstatic it
@@ -125,43 +127,6 @@ class WindowBuilder:
             "widget": widget,
             "dict": element,
         }
-
-        parent_type = type(parent)
-        print(rf"{widget_name}'s parent type is {parent_type}")
-        is_child_of_window = parent_type in (tk.Tk, tk.Toplevel)
-
-        '''
-        This is the hard part of the "things not packing" issue, because tabs in tkinter notebooks
-        are just frames, so I don't just need the direct parent of a widget (the tab), as most every grouping
-        element is a frame or something similar. I need the parent's parent in order to determine whether
-        the grandparent is a notebook. In fact I may not need the parent at all except as a means to the
-        grandparent, as - to my knowledge - only tabs are direct children of notebooks, so anything whose
-        direct parent is a notebook is itself a tab.
-        
-        The reason this is hard-ish though is that tkinter does not provide anything like a .parent()
-        function to get the parent of a widget, so I might need to change the registry to store each
-        widget's parent too (leaning that way).
-        
-        actually, I think that is what I will do. I already do it with IIDs, so it wouldn't be a huge change
-        from how the code already tends to like to work, and it's probably not all that difficult if I just
-        sit down and get my head around it from th at perspective.
-        ---
-        after working on this a little and not getting much accomplished, I begin to realize that a bb_widget or similar
-        class is probably prudent. Then objects of that class can be added to the registry and accessed - as appropriate
-        - through the registry or by something like my_widget.parent.parent
-        ---
-        I suppose a temporary "force_pack" argument could work until I make it more testable whether something should
-        pack here (i.e. whether it is a widget with a non-tk, non-toplevel, and non-notebook parent?)
-        
-        Then again, that is a bandaid, and I wonder whether it would be better to just go ahead and detour into making
-        the bb_widget class and save the tech debt
-        '''
-        is_child_of_notebook_tab = "something"
-
-        if not (is_child_of_window or is_child_of_notebook_tab):
-            print(rf'{widget_name} is not a direct descendent of a window or of a notebook tab')
-        else:
-            print(rf'{widget_name} is a direct descendent of a window or of a notebook tab')
 
         return widget_dict
 
