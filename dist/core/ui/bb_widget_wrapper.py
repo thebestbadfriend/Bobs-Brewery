@@ -9,16 +9,27 @@ class BBWidgetWrapper:
     up to now, windows have been treated more or less as widgets. Now, windows should be their own class and should have
     widgets as children. Window creation is to be handled by the window class. Again, they are /not/ to be treated as
     regular widgets anymore.
+
+    also remember that in python, instance variables are not only assinged but declared in __init__.
+
+    variables declared at the root of the class - such as global_widget_registry here - are static variables
+
+    global_widget_registry should have the following structure:
+    {
+        window_name: {
+            widget_name: BBWidgetWrapper object
+        }
+    }
     '''
-    widget = None
-    full_dict = {}
+    global_widget_registry = {}
 
-    name = ''
-    parent = None
-    children = []
+    def __init__(self, full_dict, window, parent=None):
+        self.window = window
 
-    def __init__(self, full_dict, parent=None):
         self.parent = parent
+        if parent == None:
+            self.parent = window
+
         self.full_dict = full_dict
         self.create_widget()
         self.create_children()
@@ -77,3 +88,26 @@ class BBWidgetWrapper:
         else:
             pack_props = self.get_objectified_dict(self.full_dict.get("pack_properties", {}))
             self.widget.pack(**pack_props)
+
+    def pre_widget_creation_tasks(self):
+        properties = self.full_dict.get("properties", {})
+        if properties.get('command',''):
+            command_path = '.'.join(properties["command"].split('.')[:-1])
+            func_name = properties["command"].split('.')[-1]
+
+            '''
+            the below needs to be changed for a couple reasons:
+            
+            1) it only works for single-layer modules
+              a) that is, module.function works, but module.submodule.function does not
+            2) it only works for importable or global things
+              a) that is, module.function works, but widget.function (such as tv_contacts.yview) does not unless
+                 widget has been added to globals()
+            '''
+
+            module = self.get_or_import_library(command_path)
+            if module:
+                func = getattr(module, func_name)
+                properties["command"] = func
+            else:
+                print(rf'could not find module: {command_path}')

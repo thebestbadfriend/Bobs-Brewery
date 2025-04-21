@@ -33,23 +33,17 @@ class WindowBuilder:
 
         if widget_type == "Tk":
             widget = WindowBuilder.create_window(json_properties, True)
-
-            # Recursively create child widgets
-            for child_config in children:
-                child_element = WindowBuilder.create_widget_from_json(child_config, widget)
-                if child_element:
-                    child_element["widget"].pack()
         elif widget_type == "Toplevel":
             widget = WindowBuilder.create_window(json_properties)
-
-            # Recursively create child widgets
-            for child_config in children:
-                child_element = WindowBuilder.create_widget_from_json(child_config, widget)
-                if child_element:
-                    child_element["widget"].pack()
         else:
             # For non-Tk types, initialize widget normally
-            widget = BBWidgetWrapper(ui_config)
+            widget = getattr(widget_library, widget_type)(parent, **json_properties)
+
+        # Recursively create child widgets
+        for child_config in children:
+            child_element = WindowBuilder.create_widget_from_json(child_config, widget)
+            if child_element:
+                child_element["widget"].pack()
 
         return widget
 
