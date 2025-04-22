@@ -14,6 +14,23 @@ probably will rename this to BBWindow or similar and unstatic it
 
 really it makes more sense for each window to be its own object of this class
 rather than just create the windows all muddled together from a static class
+
+When window init sets the name of the window, it should be structured something like
+`module.window_name` so that, for example, if the contacts module has a window called `main`, it does not interfere
+either with the `main` window of the program as a whole or with any `main` windows that other modules have. That is,
+`main`, `contact_management.main`, and - for example - `invoice_management.main` are distinct windows without module
+creators (myself included probably) having to manually avoid naming collisions (or whatever it'd be called)
+
+^ Nope. The idea evolved. Check the chatgpt conversation, but the short version is that registries wrapped in classes
+and stacked on top of each other, all wrapped up in an ultimate RegistryStack class is the way to go. Sort of a
+RegistryStack which contains the ModuleRegistry which contains a dictionary of  Module objects, each of which contains a
+WindowRegistry which contains a dictionary of Window objects, each of which contains a WidgetRegistry which contains a
+dictionary of Widget objects.
+
+I'd say the RegistryStack was redundant if it was only possible for it to contain the ModuleRegistry, of which there is
+only likely to be one instance (I may even make it a static class to protect that singularity), but if I add other
+registries unrelated to the gui, the small overhead of what is - at the moment - a redundant top class will make that
+extension all the easier
 '''
 class WindowBuilder:
     widget_registry = {} # To be replaced by the widgets list
