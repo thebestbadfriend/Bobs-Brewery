@@ -72,20 +72,7 @@ class BBWidgetWrapper:
 
     @staticmethod
     def get_or_import_library(library_name):
-        widget_library = None
-
-        try:
-            # If the library is already imported, use it directly
-            widget_library = globals().get(library_name)  # Get the module from the globals() dictionary
-
-            if widget_library is None:
-                # If it's not imported, we can either raise an error or try to import it dynamically
-                raise ImportError(f"Module '{library_name}' not found in the global scope. Attempting to import it.")
-
-        except ImportError:
-            widget_library = importlib.import_module(library_name)
-
-        return widget_library
+        return importlib.import_module(library_name)
 
     def check_widget_exists(self, widget_name, current_window_only=True):
         widget_exists = False
