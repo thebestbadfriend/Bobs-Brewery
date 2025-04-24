@@ -11,9 +11,8 @@ from modules.contact_management import ContactsTreeviewPopulator
 tk = tkinter
 
 '''
-A lot of this functionality - if not all of it - will eventually go into the Window and WidgetWrapper classes.
-
-That is actually what I am working on now, starting with the widget wrapper
+Working on moving all of this functionality to its appropriate classes. Once those are built and all dependency on this
+file has been switched to rely on those instead, this file will be deleted
 '''
 
 class WindowBuilder:

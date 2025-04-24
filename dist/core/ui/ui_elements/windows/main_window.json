@@ -1,7 +1,7 @@
 {
     "name": "main",
     "type": "Tk",
-    "library": "tk",
+    "library": "tkinter",
     "properties": {
         "title": "Bob's Brewery",
         "min_width": 300,
@@ -25,13 +25,13 @@
             "children": [
                 {
                     "name": "tab_main",
-                    "library": "tk",
+                    "library": "tkinter",
                     "type": "Frame",
                     "title": "Main Tab",
                     "children": [
                         {
                             "name": "btn_fix_server_access",
-                            "library": "tk",
+                            "library": "tkinter",
                             "type": "Button",
                             "properties": {
                                 "text": "Fix Server Access",
@@ -42,13 +42,13 @@
                 },
                 {
                     "name": "tab_favorite_programs",
-                    "library": "tk",
+                    "library": "tkinter",
                     "type": "Frame",
                     "title": "Favorite Programs",
                     "children": [
                         {
                             "name": "btn_open_favorite_programs",
-                            "library": "tk",
+                            "library": "tkinter",
                             "type": "Button",
                             "properties": {
                                 "text": "Open Favorite Programs",
@@ -59,13 +59,13 @@
                 },
                 {
                     "name": "tab_contacts",
-                    "library": "tk",
+                    "library": "tkinter",
                     "type": "Frame",
                     "title": "Contacts",
                     "children":[
                         {
                             "name": "btn_add_contacts",
-                            "library": "tk",
+                            "library": "tkinter",
                             "type": "Button",
                             "properties": {
                                 "text": "Add Contact(s)",
@@ -74,7 +74,7 @@
                         },
                         {
                             "name": "lbl_search_companies",
-                            "library": "tk",
+                            "library": "tkinter",
                             "type": "Label",
                             "properties": {
                                 "text": "Search by company name"
@@ -96,7 +96,7 @@
                         },
                         {
                             "name": "lbl_search_people",
-                            "library": "tk",
+                            "library": "tkinter",
                             "type": "Label",
                             "properties": {
                                 "text": "Search by person name"
@@ -159,7 +159,7 @@
         },
         {
             "name": "btn_exit",
-            "library": "tk",
+            "library": "tkinter",
             "type": "Button",
             "properties": {
                 "text": "Exit",

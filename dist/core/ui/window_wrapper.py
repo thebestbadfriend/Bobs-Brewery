@@ -22,9 +22,9 @@ class WindowWrapper:
         library_name = self.full_dict['library']
         library = utilities.get_or_import_library(library_name)
         window_type = self.full_dict.get("type")
-        window = getattr(library, window_type)
+        window = getattr(library, window_type)()
 
-        properties = utilities.get_objectified_dict(self.full_dict.get("properties", {}))
+        properties = self.full_dict.get("properties", {})
         window.title(properties.get("title", ""))
         window.minsize(properties.get("min_width", 200), properties.get("min_height", 200))
         window.maxsize(properties.get("max_width", 3000), properties.get("max_height", 3000))
