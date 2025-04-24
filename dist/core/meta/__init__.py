@@ -1,1 +1,1 @@
-import utilities
+from core.meta import utilities

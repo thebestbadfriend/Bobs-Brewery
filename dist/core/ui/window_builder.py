@@ -3,7 +3,7 @@ import json
 import tkinter
 from tkinter import ttk
 import importlib
-from core.ui.widget_wrapper import WidgetWrapper
+from core.ui.widget_wrapper import WidgetWrapper, WindowWrapper
 from core.ui import btn_commands
 import modules.contact_management as contact_management
 from modules.contact_management import ContactsTreeviewPopulator
@@ -32,22 +32,8 @@ class WindowBuilder:
 
         widget_library = WindowBuilder.get_or_import_library(widget_library_name)
 
-        if widget_type == "Tk":
-            widget = WindowBuilder.create_window(json_properties, True)
-
-            # Recursively create child widgets
-            for child_config in children:
-                child_element = WindowBuilder.create_widget_from_json(child_config, widget)
-                if child_element:
-                    child_element["widget"].pack()
-        elif widget_type == "Toplevel":
-            widget = WindowBuilder.create_window(json_properties)
-
-            # Recursively create child widgets
-            for child_config in children:
-                child_element = WindowBuilder.create_widget_from_json(child_config, widget)
-                if child_element:
-                    child_element["widget"].pack()
+        if widget_type in ("Tk", "TopLevel"):
+            widget = WindowWrapper.load_window_from_file(file_path)
         else:
             # For non-Tk types, initialize widget normally
             widget = WidgetWrapper(ui_config)
