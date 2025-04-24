@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 
-class BreweryTreeview(ttk.Treeview):
+class BBTreeview(ttk.Treeview):
     next_iid = 0
 
     def add_node(self, text, parent=''):

@@ -1,7 +1,7 @@
-from core.meta.bb_registry import BBRegistry
+from core.registries.registry import Registry
 
 
-class ModuleRegistry(BBRegistry):
+class ModuleRegistry(Registry):
     def __init__(self):
         super().__init__()
         self.modules = {}

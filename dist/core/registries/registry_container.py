@@ -1,4 +1,4 @@
-from core.meta.module_registry import ModuleRegistry
+from core.registries.module_registry import ModuleRegistry
 
 
 class RegistryContainer:

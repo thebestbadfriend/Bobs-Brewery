@@ -1,2 +1,0 @@
-class BBRegistry(dict):
-    pass
