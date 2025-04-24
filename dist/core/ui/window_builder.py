@@ -32,6 +32,7 @@ only likely to be one instance (I may even make it a static class to protect tha
 registries unrelated to the gui, the small overhead of what is - at the moment - a redundant top class will make that
 extension all the easier
 '''
+
 class WindowBuilder:
     widget_registry = {} # To be replaced by the widgets list
     widgets = []

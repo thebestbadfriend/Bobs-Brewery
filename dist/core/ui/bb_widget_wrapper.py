@@ -4,6 +4,7 @@ from tkinter import ttk
 
 tk = tkinter
 
+
 class BBWidgetWrapper:
     '''
     up to now, windows have been treated more or less as widgets. Now, windows should be their own class and should have
@@ -19,6 +20,33 @@ class BBWidgetWrapper:
         window_name: {
             widget_name: BBWidgetWrapper object
         }
+    }
+
+    ^actually, since I am restructuring as RegistryStack>ModuleRegistry>WindowRegistry>WidgetRegistry>, the widget
+    registry only needs to be
+
+    [
+        {
+            widget_name: BBWidgetWrapper object
+        }
+    ]
+
+    as the overall structure will be something like
+
+    RegistryStack object =
+    {
+        module_registry : [
+            module: {
+                enabled: True,
+                window_registry: [
+                    window: {
+                        widget_registry: [
+                            widget: BBWidgetWrapper object
+                        ]
+                    }
+                ]
+            }
+        ]
     }
     '''
     global_widget_registry = {}
@@ -72,20 +100,7 @@ class BBWidgetWrapper:
 
     @staticmethod
     def get_or_import_library(library_name):
-        widget_library = None
-
-        try:
-            # If the library is already imported, use it directly
-            widget_library = globals().get(library_name)  # Get the module from the globals() dictionary
-
-            if widget_library is None:
-                # If it's not imported, we can either raise an error or try to import it dynamically
-                raise ImportError(f"Module '{library_name}' not found in the global scope. Attempting to import it.")
-
-        except ImportError:
-            widget_library = importlib.import_module(library_name)
-
-        return widget_library
+        return importlib.import_module(library_name)
 
     def check_widget_exists(self, widget_name, current_window_only=True):
         widget_exists = False
@@ -121,25 +136,7 @@ class BBWidgetWrapper:
             '''
             the below needs to be changed for a couple reasons:
             
-            1) it only works for single-layer modules
-              a) that is, module.function works, but module.submodule.function does not
-                i) specifically, importlib.import_module can handle 'module' or 'module.submodule', but globals().get()
-                   cannot handle the 'module.submodule' string.
-                ii) preserve the string as is for use in importlib.import_module as needed
-                iii) for globals().get() need to use importlib.import_module to import the whole importable path to the
-                     module (not including the function /within/ the module) (e.g.
-                     importlib.import_module(some_module.submodule.subsubmodule)) and then use
-                     getattr(current_iteration, next_part, None) for all subsequent levels (usually just the function
-                     portion). For example
-                     
-                     if the full string is 'my_module.my_submodule.my_sub_submodule.my_sub_sub_submodule.my_function'
-                     
-                     base_mod = importlib.import_module('my_module.my_submodule.my_sub_submodule.my_sub_sub_submodule')
-                     getattr(base_mod, 'my_function', None)
-                     
-              b) the change for this part actually should go in the get_or_import_library function so that paths can
-                 be passed as strings as is already the case here and the logic to go through the path and get the right
-                 module does not have to be duplicated everywhere it is needed.
+            1) done, reduction of get_or_import_library to eliminate reliance on globals().get()
             2) it only works for importable or global things
               a) that is, module.function works, but widget.function (such as tv_contacts.yview) does not unless
                  widget has been added to globals()
