@@ -2,7 +2,7 @@ import json
 import tkinter
 from tkinter import ttk
 import importlib
-from core.ui.bb_widget_wrapper import BBWidgetWrapper
+from core.ui.bb_widget_wrapper import Widget
 from core.ui import btn_commands
 import modules.contact_management as contact_management
 from modules.contact_management import ContactsTreeviewPopulator

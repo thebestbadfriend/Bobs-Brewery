@@ -1,4 +1,5 @@
 {
+    "name": "main",
     "type": "Tk",
     "library": "tk",
     "properties": {

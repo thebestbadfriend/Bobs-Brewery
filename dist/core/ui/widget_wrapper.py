@@ -3,12 +3,14 @@ import importlib
 import json
 import tkinter
 from tkinter import ttk
+from core.meta import utilities
+from .window_wrapper import WindowWrapper
 
 tk = tkinter
 
 
-class BBWidgetWrapper:
-    def __init__(self, full_dict, window, parent=None):
+class WidgetWrapper:
+    def __init__(self, full_dict, window: WindowWrapper, parent=None):
         self.window = window
 
         self.parent = parent
@@ -19,21 +21,22 @@ class BBWidgetWrapper:
 
         self.full_dict = full_dict
         self.name = self.full_dict['name']
-        self.widget = None
+        self.widget = self.create_widget()
 
         self.create_widget()
         self.create_children()
         self.pack()
 
+    def register(self):
+        self.window.widget_registry[self.name] = self
+
     def create_widget(self):
         widget_library_name = self.full_dict.get("library")
-        widget_library = self.get_or_import_library(widget_library_name)
+        widget_library = utilities.get_or_import_library(widget_library_name)
         widget_type = self.full_dict.get("type")
         properties = self.get_objectified_dict(self.full_dict.get("properties", {}))
 
-        self.widget = getattr(widget_library, widget_type)(self.parent, **properties)
-
-        BBWidgetWrapper.global_widget_registry[self.window][self.name] = self
+        return getattr(widget_library, widget_type)(self.parent, **properties)
 
     def create_children(self):
         child_list = self.full_dict.get('children', [])
@@ -42,7 +45,7 @@ class BBWidgetWrapper:
                 self.create_child(child_dict)
 
     def create_child(self, child_dict):
-        child = BBWidgetWrapper(full_dict=child_dict, window='test', parent=self)
+        child = WidgetWrapper(full_dict=child_dict, window='test', parent=self)
         self.children.append(child)
 
     @staticmethod
@@ -55,10 +58,9 @@ class BBWidgetWrapper:
 
         return objectified_dict
 
-    @staticmethod
-    def get_or_import_library(library_name):
-        return importlib.import_module(library_name)
-
+    # TODO
+    # Move check_widget_exists from widget_wrapper, whose concern it is not, into window_wrapper.
+    # Does not need to be able to search other windows either. If there's a need later, I can explore that.
     def check_widget_exists(self, widget_name, current_window_only=True):
         widget_exists = False
         searchable_windows = []
@@ -66,11 +68,11 @@ class BBWidgetWrapper:
         if current_window_only:
             searchable_windows.append(self.window)
         else:
-            for window in BBWidgetWrapper.global_widget_registry.keys():
+            for window in WidgetWrapper.global_widget_registry.keys():
                 searchable_windows.append(window)
 
         for window in searchable_windows:
-            if widget_name in BBWidgetWrapper.global_widget_registry[window].keys():
+            if widget_name in WidgetWrapper.global_widget_registry[window].keys():
                 widget_exists = True
 
         return widget_exists
@@ -116,4 +118,4 @@ class BBWidgetWrapper:
         with open(file, 'r') as f:
             widget_json = json.load(file)
 
-        return BBWidgetWrapper(full_dict=widget_json, window=window, parent=parent)
+        return WidgetWrapper(full_dict=widget_json, window=window, parent=parent)
