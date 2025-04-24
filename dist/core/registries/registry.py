@@ -1,2 +1,0 @@
-class Registry(dict):
-    pass
