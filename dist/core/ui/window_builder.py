@@ -20,37 +20,6 @@ class WindowBuilder:
     widgets = []
 
     @staticmethod
-    def create_widget_from_file(file_path, parent=None):
-        with open(file_path, "r") as file:
-            ui_config = json.load(file)
-
-        widget_library_name = ui_config["library"]
-        widget_type = ui_config["type"]
-        json_properties = ui_config.get("properties", {})
-        children = ui_config.get("children", [])
-
-        widget_library = WindowBuilder.get_or_import_library(widget_library_name)
-
-        if widget_type in ("Tk", "TopLevel"):
-            widget = WindowWrapper.load_window_from_file(file_path)
-        else:
-            # For non-Tk types, initialize widget normally
-            widget = WidgetWrapper(ui_config)
-
-        return widget
-
-    @staticmethod
-    def create_modal_window_from_file(file_path):
-        print('\n\n\n\n')
-        modal_root = WindowBuilder.create_widget_from_file(file_path)
-        modal_root.transient(tk._default_root)
-        modal_root.grab_set()
-
-        print(f'\n\n\n\n modal root is {modal_root}')
-
-        return modal_root
-
-    @staticmethod
     def create_widget_from_json(element, parent):
         widget_name = element["name"]
         widget_library_name = element["library"]
@@ -122,22 +91,6 @@ class WindowBuilder:
 
         return widget_dict
 
-    @staticmethod
-    def get_or_import_library(library_name):
-        widget_library = None
-
-        try:
-            # If the library is already imported, use it directly
-            widget_library = globals().get(library_name)  # Get the module from the globals() dictionary
-
-            if widget_library is None:
-                # If it's not imported, we can either raise an error or try to import it dynamically
-                raise ImportError(f"Module '{library_name}' not found in the global scope.")
-
-        except ImportError:
-            widget_library = importlib.import_module(library_name)
-
-        return widget_library
 
     @staticmethod
     def create_tab_in_notebook(tab_json, notebook):

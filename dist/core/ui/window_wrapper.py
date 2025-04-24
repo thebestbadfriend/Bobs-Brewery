@@ -43,3 +43,14 @@ class WindowWrapper:
             window_json = json.load(f)
 
         return WindowWrapper(full_dict=window_json, module=module)
+
+    @staticmethod
+    def create_modal_window_from_file(file, parent_window:'WindowWrapper', module: Module=None):
+        if module is None:
+            module = parent_window.module
+
+        modal_root = WindowWrapper.load_window_from_file(file, module=module)
+        modal_root.window.transient(parent_window.window)
+        modal_root.window.grab_set()
+
+        return modal_root
