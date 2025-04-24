@@ -155,26 +155,6 @@ class WindowBuilder:
         return widget_library
 
     @staticmethod
-    def create_window(properties, is_root=False):
-        # Create the Tk instance first, then set properties separately
-        if is_root:
-            widget = tk.Tk()
-        else:
-            widget = tk.Toplevel()
-
-        widget.title(properties.get("title", ""))
-        widget.minsize(properties.get("min_width", 200), properties.get("min_height", 200))
-        widget.maxsize(properties.get("max_width", 3000), properties.get("max_height", 3000))
-        widget.geometry(properties.get("geometry_string", "800x600"))
-        # Set position if provided
-        if "xpos" in properties and "ypos" in properties:
-            widget.geometry(f'+{properties["xpos"]}+{properties["ypos"]}')
-        if "resizable" in properties:
-            widget.resizable(*properties["resizable"])
-
-        return widget
-
-    @staticmethod
     def create_tab_in_notebook(tab_json, notebook):
         tab = tk.Frame(notebook)
         children = tab_json.get("children",[])

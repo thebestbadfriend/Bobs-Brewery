@@ -34,7 +34,7 @@ class WidgetWrapper:
         widget_library_name = self.full_dict.get("library")
         widget_library = utilities.get_or_import_library(widget_library_name)
         widget_type = self.full_dict.get("type")
-        properties = self.get_objectified_dict(self.full_dict.get("properties", {}))
+        properties = utilities.get_objectified_dict(self.full_dict.get("properties", {}))
 
         return getattr(widget_library, widget_type)(self.parent, **properties)
 
@@ -47,16 +47,6 @@ class WidgetWrapper:
     def create_child(self, child_dict):
         child = WidgetWrapper(full_dict=child_dict, window='test', parent=self)
         self.children.append(child)
-
-    @staticmethod
-    def get_objectified_dict(dictionary):
-        objectified_dict = dictionary.copy()
-
-        for key, val in dictionary.items():
-            if isinstance(val, str) and hasattr(tkinter, val):
-                objectified_dict[key] = getattr(tkinter, val)
-
-        return objectified_dict
 
     # TODO
     # Move check_widget_exists from widget_wrapper, whose concern it is not, into window_wrapper.
@@ -83,7 +73,7 @@ class WidgetWrapper:
             tab = tkinter.Frame(notebook)
             notebook.add(tab, text=self.full_dict.get("title"))
         else:
-            pack_props = self.get_objectified_dict(self.full_dict.get("pack_properties", {}))
+            pack_props = utilities.get_objectified_dict(self.full_dict.get("pack_properties", {}))
             self.widget.pack(**pack_props)
 
     def pre_widget_creation_tasks(self):
@@ -106,7 +96,7 @@ class WidgetWrapper:
             if self.check_widget_exists(command_path):
                 pass
             else:
-                module = self.get_or_import_library(command_path)
+                module = utilities.get_or_import_library(command_path)
                 if module:
                     func = getattr(module, func_name)
                     properties["command"] = func
