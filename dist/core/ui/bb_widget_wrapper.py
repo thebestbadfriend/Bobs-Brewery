@@ -1,4 +1,6 @@
+import config
 import importlib
+import json
 import tkinter
 from tkinter import ttk
 
@@ -6,51 +8,6 @@ tk = tkinter
 
 
 class BBWidgetWrapper:
-    '''
-    up to now, windows have been treated more or less as widgets. Now, windows should be their own class and should have
-    widgets as children. Window creation is to be handled by the window class. Again, they are /not/ to be treated as
-    regular widgets anymore.
-
-    also remember that in python, instance variables are not only assinged but declared in __init__.
-
-    variables declared at the root of the class - such as global_widget_registry here - are static variables
-
-    global_widget_registry should have the following structure:
-    {
-        window_name: {
-            widget_name: BBWidgetWrapper object
-        }
-    }
-
-    ^actually, since I am restructuring as RegistryStack>ModuleRegistry>WindowRegistry>WidgetRegistry>, the widget
-    registry only needs to be
-
-    [
-        {
-            widget_name: BBWidgetWrapper object
-        }
-    ]
-
-    as the overall structure will be something like
-
-    RegistryStack object =
-    {
-        module_registry : [
-            module: {
-                enabled: True,
-                window_registry: [
-                    window: {
-                        widget_registry: [
-                            widget: BBWidgetWrapper object
-                        ]
-                    }
-                ]
-            }
-        ]
-    }
-    '''
-    global_widget_registry = {}
-
     def __init__(self, full_dict, window, parent=None):
         self.window = window
 
@@ -153,3 +110,10 @@ class BBWidgetWrapper:
                     properties["command"] = func
                 else:
                     print(rf'could not find module: {command_path}')
+
+    @staticmethod
+    def load_widget_from_file(file, window, parent=None):
+        with open(file, 'r') as f:
+            widget_json = json.load(file)
+
+        return BBWidgetWrapper(full_dict=widget_json, window=window, parent=parent)
