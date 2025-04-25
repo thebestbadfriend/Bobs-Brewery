@@ -101,26 +101,13 @@ class WidgetWrapper:
             command_path = '.'.join(properties["command"].split('.')[:-1])
             func_name = properties["command"].split('.')[-1]
 
-            '''
-            the below needs to be changed for a couple reasons:
-            
-            1) done, reduction of get_or_import_library to eliminate reliance on globals().get()
-            2) it only works for importable or global things
-              a) that is, module.function works, but widget.function (such as tv_contacts.yview) does not unless
-                 widget has been added to globals()
-              b) probably a check_widget_exists() function and logic to either use the widget if one exists or proceed
-                 to get_or_import_library if not is a good way to go here
-            '''
-
-            if self.check_widget_exists(command_path):
-                pass
+            print(command_path)
+            module = utilities.get_or_import(command_path)
+            if module:
+                func = getattr(module, func_name)
+                properties["command"] = func
             else:
-                module = utilities.get_or_import(command_path)
-                if module:
-                    func = getattr(module, func_name)
-                    properties["command"] = func
-                else:
-                    print(rf'could not find module: {command_path}')
+                print(rf'could not find module: {command_path}')
 
     def post_widget_creation_tasks(self):
         if self.full_dict.get('type', '') == "Scrollbar":
