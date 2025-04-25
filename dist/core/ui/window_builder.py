@@ -29,24 +29,6 @@ class WindowBuilder:
 
         widget_library = WindowBuilder.get_or_import_library(widget_library_name)
 
-        if widget_type == "Button":
-            module_name = '.'.join(json_properties["command"].split('.')[:-1])
-            func_name = json_properties["command"].split('.')[-1]
-
-            module = WindowBuilder.get_or_import_library(module_name)
-            if module:
-                func = getattr(module, func_name)
-                json_properties["command"] = func
-            else:
-                print(rf'could not find module: {module_name}')
-        elif widget_type == "Scrollbar":
-            container, view = json_properties["command"].split('.')
-            container = WindowBuilder.widget_registry.get(container)
-            if container:
-                json_properties["command"] = getattr(container, view)
-                parent = container
-
-
         # Create the widget from the library and properties
         widget = getattr(widget_library, widget_type)(parent, **json_properties)
 
@@ -90,24 +72,3 @@ class WindowBuilder:
         }
 
         return widget_dict
-
-
-    @staticmethod
-    def create_tab_in_notebook(tab_json, notebook):
-        tab = tk.Frame(notebook)
-        children = tab_json.get("children",[])
-
-        for child in children:
-            if "pack_properties" in child:
-                if "fill" in child["pack_properties"]:
-                    child["pack_properties"]["fill"] = getattr(tk, child["pack_properties"]["fill"])
-                if "side" in child["pack_properties"]:
-                    child["pack_properties"]["side"] = getattr(tk, child["pack_properties"]["side"])
-
-                w = WindowBuilder.create_widget_from_json(child, tab)["widget"]
-                w.pack(**child["pack_properties"])
-            else:
-                w = WindowBuilder.create_widget_from_json(child, tab)["widget"]
-                w.pack()
-
-        notebook.add(tab, text=tab_json["title"])

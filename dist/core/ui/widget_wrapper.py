@@ -3,6 +3,7 @@ import importlib
 import json
 import tkinter
 from tkinter import ttk
+from typing import Union
 from core.meta import utilities
 from .window_wrapper import WindowWrapper
 
@@ -10,7 +11,7 @@ tk = tkinter
 
 
 class WidgetWrapper:
-    def __init__(self, full_dict, window: WindowWrapper, parent=None):
+    def __init__(self, full_dict, window: WindowWrapper, parent: Union['WidgetWrapper', 'WindowWrapper']=None):
         self.window = window
 
         self.parent = parent
@@ -21,9 +22,12 @@ class WidgetWrapper:
 
         self.full_dict = full_dict
         self.name = self.full_dict['name']
-        self.widget = self.create_widget()
 
-        self.create_widget()
+        self.pre_widget_creation_tasks()
+        self.widget = self.create_widget()
+        self.post_widget_creation_tasks()
+        self.register()
+
         self.create_children()
         self.pack()
 
@@ -45,12 +49,13 @@ class WidgetWrapper:
                 self.create_child(child_dict)
 
     def create_child(self, child_dict):
-        child = WidgetWrapper(full_dict=child_dict, window='test', parent=self)
+        child = WidgetWrapper(full_dict=child_dict, window=self.window, parent=self)
         self.children.append(child)
 
     # TODO
-    # Move check_widget_exists from widget_wrapper, whose concern it is not, into window_wrapper.
-    # Does not need to be able to search other windows either. If there's a need later, I can explore that.
+    # Move check_widget_exists from widget_wrapper, whose concern it is not, into window_wrapper (or maybe
+    # registry_stack). Does not need to be able to search other windows either. If there's a need later, I can explore
+    # that.
     def check_widget_exists(self, widget_name, current_window_only=True):
         widget_exists = False
         searchable_windows = []
@@ -102,6 +107,40 @@ class WidgetWrapper:
                     properties["command"] = func
                 else:
                     print(rf'could not find module: {command_path}')
+
+    def post_widget_creation_tasks(self):
+        # copied from window_builder, not edited yet
+        #######
+        if widget_type == "Scrollbar":
+            parent.configure(yscrollcommand=widget.set)
+
+        if "binds" in element:
+            for event, config in element["binds"].items():
+                config['module'] = globals().get(config["module"])
+                func = getattr(config['module'], config['function'])
+                args = config['args']
+                args['widget'] = widget
+
+                widget.bind(event, lambda e, function=func, arguments=args.copy(): function(e, **arguments))
+
+        if widget_type == "file":
+            widget = WindowBuilder.create_widget_from_file(widget, parent)
+        elif widget_type == "Notebook":
+            for child in children:
+                WindowBuilder.create_tab_in_notebook(child, widget)
+        else:
+            for child in children:
+                WindowBuilder.create_widget_from_json(child, widget)
+
+        if "populate_function" in element:
+            module_name = element["populate_function"]["module"]
+            func_name = element["populate_function"]["function_name"]
+
+            module = globals().get(module_name)
+            if module:
+                func = getattr(module, func_name)
+                func(widget)
+        #######
 
     @staticmethod
     def load_widget_from_file(file, window, parent=None):
