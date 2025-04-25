@@ -16,7 +16,7 @@
     "children": [
         {
             "name": "tc_main",
-            "library": "ttk",
+            "library": "tkinter.ttk",
             "type": "Notebook",
             "properties": {
                 "height": 500,
@@ -82,7 +82,7 @@
                         },
                         {
                             "name": "txt_search_companies",
-                            "library": "ttk",
+                            "library": "tkinter.ttk",
                             "type": "Entry",
                             "binds": {
                                 "<KeyRelease>": {
@@ -104,7 +104,7 @@
                         },
                         {
                             "name": "txt_search_people",
-                            "library": "ttk",
+                            "library": "tkinter.ttk",
                             "type": "Entry",
                             "binds": {
                                 "<KeyRelease>": {
@@ -118,7 +118,7 @@
                         },
                         {
                             "name": "tv_contacts",
-                            "library": "ttk",
+                            "library": "tkinter.ttk",
                             "type": "Treeview",
                             "populate_function": {
                                 "module": "ContactsTreeviewPopulator",
@@ -127,7 +127,7 @@
                             "children": [
                                 {
                                     "name": "ctv_vert_scroll",
-                                    "library": "ttk",
+                                    "library": "tkinter.ttk",
                                     "type": "Scrollbar",
                                     "properties": {
                                         "orient": "vertical",

@@ -1,8 +1,13 @@
 import importlib
 import tkinter
 
-def get_or_import_library(library_name):
-    return importlib.import_module(library_name)
+def get_or_import(module_path, class_name=''):
+    importer = importlib.import_module(module_path)
+
+    if class_name:
+        importer = getattr(importer, class_name)
+
+    return importer
 
 
 def get_objectified_dict(dictionary):

@@ -35,12 +35,26 @@ class WidgetWrapper:
         self.window.widget_registry[self.name] = self
 
     def create_widget(self):
-        widget_library_name = self.full_dict.get("library")
-        widget_library = utilities.get_or_import_library(widget_library_name)
-        widget_type = self.full_dict.get("type")
-        properties = utilities.get_objectified_dict(self.full_dict.get("properties", {}))
+        if self.full_dict.get('type','') == "file":
+            file = self.full_dict.get('file','')
+            return self.load_widget_from_file(file, self.window, self.parent)
+        else:
+            widget_library_name = self.full_dict.get("library")
+            print(rf'widget library name is : {widget_library_name}')
+            widget_library = utilities.get_or_import(widget_library_name)
+            widget_type = self.full_dict.get("type")
+            print(rf'widget type is : {widget_type}')
+            print('---')
+            properties = utilities.get_objectified_dict(self.full_dict.get("properties", {}))
 
-        return getattr(widget_library, widget_type)(self.parent, **properties)
+            widget_class = getattr(widget_library, widget_type)
+            if isinstance(self.parent, WindowWrapper):
+                widget = widget_class(self.parent.window, **properties)
+            else:
+                widget = widget_class(self.parent.widget, **properties)
+
+            return widget
+
 
     def create_children(self):
         child_list = self.full_dict.get('children', [])
@@ -101,7 +115,7 @@ class WidgetWrapper:
             if self.check_widget_exists(command_path):
                 pass
             else:
-                module = utilities.get_or_import_library(command_path)
+                module = utilities.get_or_import(command_path)
                 if module:
                     func = getattr(module, func_name)
                     properties["command"] = func
@@ -109,38 +123,28 @@ class WidgetWrapper:
                     print(rf'could not find module: {command_path}')
 
     def post_widget_creation_tasks(self):
-        # copied from window_builder, not edited yet
-        #######
-        if widget_type == "Scrollbar":
-            parent.configure(yscrollcommand=widget.set)
+        if self.full_dict.get('type', '') == "Scrollbar":
+            self.parent.widget.configure(yscrollcommand=self.widget.set)
 
-        if "binds" in element:
-            for event, config in element["binds"].items():
-                config['module'] = globals().get(config["module"])
-                func = getattr(config['module'], config['function'])
-                args = config['args']
-                args['widget'] = widget
+        binds = self.full_dict.get("binds", {})
+        if binds:
+            for event_name, event_config in binds.items():
+                event_config['module'] = globals().get(event_config["module"])
+                func = getattr(event_config['module'], event_config['function'])
+                args = event_config['args']
+                args['widget'] = self.widget
 
-                widget.bind(event, lambda e, function=func, arguments=args.copy(): function(e, **arguments))
+                self.widget.bind(event_name, lambda e, function=func, arguments=args.copy(): function(e, **arguments))
 
-        if widget_type == "file":
-            widget = WindowBuilder.create_widget_from_file(widget, parent)
-        elif widget_type == "Notebook":
-            for child in children:
-                WindowBuilder.create_tab_in_notebook(child, widget)
-        else:
-            for child in children:
-                WindowBuilder.create_widget_from_json(child, widget)
+        populate_function = self.full_dict.get("populate_function",'')
+        if populate_function:
+            module_name = populate_function["module"]
+            func_name = populate_function["function_name"]
 
-        if "populate_function" in element:
-            module_name = element["populate_function"]["module"]
-            func_name = element["populate_function"]["function_name"]
-
-            module = globals().get(module_name)
+            module = utilities.get_or_import(module_name)
             if module:
                 func = getattr(module, func_name)
-                func(widget)
-        #######
+                func(self.widget)
 
     @staticmethod
     def load_widget_from_file(file, window, parent=None):

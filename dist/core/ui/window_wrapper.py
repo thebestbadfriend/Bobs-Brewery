@@ -14,13 +14,14 @@ class WindowWrapper:
 
         self.widget_registry = Registry(name='widget_registry')
         self.window = self.create_window()
+        self.create_children()
 
     def register(self):
         self.module.window_registry[self.name] = self
 
     def create_window(self):
         library_name = self.full_dict['library']
-        library = utilities.get_or_import_library(library_name)
+        library = utilities.get_or_import(library_name)
         window_type = self.full_dict.get("type")
         window = getattr(library, window_type)()
 
@@ -36,6 +37,15 @@ class WindowWrapper:
             window.resizable(*properties["resizable"])
 
         return window
+
+    def create_children(self):
+        module_path = 'core.ui.widget_wrapper'
+        class_name = 'WidgetWrapper'
+        WidgetWrapper = utilities.get_or_import(module_path, class_name)
+
+        for child in self.full_dict.get("children", []):
+            # full_dict, window: WindowWrapper, parent: Union['WidgetWrapper', 'WindowWrapper']=None
+            child = WidgetWrapper(child, self, self)
 
     @staticmethod
     def load_window_from_file(file, module: Module=None):
