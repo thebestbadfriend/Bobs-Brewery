@@ -10,6 +10,13 @@ def get_or_import(module_path, class_name=''):
     return importer
 
 
+def resolve_object_reference_from_string(string_value, context):
+    if not string_value.startswith('@@'):
+        return string_value
+
+    object_path = string_value[2:]
+
+
 def get_objectified_dict(dictionary):
     objectified_dict = dictionary.copy()
 

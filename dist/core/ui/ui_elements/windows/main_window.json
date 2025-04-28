@@ -77,7 +77,10 @@
                                 "text": "Add Contact(s)",
                                 "command": {
                                     "path": "modules.contact_management.event_handlers",
-                                    "function": "btn_add_contacts_clicked"
+                                    "function": "btn_add_contacts_clicked",
+                                    "kwargs": {
+                                        "window": "@@window.window"
+                                    }
                                 }
                             }
                         },
