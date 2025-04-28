@@ -82,6 +82,7 @@ class WidgetWrapper:
             command_path = '.'.join(command['path'].split('.'))
             command_class = command.get('class', '')
             func_name = command['function']
+            kwargs = command.get('kwargs', {}).copy()
 
             if self.check_widget_exists(command_path):
                 module = self.window.widget_registry[command_path].widget
@@ -89,7 +90,7 @@ class WidgetWrapper:
                 module = utilities.get_or_import(command_path, command_class)
 
             func = getattr(module, func_name)
-            properties["command"] = func
+            properties["command"] = lambda function=func, arguments=kwargs: function(**arguments)
 
     def post_widget_creation_tasks(self):
         if self.full_dict.get('type', '') == "Scrollbar":
