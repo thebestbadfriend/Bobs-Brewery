@@ -35,7 +35,10 @@
                             "type": "Button",
                             "properties": {
                                 "text": "Fix Server Access",
-                                "command": "core.ui.btn_commands.fix_server_access"
+                                "command": {
+                                    "path": "core.ui.btn_commands",
+                                    "function": "fix_server_access"
+                                }
                             }
                         }
                     ]
@@ -52,7 +55,10 @@
                             "type": "Button",
                             "properties": {
                                 "text": "Open Favorite Programs",
-                                "command": "core.ui.btn_commands.open_favorite_programs"
+                                "command": {
+                                    "path": "core.ui.btn_commands",
+                                    "function": "open_favorite_programs"
+                                }
                             }
                         }
                     ]
@@ -69,7 +75,10 @@
                             "type": "Button",
                             "properties": {
                                 "text": "Add Contact(s)",
-                                "command": "modules.contact_management.event_handlers.btn_add_contacts_clicked"
+                                "command": {
+                                    "path": "modules.contact_management.event_handlers",
+                                    "function": "btn_add_contacts_clicked"
+                                }
                             }
                         },
                         {
@@ -134,7 +143,10 @@
                                     "type": "Scrollbar",
                                     "properties": {
                                         "orient": "vertical",
-                                        "command": "tv_contacts.yview"
+                                        "command": {
+                                            "path": "tv_contacts",
+                                            "function": "yview"
+                                        }
                                     },
                                     "pack_properties": {
                                         "side": "RIGHT",
@@ -167,7 +179,10 @@
             "type": "Button",
             "properties": {
                 "text": "Exit",
-                "command": "core.ui.btn_commands.on_btn_exit_click"
+                "command": {
+                    "path": "core.ui.btn_commands",
+                    "function": "on_btn_exit_click"
+                }
             }
         }
     ]

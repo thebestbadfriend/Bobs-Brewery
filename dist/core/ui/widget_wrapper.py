@@ -77,9 +77,10 @@ class WidgetWrapper:
 
     def pre_widget_creation_tasks(self):
         properties = self.full_dict.get("properties", {})
-        if properties.get('command',''):
-            command_path = '.'.join(properties["command"].split('.')[:-1])
-            func_name = properties["command"].split('.')[-1]
+        command = properties.get("command", '')
+        if command:
+            command_path = '.'.join(command['path'].split('.'))
+            func_name = command['function']
 
             if self.check_widget_exists(command_path):
                 module = self.window.widget_registry[command_path].widget
