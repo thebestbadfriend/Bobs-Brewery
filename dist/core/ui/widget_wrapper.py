@@ -29,7 +29,7 @@ class WidgetWrapper:
         self.register()
 
         self.create_children()
-        self.pack()
+        self.pack_widget()
 
     def register(self):
         self.window.widget_registry[self.name] = self
@@ -50,6 +50,11 @@ class WidgetWrapper:
             else:
                 widget = widget_class(self.parent.widget, **properties)
 
+                if self.parent.full_dict.get('type', '') == 'Notebook':
+                    print(rf'{self.name} is the direct child of a notebook')
+                    notebook = self.parent.widget
+                    notebook.add(widget, text=self.full_dict['title'])
+
             return widget
 
     def create_children(self):
@@ -62,23 +67,16 @@ class WidgetWrapper:
         child = WidgetWrapper(full_dict=child_dict, window=self.window, parent=self)
         self.children.append(child)
 
-    def pack(self):
-        if self.parent.full_dict.get('type', '') == 'Notebook':
-            notebook = self.parent.widget
-            tab = tkinter.Frame(notebook)
-            notebook.add(tab, text=self.full_dict.get("title"))
-        else:
+    def pack_widget(self):
+        if self.parent.full_dict.get('type', '') != 'Notebook':
             pack_props = utilities.get_objectified_dict(self.full_dict.get("pack_properties", {}))
             self.widget.pack(**pack_props)
 
     def check_widget_exists(self, widget_name):
-        print(widget_name)
-        print(widget_name in self.window.widget_registry.keys())
         return widget_name in self.window.widget_registry.keys()
 
     def pre_widget_creation_tasks(self):
         properties = self.full_dict.get("properties", {})
-        print(self.name)
         if properties.get('command',''):
             command_path = '.'.join(properties["command"].split('.')[:-1])
             func_name = properties["command"].split('.')[-1]
