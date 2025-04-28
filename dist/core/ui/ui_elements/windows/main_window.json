@@ -35,7 +35,7 @@
                             "type": "Button",
                             "properties": {
                                 "text": "Fix Server Access",
-                                "command": "btn_commands.fix_server_access"
+                                "command": "core.ui.btn_commands.fix_server_access"
                             }
                         }
                     ]
@@ -52,7 +52,7 @@
                             "type": "Button",
                             "properties": {
                                 "text": "Open Favorite Programs",
-                                "command": "btn_commands.open_favorite_programs"
+                                "command": "core.ui.btn_commands.open_favorite_programs"
                             }
                         }
                     ]
@@ -86,7 +86,8 @@
                             "type": "Entry",
                             "binds": {
                                 "<KeyRelease>": {
-                                    "module": "ContactsTreeviewPopulator",
+                                    "module": "modules.contact_management",
+                                    "class": "ContactsTreeviewPopulator",
                                     "function": "filter_contacts_treeview",
                                     "args": {
                                         "filter_by": "companies"
@@ -108,7 +109,8 @@
                             "type": "Entry",
                             "binds": {
                                 "<KeyRelease>": {
-                                    "module": "ContactsTreeviewPopulator",
+                                    "module": "modules.contact_management",
+                                    "class": "ContactsTreeviewPopulator",
                                     "function": "filter_contacts_treeview",
                                     "args": {
                                         "filter_by": "people"
@@ -121,7 +123,8 @@
                             "library": "tkinter.ttk",
                             "type": "Treeview",
                             "populate_function": {
-                                "module": "ContactsTreeviewPopulator",
+                                "module": "modules.contact_management",
+                                "class": "ContactsTreeviewPopulator",
                                 "function_name": "populate_contacts_treeview"
                             },
                             "children": [
@@ -141,7 +144,8 @@
                             ],
                             "binds": {
                                 "<<TreeviewOpen>>": {
-                                    "module": "ContactsTreeviewPopulator",
+                                    "module": "modules.contact_management",
+                                    "class": "ContactsTreeviewPopulator",
                                     "function": "load_details_for_contact",
                                     "args": {
 
@@ -163,7 +167,7 @@
             "type": "Button",
             "properties": {
                 "text": "Exit",
-                "command": "btn_commands.on_btn_exit_click"
+                "command": "core.ui.btn_commands.on_btn_exit_click"
             }
         }
     ]
