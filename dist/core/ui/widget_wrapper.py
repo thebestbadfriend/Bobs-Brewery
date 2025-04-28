@@ -80,12 +80,13 @@ class WidgetWrapper:
         command = properties.get("command", '')
         if command:
             command_path = '.'.join(command['path'].split('.'))
+            command_class = command.get('class', '')
             func_name = command['function']
 
             if self.check_widget_exists(command_path):
                 module = self.window.widget_registry[command_path].widget
             else:
-                module = utilities.get_or_import(command_path)
+                module = utilities.get_or_import(command_path, command_class)
 
             func = getattr(module, func_name)
             properties["command"] = func
