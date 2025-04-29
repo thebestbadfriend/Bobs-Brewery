@@ -36,4 +36,9 @@ of allowing relatively non-technical people to build graphical tools without too
 it easier for tech people to manage things in some ways. Also, if I do build a wysiwyg editor, having it work by
 creating json/yaml files to be loaded by the program will make it pretty straightforward for people to fine-tune things
 as needed.
+
+Aaaaaaand another branch... Gotta firm up security. Query execution, for example, works but is not secure at the moment.
+Need to look into other areas for improvement regarding security too.
+
+Should probably get a Notion going for this whole thing.
 '''
