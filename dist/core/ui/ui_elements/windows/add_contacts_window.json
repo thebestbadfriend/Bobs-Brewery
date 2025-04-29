@@ -10,7 +10,7 @@
         "max_height": 3000,
         "xpos": 200,
         "ypos": 100,
-        "geometry_string": "500x300",
+        "geometry_string": "800x600",
         "resizable": [
             true,
             true
@@ -31,14 +31,6 @@
                 "expand": true
             },
             "children": [
-                {
-                    "name": "lbl_test",
-                    "library": "tkinter",
-                    "type": "Label",
-                    "properties": {
-                        "text": "this is a test label"
-                    }
-                },
                 {
                     "name": "tc_contact_name",
                     "library": "tkinter.ttk",
@@ -77,7 +69,10 @@
                                     "type": "Button",
                                     "properties": {
                                         "text": "Add Company",
-                                        "command": "btn_commands.open_favorite_programs"
+                                        "command": {
+                                            "path": "core.ui.btn_commands",
+                                            "function": "open_favorite_programs"
+                                        }
                                     }
                                 }
                             ]
@@ -146,7 +141,10 @@
                                     "type": "Button",
                                     "properties": {
                                         "text": "Add Person",
-                                        "command": "btn_commands.open_favorite_programs"
+                                        "command": {
+                                            "path": "core.ui.btn_commands",
+                                            "function": "open_favorite_programs"
+                                        }
                                     }
                                 }
                             ]

@@ -22,6 +22,7 @@ class WidgetWrapper:
 
         self.full_dict = full_dict
         self.name = self.full_dict['name']
+        print(rf'working on {self.name}')
 
         self.pre_widget_creation_tasks()
         self.widget = self.create_widget()
@@ -51,7 +52,6 @@ class WidgetWrapper:
                 widget = widget_class(self.parent.widget, **properties)
 
                 if self.parent.full_dict.get('type', '') == 'Notebook':
-                    print(rf'{self.name} is the direct child of a notebook')
                     notebook = self.parent.widget
                     notebook.add(widget, text=self.full_dict['title'])
 
