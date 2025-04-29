@@ -26,10 +26,6 @@
                 "width": 500,
                 "height": 500
             },
-            "pack_properties": {
-                "fill": "both",
-                "expand": true
-            },
             "children": [
                 {
                     "name": "tc_contact_name",
@@ -38,10 +34,6 @@
                     "properties": {
                         "height": 200,
                         "width": 400
-                    },
-                    "pack_properties": {
-                        "fill": "both",
-                        "expand": true
                     },
                     "children": [
                         {
