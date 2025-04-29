@@ -22,7 +22,6 @@ class WidgetWrapper:
 
         self.full_dict = full_dict
         self.name = self.full_dict['name']
-        print(rf'working on {self.name}')
 
         self.pre_widget_creation_tasks()
         self.widget = self.create_widget()

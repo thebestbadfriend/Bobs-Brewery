@@ -62,8 +62,11 @@
                                     "properties": {
                                         "text": "Add Company",
                                         "command": {
-                                            "path": "core.ui.btn_commands",
-                                            "function": "open_favorite_programs"
+                                            "path": "modules.contact_management.event_handlers",
+                                            "function": "btn_add_company_clicked",
+                                            "kwargs": {
+                                                "window": "@@window"
+                                            }
                                         }
                                     }
                                 }
@@ -134,8 +137,11 @@
                                     "properties": {
                                         "text": "Add Person",
                                         "command": {
-                                            "path": "core.ui.btn_commands",
-                                            "function": "open_favorite_programs"
+                                            "path": "modules.contact_management.event_handlers",
+                                            "function": "btn_add_person_clicked",
+                                            "kwargs": {
+                                                "window": "@@window"
+                                            }
                                         }
                                     }
                                 }
@@ -144,6 +150,101 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "lbl_phone_number",
+            "library": "tkinter",
+            "type": "Label",
+            "properties": {
+                "text": "Phone Number"
+            },
+            "children": [
+
+            ]
+        },
+        {
+            "name": "txt_phone_number",
+            "library": "tkinter",
+            "type": "Entry"
+        },
+        {
+            "name": "lbl_email_address",
+            "library": "tkinter",
+            "type": "Label",
+            "properties": {
+                "text": "Email Address"
+            }
+        },
+        {
+            "name": "txt_email_address",
+            "library": "tkinter",
+            "type": "Entry"
+        },
+        {
+            "name": "lbl_street_address",
+            "library": "tkinter",
+            "type": "Label",
+            "properties": {
+                "text": "Street Address"
+            }
+        },
+        {
+            "name": "txt_street_address",
+            "library": "tkinter",
+            "type": "Entry"
+        },
+        {
+            "name": "lbl_po_box",
+            "library": "tkinter",
+            "type": "Label",
+            "properties": {
+                "text": "P.O. Box"
+            }
+        },
+        {
+            "name": "txt_po_box",
+            "library": "tkinter",
+            "type": "Entry"
+        },
+        {
+            "name": "lbl_city",
+            "library": "tkinter",
+            "type": "Label",
+            "properties": {
+                "text": "City"
+            }
+        },
+        {
+            "name": "txt_city",
+            "library": "tkinter",
+            "type": "Entry"
+        },
+        {
+            "name": "lbl_state",
+            "library": "tkinter",
+            "type": "Label",
+            "properties": {
+                "text": "State"
+            }
+        },
+        {
+            "name": "txt_state",
+            "library": "tkinter",
+            "type": "Entry"
+        },
+        {
+            "name": "lbl_zip_code",
+            "library": "tkinter",
+            "type": "Label",
+            "properties": {
+                "text": "Zip Code"
+            }
+        },
+        {
+            "name": "txt_zip_code",
+            "library": "tkinter",
+            "type": "Entry"
         }
     ]
+
 }
