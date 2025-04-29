@@ -38,6 +38,32 @@ CREATE TABLE public.addresses (
 ALTER TABLE public.addresses OWNER TO postgres;
 
 --
+-- Name: addresses_email_addresses; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.addresses_email_addresses (
+    address_id integer NOT NULL,
+    email_address_id integer NOT NULL,
+    last_verified date
+);
+
+
+ALTER TABLE public.addresses_email_addresses OWNER TO postgres;
+
+--
+-- Name: addresses_fax_numbers; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.addresses_fax_numbers (
+    address_id integer NOT NULL,
+    fax_number_id integer NOT NULL,
+    last_verified date
+);
+
+
+ALTER TABLE public.addresses_fax_numbers OWNER TO postgres;
+
+--
 -- Name: addresses_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -71,6 +97,19 @@ CREATE TABLE public.addresses_phone_numbers (
 
 
 ALTER TABLE public.addresses_phone_numbers OWNER TO postgres;
+
+--
+-- Name: addresses_websites; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.addresses_websites (
+    address_id integer NOT NULL,
+    website_id integer NOT NULL,
+    last_verified date
+);
+
+
+ALTER TABLE public.addresses_websites OWNER TO postgres;
 
 --
 -- Name: companies; Type: TABLE; Schema: public; Owner: postgres
@@ -953,6 +992,216 @@ COPY public.addresses (id, street_address, po_box, city, state, zip_code) FROM s
 
 
 --
+-- Data for Name: addresses_email_addresses; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.addresses_email_addresses (address_id, email_address_id, last_verified) FROM stdin;
+10	37	\N
+335	47	\N
+17	25	\N
+214	14	\N
+325	20	\N
+121	34	\N
+154	45	\N
+385	57	\N
+99	9	\N
+130	46	\N
+250	44	\N
+38	56	\N
+298	15	\N
+404	4	\N
+56	2	\N
+220	2	\N
+257	42	\N
+37	3	\N
+222	17	\N
+158	54	\N
+131	18	\N
+5	5	\N
+201	28	\N
+49	10	\N
+300	31	\N
+67	35	\N
+62	52	\N
+243	24	\N
+226	38	\N
+317	39	\N
+382	40	\N
+148	48	\N
+259	27	\N
+316	43	\N
+359	33	\N
+149	50	\N
+76	51	\N
+35	36	\N
+398	22	\N
+402	13	\N
+264	16	\N
+176	12	\N
+19	7	\N
+109	1	\N
+268	21	\N
+284	26	\N
+225	41	\N
+96	8	\N
+278	55	\N
+116	53	\N
+102	6	\N
+430	49	\N
+17	23	\N
+\.
+
+
+--
+-- Data for Name: addresses_fax_numbers; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.addresses_fax_numbers (address_id, fax_number_id, last_verified) FROM stdin;
+10	2	\N
+53	3	\N
+200	5	\N
+282	6	\N
+17	7	\N
+384	8	\N
+194	10	\N
+110	12	\N
+40	13	\N
+40	14	\N
+214	15	\N
+118	16	\N
+204	17	\N
+325	18	\N
+85	19	\N
+436	20	\N
+94	21	\N
+363	22	\N
+155	23	\N
+33	24	\N
+142	25	\N
+46	26	\N
+353	27	\N
+170	28	\N
+192	29	\N
+408	30	\N
+154	31	\N
+385	32	\N
+99	33	\N
+122	34	\N
+9	35	\N
+315	36	\N
+368	37	\N
+130	38	\N
+250	39	\N
+287	40	\N
+38	41	\N
+298	146	\N
+220	42	\N
+264	116	\N
+257	43	\N
+397	44	\N
+27	45	\N
+68	46	\N
+266	47	\N
+416	49	\N
+131	50	\N
+184	51	\N
+447	52	\N
+172	53	\N
+255	54	\N
+351	55	\N
+251	56	\N
+241	57	\N
+143	58	\N
+178	59	\N
+354	60	\N
+440	61	\N
+182	62	\N
+49	63	\N
+429	65	\N
+434	66	\N
+14	67	\N
+69	68	\N
+197	69	\N
+62	70	\N
+84	71	\N
+350	72	\N
+2	74	\N
+370	75	\N
+329	76	\N
+226	77	\N
+61	78	\N
+333	79	\N
+275	80	\N
+317	81	\N
+1	82	\N
+410	83	\N
+382	84	\N
+383	85	\N
+148	85	\N
+228	86	\N
+259	88	\N
+341	89	\N
+316	90	\N
+22	91	\N
+359	92	\N
+246	93	\N
+395	94	\N
+23	95	\N
+83	96	\N
+75	97	\N
+146	98	\N
+127	99	\N
+202	100	\N
+393	101	\N
+379	102	\N
+271	103	\N
+16	104	\N
+7	105	\N
+361	106	\N
+35	107	\N
+35	108	\N
+402	109	\N
+390	110	\N
+357	111	\N
+13	112	\N
+384	113	\N
+263	114	\N
+57	115	\N
+19	117	\N
+109	118	\N
+74	119	\N
+419	120	\N
+419	121	\N
+15	123	\N
+284	124	\N
+273	125	\N
+427	127	\N
+213	128	\N
+225	129	\N
+332	131	\N
+409	132	\N
+97	133	\N
+136	134	\N
+438	135	\N
+358	136	\N
+270	137	\N
+432	138	\N
+413	139	\N
+433	140	\N
+340	141	\N
+96	142	\N
+58	143	\N
+309	144	\N
+327	145	\N
+278	146	\N
+116	147	\N
+102	148	\N
+430	149	\N
+17	151	\N
+\.
+
+
+--
 -- Data for Name: addresses_phone_numbers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -1614,6 +1863,32 @@ COPY public.addresses_phone_numbers (address_id, phone_number_id, last_verified)
 
 
 --
+-- Data for Name: addresses_websites; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.addresses_websites (address_id, website_id, last_verified) FROM stdin;
+194	1	\N
+374	3	\N
+408	5	\N
+154	7	\N
+130	8	\N
+56	10	\N
+257	4	\N
+300	11	\N
+67	2	\N
+382	13	\N
+383	13	\N
+148	13	\N
+228	12	\N
+176	14	\N
+19	6	\N
+109	15	\N
+409	16	\N
+96	17	\N
+\.
+
+
+--
 -- Data for Name: companies; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -1933,6 +2208,7 @@ COPY public.companies (id, name, contact_id) FROM stdin;
 313	Xero Fax Inc	313
 314	Yeager Auto Salvage	314
 315	Yover & Sons Construction Inc	315
+317	boop	\N
 \.
 
 
@@ -6567,7 +6843,7 @@ SELECT pg_catalog.setval('public.addresses_id_seq', 452, true);
 -- Name: companies_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.companies_id_seq', 315, true);
+SELECT pg_catalog.setval('public.companies_id_seq', 318, true);
 
 
 --
@@ -6620,6 +6896,22 @@ SELECT pg_catalog.setval('public.websites_id_seq', 18, true);
 
 
 --
+-- Name: addresses_email_addresses addresses_email_addresses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addresses_email_addresses
+    ADD CONSTRAINT addresses_email_addresses_pkey PRIMARY KEY (address_id, email_address_id);
+
+
+--
+-- Name: addresses_fax_numbers addresses_fax_numbers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addresses_fax_numbers
+    ADD CONSTRAINT addresses_fax_numbers_pkey PRIMARY KEY (address_id, fax_number_id);
+
+
+--
 -- Name: addresses_phone_numbers addresses_phone_numbers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6633,6 +6925,22 @@ ALTER TABLE ONLY public.addresses_phone_numbers
 
 ALTER TABLE ONLY public.addresses
     ADD CONSTRAINT addresses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: addresses_websites addresses_websites_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addresses_websites
+    ADD CONSTRAINT addresses_websites_pkey PRIMARY KEY (address_id, website_id);
+
+
+--
+-- Name: companies companies_name_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_name_unique UNIQUE (name);
 
 
 --
@@ -6756,6 +7064,38 @@ ALTER TABLE ONLY public.websites
 
 
 --
+-- Name: addresses_email_addresses addresses_email_addresses_address_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addresses_email_addresses
+    ADD CONSTRAINT addresses_email_addresses_address_id_fkey FOREIGN KEY (address_id) REFERENCES public.addresses(id);
+
+
+--
+-- Name: addresses_email_addresses addresses_email_addresses_email_address_id_fkay; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addresses_email_addresses
+    ADD CONSTRAINT addresses_email_addresses_email_address_id_fkay FOREIGN KEY (email_address_id) REFERENCES public.email_addresses(id);
+
+
+--
+-- Name: addresses_fax_numbers addresses_fax_numbers_address_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addresses_fax_numbers
+    ADD CONSTRAINT addresses_fax_numbers_address_id_fkey FOREIGN KEY (address_id) REFERENCES public.addresses(id);
+
+
+--
+-- Name: addresses_fax_numbers addresses_fax_numbers_fax_number_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addresses_fax_numbers
+    ADD CONSTRAINT addresses_fax_numbers_fax_number_id_fkey FOREIGN KEY (fax_number_id) REFERENCES public.fax_numbers(id);
+
+
+--
 -- Name: addresses_phone_numbers addresses_phone_numbers_address_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6769,6 +7109,22 @@ ALTER TABLE ONLY public.addresses_phone_numbers
 
 ALTER TABLE ONLY public.addresses_phone_numbers
     ADD CONSTRAINT addresses_phone_numbers_phone_number_id_fkey FOREIGN KEY (phone_number_id) REFERENCES public.phone_numbers(id);
+
+
+--
+-- Name: addresses_websites addresses_websites_address_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addresses_websites
+    ADD CONSTRAINT addresses_websites_address_id_fkey FOREIGN KEY (address_id) REFERENCES public.addresses(id);
+
+
+--
+-- Name: addresses_websites addresses_websites_website_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.addresses_websites
+    ADD CONSTRAINT addresses_websites_website_id_fkey FOREIGN KEY (website_id) REFERENCES public.websites(id);
 
 
 --
