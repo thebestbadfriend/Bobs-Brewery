@@ -27,4 +27,13 @@ the core, but I am skeptical whether anything like that will exist. Themes shoul
 module.
 
 Setting that up, of course, will probably be its own branch.
+
+Another branch will probably be to implement the option for framing rather than packing. I will keep packing as an
+option, especially since it is useful for prototyping, but framing gives a lot more flexibility in UI design. This, of
+course, needs to be able to be json-driven, as json (and possibly yaml if it can be pulled in as dictionaries as json
+can so that the already existing code can handle it properly as long as it is loaded correctly) is central to the goal
+of allowing relatively non-technical people to build graphical tools without too steep a learning curve. It also makes
+it easier for tech people to manage things in some ways. Also, if I do build a wysiwyg editor, having it work by
+creating json/yaml files to be loaded by the program will make it pretty straightforward for people to fine-tune things
+as needed.
 '''
