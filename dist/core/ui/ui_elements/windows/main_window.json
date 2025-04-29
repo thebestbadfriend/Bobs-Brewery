@@ -1,5 +1,5 @@
 {
-    "name": "main",
+    "name": "window_main",
     "type": "Tk",
     "library": "tkinter",
     "properties": {
@@ -79,7 +79,7 @@
                                     "path": "modules.contact_management.event_handlers",
                                     "function": "btn_add_contacts_clicked",
                                     "kwargs": {
-                                        "window": "@@window.window"
+                                        "window": "@@window"
                                     }
                                 }
                             }

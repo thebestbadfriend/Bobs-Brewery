@@ -1,6 +1,7 @@
 {
+    "name": "window_add_contacts",
     "type": "Toplevel",
-    "library": "tk",
+    "library": "tkinter",
     "properties": {
         "title": "Add Contacts",
         "min_width": 300,
@@ -18,7 +19,7 @@
     "children": [
         {
             "name": "lbf_contact_name",
-            "library": "ttk",
+            "library": "tkinter.ttk",
             "type": "LabelFrame",
             "properties": {
                 "text": "Contact Name",
@@ -32,7 +33,7 @@
             "children": [
                 {
                     "name": "lbl_test",
-                    "library": "tk",
+                    "library": "tkinter",
                     "type": "Label",
                     "properties": {
                         "text": "this is a test label"
@@ -40,7 +41,7 @@
                 },
                 {
                     "name": "tc_contact_name",
-                    "library": "ttk",
+                    "library": "tkinter.ttk",
                     "type": "Notebook",
                     "properties": {
                         "height": 200,
@@ -53,13 +54,13 @@
                     "children": [
                         {
                             "name": "tab_company_name",
-                            "library": "tk",
+                            "library": "tkinter",
                             "type": "Frame",
                             "title": "Company",
                             "children": [
                                 {
                                     "name": "lbl_company_name",
-                                    "library": "tk",
+                                    "library": "tkinter",
                                     "type": "Label",
                                     "properties": {
                                         "text": "Company Name"
@@ -67,12 +68,12 @@
                                 },
                                 {
                                     "name": "txt_company_name",
-                                    "library": "tk",
+                                    "library": "tkinter",
                                     "type": "Entry"
                                 },
                                 {
                                     "name": "btn_add_company",
-                                    "library": "tk",
+                                    "library": "tkinter",
                                     "type": "Button",
                                     "properties": {
                                         "text": "Add Company",
@@ -83,13 +84,13 @@
                         },
                         {
                             "name": "tab_person_name",
-                            "library": "tk",
+                            "library": "tkinter",
                             "type": "Frame",
                             "title": "Person",
                             "children": [
                                 {
                                     "name": "lbl_person_first_name",
-                                    "library": "tk",
+                                    "library": "tkinter",
                                     "type": "Label",
                                     "properties": {
                                         "text": "First Name"
@@ -97,12 +98,12 @@
                                 },
                                 {
                                     "name": "txt_person_first_name",
-                                    "library": "tk",
+                                    "library": "tkinter",
                                     "type": "Entry"
                                 },
                                 {
                                     "name": "lbl_person_last_name",
-                                    "library": "tk",
+                                    "library": "tkinter",
                                     "type": "Label",
                                     "properties": {
                                         "text": "Last Name"
@@ -110,12 +111,12 @@
                                 },
                                 {
                                     "name": "txt_person_last_name",
-                                    "library": "tk",
+                                    "library": "tkinter",
                                     "type": "Entry"
                                 },
                                 {
                                     "name": "lbl_person_suffix",
-                                    "library": "tk",
+                                    "library": "tkinter",
                                     "type": "Label",
                                     "properties": {
                                         "text": "Suffix"
@@ -123,12 +124,12 @@
                                 },
                                 {
                                     "name": "txt_person_suffix",
-                                    "library": "tk",
+                                    "library": "tkinter",
                                     "type": "Entry"
                                 },
                                 {
                                     "name": "lbl_person_nickname",
-                                    "library": "tk",
+                                    "library": "tkinter",
                                     "type": "Label",
                                     "properties": {
                                         "text": "Nickname"
@@ -136,12 +137,12 @@
                                 },
                                 {
                                     "name": "txt_person_nickname",
-                                    "library": "tk",
+                                    "library": "tkinter",
                                     "type": "Entry"
                                 },
                                 {
                                     "name": "btn_add_person",
-                                    "library": "tk",
+                                    "library": "tkinter",
                                     "type": "Button",
                                     "properties": {
                                         "text": "Add Person",

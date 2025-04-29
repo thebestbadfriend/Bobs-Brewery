@@ -14,7 +14,13 @@ def resolve_object_reference_from_string(string_value, context):
     if not string_value.startswith('@@'):
         return string_value
 
-    object_path = string_value[2:]
+    object_path = string_value[2:].split('.')
+    obj = context
+
+    for attr in object_path:
+        obj = getattr(obj, attr)
+
+    return obj
 
 
 def get_objectified_dict(dictionary):
