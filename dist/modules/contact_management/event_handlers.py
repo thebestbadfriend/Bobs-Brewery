@@ -8,7 +8,7 @@ def btn_add_contacts_clicked(window):
 
 def btn_add_company_clicked(window):
     company_name = window.widget_registry.get('txt_company_name').widget.get()
-    dal.add_new_company(company_name)
+    dal.insert_company(company_name)
 
 
 def btn_add_person_clicked(window):

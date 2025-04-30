@@ -38,7 +38,9 @@ creating json/yaml files to be loaded by the program will make it pretty straigh
 as needed.
 
 Aaaaaaand another branch... Gotta firm up security. Query execution, for example, works but is not secure at the moment.
-Need to look into other areas for improvement regarding security too.
+Need to look into other areas for improvement regarding security too. The sql part of this will also probably include
+putting commonly used queries (whether in core or a module) in a queries.py file in the appropriate core/module location
+to be stored there as constants
 
 Should probably get a Notion going for this whole thing.
 '''

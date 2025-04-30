@@ -2690,8 +2690,6 @@ COPY public.contacts (contact_id, person_id, company_id, status_id) FROM stdin;
 471	156	\N	1
 472	157	\N	1
 473	158	\N	1
-474	159	\N	1
-475	159	\N	1
 476	161	\N	1
 477	162	\N	1
 478	163	\N	1
@@ -5531,8 +5529,6 @@ COPY public.people (id, first_name, last_name, contact_id, suffix, nickname) FRO
 157	Hank	Hartman	472		
 158	Harold	Bennett	473		
 199	Jim	Chrietzberg	514		
-160	invalid row. Safe to delete in db	invalid row. Safe to delete in db	\N		
-159	invalid row. Safe to delete in db	invalid row. Safe to delete in db	474		
 161	Herman	Deaton	476		
 162	J.L.	Freeman	477		
 163	Jack	Goff	478		
