@@ -12,4 +12,9 @@ def btn_add_company_clicked(window):
 
 
 def btn_add_person_clicked(window):
-    pass
+    first_name = window.widget_registry.get('txt_person_first_name').widget.get()
+    last_name = window.widget_registry.get('txt_person_last_name').widget.get()
+    suffix = window.widget_registry.get('txt_person_suffix').widget.get()
+    nickname = window.widget_registry.get('txt_person_nickname').widget.get()
+
+    dal.insert_person(first_name, last_name, nickname, suffix)
