@@ -42,5 +42,9 @@ Need to look into other areas for improvement regarding security too. The sql pa
 putting commonly used queries (whether in core or a module) in a queries.py file in the appropriate core/module location
 to be stored there as constants
 
+Another, some improved utility and separation of concerns for db stuff. the db accessor should probably not only accept
+queries but also provide flexible functions for common practices such as a get_column_by_column function something like
+    def get_column_by_column(db, table, column_to_get, column_to_search_by, db_user='', db_pass='')
+
 Should probably get a Notion going for this whole thing.
 '''
