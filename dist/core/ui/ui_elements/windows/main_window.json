@@ -171,6 +171,12 @@
                                 "fill": "BOTH",
                                 "expand": 1
                             }
+                        },
+                        {
+                            "name": "btn_delete_selected_contact"
+                        },
+                        {
+                            "name": "btn_update_selected_contact"
                         }
                     ]
                 }
