@@ -1,0 +1,29 @@
+{
+    "name": "window_update_contact",
+    "type": "Toplevel",
+    "library": "tkinter",
+    "properties": {
+        "title": "Update Contact",
+        "min_width": 300,
+        "min_height": 300,
+        "max_width": 3000,
+        "max_height": 3000,
+        "xpos": 200,
+        "ypos": 100,
+        "geometry_string": "800x600",
+        "resizable": [
+            true,
+            true
+        ]
+    },
+    "children": [
+        {
+            "name": "lbl_contact",
+            "type": "Label",
+            "library": "tkinter",
+            "properties": {
+                "text": "Something like 'Contact: {contact_name}' but not quite sure how to get there. Tired at the moment"
+            }
+        }
+    ]
+}
