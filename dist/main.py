@@ -47,4 +47,10 @@ queries but also provide flexible functions for common practices such as a get_c
     def get_column_by_column(db, table, column_to_get, column_to_search_by, db_user='', db_pass='')
 
 Should probably get a Notion going for this whole thing.
+
+If I do go the 'something like visual studio for python' or 'something like godot but for general python application
+dev, one clear benefit of that, which I do not want to forget, is that the ability to drag and drop widgets and to click
+on them to pull up something like the inspector window in Godot which shows properties, signals/events/bindings, etc
+means that people do not have to know what things are called, what properties/events/etc they come with, etc. The editor
+can tell them all of that.
 '''
