@@ -31,7 +31,10 @@
             "type": "LabelFrame",
             "properties": {
                 "text": "Phone Numbers"
-            }
+            },
+            "children": [
+
+            ]
         },
         {
             "name": "lbf_fax_numbers",
@@ -39,7 +42,10 @@
             "type": "LabelFrame",
             "properties": {
                 "text": "Fax Numbers"
-            }
+            },
+            "children": [
+
+            ]
         },
         {
             "name": "lbf_email_addresses",
@@ -47,7 +53,10 @@
             "type": "LabelFrame",
             "properties": {
                 "text": "Email Addresses"
-            }
+            },
+            "children": [
+
+            ]
         },
         {
             "name": "lbf_addresses",
@@ -55,7 +64,10 @@
             "type": "LabelFrame",
             "properties": {
                 "text": "Addresses"
-            }
+            },
+            "children": [
+
+            ]
         },
         {
             "name": "lbf_websites",
@@ -63,7 +75,10 @@
             "type": "LabelFrame",
             "properties": {
                 "text": "Websites"
-            }
+            },
+            "children": [
+
+            ]
         }
     ]
 }
