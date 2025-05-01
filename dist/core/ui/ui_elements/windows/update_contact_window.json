@@ -33,7 +33,12 @@
                 "text": "Phone Numbers"
             },
             "children": [
-
+                "list (probably treeview, as I don't think there's any such thing as a listview) of existing phone numbers",
+                "btn_delete_phone_number to delete selected phone number in list",
+                "lbl_new_phone_number",
+                "txt_new_phone_number",
+                "btn_add_phone_number to add the phone number in txt_new_phone_number to the list",
+                "btn_update_phone_number to change the selected phone number in the list to the number in txt_new_phone_number"
             ]
         },
         {
