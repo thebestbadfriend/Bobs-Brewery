@@ -19,10 +19,50 @@
     "children": [
         {
             "name": "lbl_contact",
-            "type": "Label",
             "library": "tkinter",
+            "type": "Label",
             "properties": {
                 "text": "Something like 'Contact: {contact_name}' but not quite sure how to get there. Tired at the moment"
+            }
+        },
+        {
+            "name": "lbf_phone_numbers",
+            "library": "tkinter.ttk",
+            "type": "LabelFrame",
+            "properties": {
+                "text": "Phone Numbers"
+            }
+        },
+        {
+            "name": "lbf_fax_numbers",
+            "library": "tkinter.ttk",
+            "type": "LabelFrame",
+            "properties": {
+                "text": "Fax Numbers"
+            }
+        },
+        {
+            "name": "lbf_email_addresses",
+            "library": "tkinter.ttk",
+            "type": "LabelFrame",
+            "properties": {
+                "text": "Email Addresses"
+            }
+        },
+        {
+            "name": "lbf_addresses",
+            "library": "tkinter.ttk",
+            "type": "LabelFrame",
+            "properties": {
+                "text": "Addresses"
+            }
+        },
+        {
+            "name": "lbf_websites",
+            "library": "tkinter.ttk",
+            "type": "LabelFrame",
+            "properties": {
+                "text": "Websites"
             }
         }
     ]
