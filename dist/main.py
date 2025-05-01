@@ -48,9 +48,21 @@ queries but also provide flexible functions for common practices such as a get_c
 
 Should probably get a Notion going for this whole thing.
 
+meta folder structure for yaml/json files representing data types, classes, etc and all the relevant properties,
+functions, events/bindings, etc for each. (see chatgpt conversation)
+
+code completion
+
+inspector pane
+
+---
+
 If I do go the 'something like visual studio for python' or 'something like godot but for general python application
 dev, one clear benefit of that, which I do not want to forget, is that the ability to drag and drop widgets and to click
 on them to pull up something like the inspector window in Godot which shows properties, signals/events/bindings, etc
 means that people do not have to know what things are called, what properties/events/etc they come with, etc. The editor
-can tell them all of that.
+can tell them all of that and even - where it is useful - show things as more user-friendly names
+(e.g. on_node_expanded rather than <<TreeviewOpen>>) and provide on-hover descriptions of what things do. This might
+actually be one of the most important elements of all for the goal of making it hyper-accessible to relatively
+non-technical users.
 '''
