@@ -1,5 +1,6 @@
 import importlib
 import tkinter
+import re
 
 def get_or_import(module_path, class_name=''):
     importer = importlib.import_module(module_path)
@@ -15,9 +16,20 @@ def resolve_special_string(string_value, context):
         '@obj@': resolve_object_reference_from_string,
         '@text@': resolve_text_from_function_reference
     }
-    resolver_string = rf"@{string_value.split('@')[0]}@"
-    string_remainder = string_value[len(resolver_string):]
-    resolution_map[resolver_string](string_remainder, context)
+
+    regex = r'^(@\w+@)(.+)'
+    match = re.match(regex, string_value)
+
+    if not match:
+        return string_value
+
+    prefix, remainder = match.groups()
+    resolver = resolution_map.get(prefix)
+
+    if not resolver:
+        raise ValueError(f'Unknown prefix: {prefix}')
+
+    return resolver(remainder, context)
 
 
 def resolve_object_reference_from_string(string_value, context):
