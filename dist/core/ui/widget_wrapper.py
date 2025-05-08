@@ -35,6 +35,7 @@ class WidgetWrapper:
         self.window.widget_registry[self.name] = self
 
     def create_widget(self):
+        print(self.name)
         if self.full_dict.get('type','') == "file":
             file = self.full_dict.get('file','')
             return self.load_widget_from_file(file, self.window, self.parent)

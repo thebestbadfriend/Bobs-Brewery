@@ -173,10 +173,34 @@
                             }
                         },
                         {
-                            "name": "btn_delete_selected_contact"
+                            "name": "btn_delete_selected_contact",
+                            "library": "tkinter",
+                            "type": "Button",
+                            "properties": {
+                                "text": "Delete Selected Contact",
+                                "command": {
+                                    "path": "modules.contact_management.event_handlers",
+                                    "function": "btn_add_contacts_clicked",
+                                    "kwargs": {
+                                        "window": "@@window"
+                                    }
+                                }
+                            }
                         },
                         {
-                            "name": "btn_update_selected_contact"
+                            "name": "btn_update_selected_contact",
+                            "library": "tkinter",
+                            "type": "Button",
+                            "properties": {
+                                "text": "Update Selected Contact",
+                                "command": {
+                                    "path": "modules.contact_management.event_handlers",
+                                    "function": "btn_add_contacts_clicked",
+                                    "kwargs": {
+                                        "window": "@@window"
+                                    }
+                                }
+                            }
                         }
                     ]
                 }
