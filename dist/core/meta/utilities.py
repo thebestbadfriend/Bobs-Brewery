@@ -10,28 +10,27 @@ def get_or_import(module_path, class_name=''):
     return importer
 
 
-def resolve_object_reference_from_string(string_value, context):
-    if not string_value.startswith('@obj@'):
-        return string_value
+def resolve_special_string(string_value, context):
+    resolution_map = {
+        '@obj@': resolve_object_reference_from_string,
+        '@text@': resolve_text_from_function_reference
+    }
+    resolver_string = rf"@{string_value.split('@')[0]}@"
+    string_remainder = string_value[len(resolver_string):]
+    resolution_map[resolver_string](string_remainder, context)
 
-    object_path = string_value[5:].split('.')
+
+def resolve_object_reference_from_string(string_value, context):
     obj = context
 
-    for attr in object_path:
+    for attr in string_value:
         obj = getattr(obj, attr)
 
     return obj
 
 
-def resolve_function_reference_from_string(string_value, context):
-    if not string_value.startswith('@func@'):
-        return string_value
-
-    func = string_value[6:].split('.')
-
-    # all the things
-
-    return func
+def resolve_text_from_function_reference(string_value, context):
+    pass
 
 
 def get_objectified_dict(dictionary):
