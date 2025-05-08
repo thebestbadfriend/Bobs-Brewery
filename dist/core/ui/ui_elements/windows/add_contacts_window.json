@@ -65,7 +65,7 @@
                                             "path": "modules.contact_management.event_handlers",
                                             "function": "btn_add_company_clicked",
                                             "kwargs": {
-                                                "window": "@@window"
+                                                "window": "@obj@window"
                                             }
                                         }
                                     }
@@ -140,7 +140,7 @@
                                             "path": "modules.contact_management.event_handlers",
                                             "function": "btn_add_person_clicked",
                                             "kwargs": {
-                                                "window": "@@window"
+                                                "window": "@obj@window"
                                             }
                                         }
                                     }

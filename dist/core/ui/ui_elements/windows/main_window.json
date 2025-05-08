@@ -79,7 +79,7 @@
                                     "path": "modules.contact_management.event_handlers",
                                     "function": "btn_add_contacts_clicked",
                                     "kwargs": {
-                                        "window": "@@window"
+                                        "window": "@obj@window"
                                     }
                                 }
                             }
@@ -182,7 +182,7 @@
                                     "path": "modules.contact_management.event_handlers",
                                     "function": "btn_add_contacts_clicked",
                                     "kwargs": {
-                                        "window": "@@window"
+                                        "window": "@obj@window"
                                     }
                                 }
                             }
@@ -195,9 +195,9 @@
                                 "text": "Update Selected Contact",
                                 "command": {
                                     "path": "modules.contact_management.event_handlers",
-                                    "function": "btn_add_contacts_clicked",
+                                    "function": "btn_update_contact_clicked",
                                     "kwargs": {
-                                        "window": "@@window"
+                                        "window": "@obj@window"
                                     }
                                 }
                             }
