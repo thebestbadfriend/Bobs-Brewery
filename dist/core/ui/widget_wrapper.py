@@ -90,7 +90,7 @@ class WidgetWrapper:
                 module = utilities.get_or_import(command_path, command_class)
 
             for k, v in kwargs.items():
-                kwargs[k] = utilities.resolve_object_reference_from_string(v, self)
+                kwargs[k] = utilities.resolve_special_string(v, self)
 
             func = getattr(module, func_name)
             properties["command"] = lambda function=func, arguments=kwargs: function(**arguments)

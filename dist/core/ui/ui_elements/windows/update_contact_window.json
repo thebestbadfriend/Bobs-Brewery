@@ -16,13 +16,16 @@
             true
         ]
     },
+    "window_kwargs": {
+
+    },
     "children": [
         {
             "name": "lbl_contact",
             "library": "tkinter",
             "type": "Label",
             "properties": {
-                "text": "Something like 'Contact: {contact_name}' but not quite sure how to get there. Tired at the moment"
+                "text": "@jinja@Now editing {{ person.name }}"
             }
         },
         {
