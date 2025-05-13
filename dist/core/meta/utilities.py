@@ -1,4 +1,5 @@
 import importlib
+from jinja2 import Template
 import tkinter
 import re
 
@@ -14,7 +15,7 @@ def get_or_import(module_path, class_name=''):
 def resolve_special_string(string_value, context):
     resolution_map = {
         '@obj@': resolve_object_reference_from_string,
-        '@text@': resolve_text_from_function_reference
+        '@jinja@': parse_jinja_text
     }
 
     regex = r'^(@\w+@)(.+)'
@@ -41,7 +42,7 @@ def resolve_object_reference_from_string(string_value, context):
     return obj
 
 
-def resolve_text_from_function_reference(string_value, context):
+def parse_jinja_text(string_value, context):
     pass
 
 
