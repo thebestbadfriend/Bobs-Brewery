@@ -23,6 +23,14 @@ in contacts, etc.
 
 That will probably be a branch in the near future after the add contacts one is done.
 
+also, per-module configs. Nothing special needs to be done - I think - to make each module able to have its own config
+file, but the current config.py should go into the core folder, as it should be the core config. contact management
+should have its own config.py file. And so on. If a config file is to exist at the root of the project (in the same dir
+as main.py), then it should be clearly named something like global_config.py to indicate that it is for settings that
+are not bound by the scope of core or of any one module. This separation of configs will allow for things like
+Obsidian's per-plugin settings menus where you can go into each plugin and configure that plugin's settings pretty
+organically.
+
 I should also get module management working so that modules are not manually imported anywhere but are managed by a
 ModuleManager class or similar which leverages the module registry and an enforces core/modules/module_name route to
 the root of each module. As I started to define above, every module should consider itself logically bound by its root
