@@ -17,6 +17,10 @@ I ought to put all the current data access things in the contact management modu
 any of it. Really the core - if it uses a database - and each module that uses a database should each have their own
 self-contained databases, DALs, etc. Nothing should be tightly coupled, as modularity is the keyword for this tool.
 
+Basically, brewerydbaccessor should probably be configured to use a "bb_core" database by default but to accept other
+DBs so that bb_contacts, for example, can be used, but the logic for core should be in core, for contacts should be
+in contacts, etc.
+
 That will probably be a branch in the near future after the add contacts one is done.
 
 I should also get module management working so that modules are not manually imported anywhere but are managed by a
