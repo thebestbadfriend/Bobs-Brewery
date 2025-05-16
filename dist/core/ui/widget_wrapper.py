@@ -4,7 +4,7 @@ import json
 import tkinter
 from tkinter import ttk
 from typing import Union
-from core.meta import utilities
+from core.meta.utilities import utilities
 from .window_wrapper import WindowWrapper
 
 tk = tkinter

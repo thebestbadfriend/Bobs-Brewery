@@ -2,7 +2,7 @@ import json
 import config
 from core.meta.module import Module
 from core.meta.registry import Registry
-from core.meta import utilities
+from core.meta.utilities import utilities
 
 class WindowWrapper:
     def __init__(self, full_dict, module:Module=None):
