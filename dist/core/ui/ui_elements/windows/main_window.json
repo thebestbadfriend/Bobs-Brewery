@@ -70,6 +70,14 @@
                     "title": "Contacts",
                     "children":[
                         {
+                            "name": "lbl_dev_note",
+                            "library": "tkinter",
+                            "type": "Label",
+                            "properties": {
+                                "text": "NOTE: The add and edit buttons in this tab are in development and are not safe to use yet."
+                            }
+                        },
+                        {
                             "name": "lbl_search_companies",
                             "library": "tkinter",
                             "type": "Label",

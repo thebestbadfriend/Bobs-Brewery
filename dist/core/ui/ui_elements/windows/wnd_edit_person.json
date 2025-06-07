@@ -16,15 +16,6 @@
             true
         ]
     },
-    maybe actually the children here should be a label containing the contact name and then buttons like,
-    edit name,
-    manage companies,
-    manage addresses,
-    manage phone numbers,
-    etc,
-
-    same for edit company but it would have manage people instead of manage companies. Might eventually be worth
-    revisiting some of the design and logic surrounding the contact management module in general.
     "children": [
         {
             "name": "lbl_person_first_name",
