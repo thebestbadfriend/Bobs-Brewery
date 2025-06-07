@@ -70,21 +70,6 @@
                     "title": "Contacts",
                     "children":[
                         {
-                            "name": "btn_add_contacts",
-                            "library": "tkinter",
-                            "type": "Button",
-                            "properties": {
-                                "text": "Add Contact(s)",
-                                "command": {
-                                    "path": "modules.contact_management.event_handlers",
-                                    "function": "btn_add_contacts_clicked",
-                                    "kwargs": {
-                                        "window": "@obj@window"
-                                    }
-                                }
-                            }
-                        },
-                        {
                             "name": "lbl_search_companies",
                             "library": "tkinter",
                             "type": "Label",
@@ -108,6 +93,21 @@
                             }
                         },
                         {
+                            "name": "btn_add_company",
+                            "library": "tkinter",
+                            "type": "Button",
+                            "properties": {
+                                "text": "Add Company",
+                                "command": {
+                                    "path": "modules.contact_management.event_handlers",
+                                    "function": "btn_add_company_clicked",
+                                    "kwargs": {
+                                        "window": "@obj@window"
+                                    }
+                                }
+                            }
+                        },
+                        {
                             "name": "lbl_search_people",
                             "library": "tkinter",
                             "type": "Label",
@@ -126,6 +126,21 @@
                                     "function": "filter_contacts_treeview",
                                     "args": {
                                         "filter_by": "people"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "btn_add_person",
+                            "library": "tkinter",
+                            "type": "Button",
+                            "properties": {
+                                "text": "Add Person",
+                                "command": {
+                                    "path": "modules.contact_management.event_handlers",
+                                    "function": "btn_add_person_clicked",
+                                    "kwargs": {
+                                        "window": "@obj@window"
                                     }
                                 }
                             }
@@ -180,7 +195,7 @@
                                 "text": "Delete Selected Contact",
                                 "command": {
                                     "path": "modules.contact_management.event_handlers",
-                                    "function": "btn_add_contacts_clicked",
+                                    "function": "btn_add_company_clicked",
                                     "kwargs": {
                                         "window": "@obj@window"
                                     }

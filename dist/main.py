@@ -13,6 +13,13 @@ def main():
 main()
 
 '''
+check for updates (auto on start and also a check for updates button). Auto check on start should be toggleable via
+a checkbox in settings (so also need a settings menu)
+
+main window should not have its json quite so hard coded. The core of the UI can be, but since modules may arbitrarily
+exist and be loaded, some kind of loop will need to handle the folding of module UI into the display and the application
+of themes
+
 I ought to put all the current data access things in the contact management module since that is the only thing using
 any of it. Really the core - if it uses a database - and each module that uses a database should each have their own
 self-contained databases, DALs, etc. Nothing should be tightly coupled, as modularity is the keyword for this tool.
