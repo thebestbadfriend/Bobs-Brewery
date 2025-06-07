@@ -1,0 +1,88 @@
+{
+    "name": "window_edit_person",
+    "type": "Toplevel",
+    "library": "tkinter",
+    "properties": {
+        "title": "Edit Person",
+        "min_width": 300,
+        "min_height": 300,
+        "max_width": 3000,
+        "max_height": 3000,
+        "xpos": 200,
+        "ypos": 100,
+        "geometry_string": "800x600",
+        "resizable": [
+            true,
+            true
+        ]
+    },
+    "children": [
+        {
+            "name": "lbl_person_first_name",
+            "library": "tkinter",
+            "type": "Label",
+            "properties": {
+                "text": "First Name"
+            }
+        },
+        {
+            "name": "txt_person_first_name",
+            "library": "tkinter",
+            "type": "Entry"
+        },
+        {
+            "name": "lbl_person_last_name",
+            "library": "tkinter",
+            "type": "Label",
+            "properties": {
+                "text": "Last Name"
+            }
+        },
+        {
+            "name": "txt_person_last_name",
+            "library": "tkinter",
+            "type": "Entry"
+        },
+        {
+            "name": "lbl_person_suffix",
+            "library": "tkinter",
+            "type": "Label",
+            "properties": {
+                "text": "Suffix"
+            }
+        },
+        {
+            "name": "txt_person_suffix",
+            "library": "tkinter",
+            "type": "Entry"
+        },
+        {
+            "name": "lbl_person_nickname",
+            "library": "tkinter",
+            "type": "Label",
+            "properties": {
+                "text": "Nickname"
+            }
+        },
+        {
+            "name": "txt_person_nickname",
+            "library": "tkinter",
+            "type": "Entry"
+        },
+        {
+            "name": "btn_submit_edit_person",
+            "library": "tkinter",
+            "type": "Button",
+            "properties": {
+                "text": "Save Changes",
+                "command": {
+                    "path": "modules.contact_management.event_handlers",
+                    "function": "btn_submit_add_person_clicked",
+                    "kwargs": {
+                        "window": "@obj@window"
+                    }
+                }
+            }
+        }
+    ]
+}

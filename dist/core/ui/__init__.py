@@ -1,3 +1,4 @@
-from .brewery_treeview import BreweryTreeview
+from .bb_treeview import BBTreeview
 from .notebook_builder import NotebookBuilder
-from .window_builder import WindowBuilder
+from .window_wrapper import WindowWrapper
+from .widget_wrapper import WidgetWrapper

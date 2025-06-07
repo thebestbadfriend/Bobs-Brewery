@@ -10,7 +10,8 @@ import concealed_vars as cv
 
 def fix_server_access():
     os.system('net use * /delete /y > NUL')
-    os.system(rf'net use Z: \\PAT-PC\MiTek_Network /user:bt3 "{cv.COMMON_PASS}" > NUL')
+    os.system(rf'net use Z: \\PAT-PC\MiTek_Network /user:bt3 "{cv.COMMON_PASS}"')
+    os.system(rf'net use Y: "\\bt-server\Alpine Data" /user:bt-user "{cv.COMMON_PASS}"')
     os.system('net use')
 
 

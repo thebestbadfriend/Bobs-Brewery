@@ -1,6 +1,7 @@
 {
+    "name": "window_main",
     "type": "Tk",
-    "library": "tk",
+    "library": "tkinter",
     "properties": {
         "title": "Bob's Brewery",
         "min_width": 300,
@@ -15,7 +16,7 @@
     "children": [
         {
             "name": "tc_main",
-            "library": "ttk",
+            "library": "tkinter.ttk",
             "type": "Notebook",
             "properties": {
                 "height": 500,
@@ -24,47 +25,61 @@
             "children": [
                 {
                     "name": "tab_main",
-                    "library": "tk",
+                    "library": "tkinter",
                     "type": "Frame",
                     "title": "Main Tab",
                     "children": [
                         {
                             "name": "btn_fix_server_access",
-                            "library": "tk",
+                            "library": "tkinter",
                             "type": "Button",
                             "properties": {
                                 "text": "Fix Server Access",
-                                "command": "btn_commands.fix_server_access"
+                                "command": {
+                                    "path": "core.ui.btn_commands",
+                                    "function": "fix_server_access"
+                                }
                             }
                         }
                     ]
                 },
                 {
                     "name": "tab_favorite_programs",
-                    "library": "tk",
+                    "library": "tkinter",
                     "type": "Frame",
                     "title": "Favorite Programs",
                     "children": [
                         {
                             "name": "btn_open_favorite_programs",
-                            "library": "tk",
+                            "library": "tkinter",
                             "type": "Button",
                             "properties": {
                                 "text": "Open Favorite Programs",
-                                "command": "btn_commands.open_favorite_programs"
+                                "command": {
+                                    "path": "core.ui.btn_commands",
+                                    "function": "open_favorite_programs"
+                                }
                             }
                         }
                     ]
                 },
                 {
                     "name": "tab_contacts",
-                    "library": "tk",
+                    "library": "tkinter",
                     "type": "Frame",
                     "title": "Contacts",
                     "children":[
                         {
+                            "name": "lbl_dev_note",
+                            "library": "tkinter",
+                            "type": "Label",
+                            "properties": {
+                                "text": "NOTE: The add and edit buttons in this tab are in development and are not safe to use yet."
+                            }
+                        },
+                        {
                             "name": "lbl_search_companies",
-                            "library": "tk",
+                            "library": "tkinter",
                             "type": "Label",
                             "properties": {
                                 "text": "Search by company name"
@@ -72,11 +87,12 @@
                         },
                         {
                             "name": "txt_search_companies",
-                            "library": "ttk",
+                            "library": "tkinter.ttk",
                             "type": "Entry",
                             "binds": {
                                 "<KeyRelease>": {
-                                    "module": "ContactsTreeviewPopulator",
+                                    "module": "modules.contact_management",
+                                    "class": "ContactsTreeviewPopulator",
                                     "function": "filter_contacts_treeview",
                                     "args": {
                                         "filter_by": "companies"
@@ -86,7 +102,7 @@
                         },
                         {
                             "name": "lbl_search_people",
-                            "library": "tk",
+                            "library": "tkinter",
                             "type": "Label",
                             "properties": {
                                 "text": "Search by person name"
@@ -94,11 +110,12 @@
                         },
                         {
                             "name": "txt_search_people",
-                            "library": "ttk",
+                            "library": "tkinter.ttk",
                             "type": "Entry",
                             "binds": {
                                 "<KeyRelease>": {
-                                    "module": "ContactsTreeviewPopulator",
+                                    "module": "modules.contact_management",
+                                    "class": "ContactsTreeviewPopulator",
                                     "function": "filter_contacts_treeview",
                                     "args": {
                                         "filter_by": "people"
@@ -107,16 +124,51 @@
                             }
                         },
                         {
+                            "name": "btn_open_wnd_add_contact",
+                            "library": "tkinter",
+                            "type": "Button",
+                            "properties": {
+                                "text": "Add Contact",
+                                "command": {
+                                    "path": "modules.contact_management.event_handlers",
+                                    "function": "btn_open_wnd_add_contact_clicked",
+                                    "kwargs": {
+                                        "window": "@obj@window"
+                                    }
+                                }
+                            }
+                        },
+                        {
                             "name": "tv_contacts",
-                            "library": "ttk",
+                            "library": "tkinter.ttk",
                             "type": "Treeview",
                             "populate_function": {
-                                "module": "ContactsTreeviewPopulator",
+                                "module": "modules.contact_management",
+                                "class": "ContactsTreeviewPopulator",
                                 "function_name": "populate_contacts_treeview"
                             },
+                            "children": [
+                                {
+                                    "name": "ctv_vert_scroll",
+                                    "library": "tkinter.ttk",
+                                    "type": "Scrollbar",
+                                    "properties": {
+                                        "orient": "vertical",
+                                        "command": {
+                                            "path": "tv_contacts",
+                                            "function": "yview"
+                                        }
+                                    },
+                                    "pack_properties": {
+                                        "side": "RIGHT",
+                                        "fill": "Y"
+                                    }
+                                }
+                            ],
                             "binds": {
                                 "<<TreeviewOpen>>": {
-                                    "module": "ContactsTreeviewPopulator",
+                                    "module": "modules.contact_management",
+                                    "class": "ContactsTreeviewPopulator",
                                     "function": "load_details_for_contact",
                                     "args": {
 
@@ -129,16 +181,33 @@
                             }
                         },
                         {
-                            "name": "ctv_vert_scroll",
-                            "library": "ttk",
-                            "type": "Scrollbar",
+                            "name": "btn_delete_selected_contact",
+                            "library": "tkinter",
+                            "type": "Button",
                             "properties": {
-                                "orient": "vertical",
-                                "command": "tv_contacts.yview"
-                            },
-                            "pack_properties": {
-                                "side": "RIGHT",
-                                "fill": "Y"
+                                "text": "Delete Selected Contact",
+                                "command": {
+                                    "path": "modules.contact_management.event_handlers",
+                                    "function": "btn_open_wnd_add_contact_clicked",
+                                    "kwargs": {
+                                        "window": "@obj@window"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "btn_update_selected_contact",
+                            "library": "tkinter",
+                            "type": "Button",
+                            "properties": {
+                                "text": "Update Selected Contact",
+                                "command": {
+                                    "path": "modules.contact_management.event_handlers",
+                                    "function": "btn_update_contact_clicked",
+                                    "kwargs": {
+                                        "window": "@obj@window"
+                                    }
+                                }
                             }
                         }
                     ]
@@ -147,11 +216,14 @@
         },
         {
             "name": "btn_exit",
-            "library": "tk",
+            "library": "tkinter",
             "type": "Button",
             "properties": {
                 "text": "Exit",
-                "command": "btn_commands.on_btn_exit_click"
+                "command": {
+                    "path": "core.ui.btn_commands",
+                    "function": "on_btn_exit_click"
+                }
             }
         }
     ]

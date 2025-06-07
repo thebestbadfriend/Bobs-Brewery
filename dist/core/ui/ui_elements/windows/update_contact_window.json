@@ -1,0 +1,118 @@
+{
+    "name": "window_update_contact",
+    "type": "Toplevel",
+    "library": "tkinter",
+    "properties": {
+        "title": "Update Contact",
+        "min_width": 300,
+        "min_height": 300,
+        "max_width": 3000,
+        "max_height": 3000,
+        "xpos": 200,
+        "ypos": 100,
+        "geometry_string": "800x600",
+        "resizable": [
+            true,
+            true
+        ]
+    },
+    "window_kwargs": {
+
+    },
+    "children": [
+        {
+            "name": "lbl_contact",
+            "library": "tkinter",
+            "type": "Label",
+            "properties": {
+                "text": "@jinja@Now editing {{ person.name }}"
+            }
+        },
+        {
+            "name": "lbf_phone_numbers",
+            "library": "tkinter.ttk",
+            "type": "LabelFrame",
+            "properties": {
+                "text": "Phone Numbers"
+            },
+            "children": [
+                "list (probably treeview, as I don't think there's any such thing as a listview) of existing phone numbers",
+                "btn_delete_phone_number to delete selected phone number in list",
+                "lbl_new_phone_number",
+                "txt_new_phone_number",
+                "btn_add_phone_number to add the phone number in txt_new_phone_number to the list",
+                "btn_update_phone_number to change the selected phone number in the list to the number in txt_new_phone_number"
+            ]
+        },
+        {
+            "name": "lbf_fax_numbers",
+            "library": "tkinter.ttk",
+            "type": "LabelFrame",
+            "properties": {
+                "text": "Fax Numbers"
+            },
+            "children": [
+                "list of existing fax numbers",
+                "btn_delete_fax_number to delete selected fax number in list",
+                "lbl_new_fax_number",
+                "txt_new_fax_number",
+                "btn_add_fax_number to add the fax number in txt_new_fax_number to the list",
+                "btn_update_fax_number to change the selected fax number in the list to the number in txt_new_fax_number"
+            ]
+        },
+        {
+            "name": "lbf_email_addresses",
+            "library": "tkinter.ttk",
+            "type": "LabelFrame",
+            "properties": {
+                "text": "Email Addresses"
+            },
+            "children": [
+                "list of existing email addresses",
+                "btn_delete_email_address to delete selected email address in list",
+                "lbl_new_email_address",
+                "txt_new_email_address",
+                "btn_add_email_address to add the email address in txt_new_email_address to the list",
+                "btn_update_email_address to change the selected email address in the list to the one in txt_new_email_address"
+            ]
+        },
+        {
+            "name": "lbf_addresses",
+            "library": "tkinter.ttk",
+            "type": "LabelFrame",
+            "properties": {
+                "text": "Addresses"
+            },
+            "children": [
+                "list of existing addresses",
+                "btn_delete_email_address to delete selected address in list",
+                "lbf_new_address",
+                "---",
+                "lbl_new_street_address",
+                "txt_new_street_address",
+                "lbl_new_po_box",
+                "txt_new_po_box",
+                "lbl_new_city",
+                "txt_new_city",
+                "lbl_new_state",
+                "txt_new_state",
+                "lbl_new_zip_code",
+                "txt_new_zip_code",
+                "---",
+                "btn_add_address",
+                "btn_update_address"
+            ]
+        },
+        {
+            "name": "lbf_websites",
+            "library": "tkinter.ttk",
+            "type": "LabelFrame",
+            "properties": {
+                "text": "Websites"
+            },
+            "children": [
+
+            ]
+        }
+    ]
+}
