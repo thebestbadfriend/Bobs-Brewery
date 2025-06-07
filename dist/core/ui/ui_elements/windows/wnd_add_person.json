@@ -18,27 +18,66 @@
     },
     "children": [
         {
-            "name": "lbl_company_name",
+            "name": "lbl_person_first_name",
             "library": "tkinter",
             "type": "Label",
             "properties": {
-                "text": "Company Name"
+                "text": "First Name"
             }
         },
         {
-            "name": "txt_company_name",
+            "name": "txt_person_first_name",
             "library": "tkinter",
             "type": "Entry"
         },
         {
-            "name": "btn_submit_add_company",
+            "name": "lbl_person_last_name",
+            "library": "tkinter",
+            "type": "Label",
+            "properties": {
+                "text": "Last Name"
+            }
+        },
+        {
+            "name": "txt_person_last_name",
+            "library": "tkinter",
+            "type": "Entry"
+        },
+        {
+            "name": "lbl_person_suffix",
+            "library": "tkinter",
+            "type": "Label",
+            "properties": {
+                "text": "Suffix"
+            }
+        },
+        {
+            "name": "txt_person_suffix",
+            "library": "tkinter",
+            "type": "Entry"
+        },
+        {
+            "name": "lbl_person_nickname",
+            "library": "tkinter",
+            "type": "Label",
+            "properties": {
+                "text": "Nickname"
+            }
+        },
+        {
+            "name": "txt_person_nickname",
+            "library": "tkinter",
+            "type": "Entry"
+        },
+        {
+            "name": "btn_submit_add_person",
             "library": "tkinter",
             "type": "Button",
             "properties": {
-                "text": "Add Company",
+                "text": "Add Person",
                 "command": {
                     "path": "modules.contact_management.event_handlers",
-                    "function": "btn_submit_add_company_clicked",
+                    "function": "btn_submit_add_person_clicked",
                     "kwargs": {
                         "window": "@obj@window"
                     }
