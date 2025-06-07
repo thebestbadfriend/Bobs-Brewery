@@ -3,12 +3,8 @@ from core.meta import utilities
 from . import dal
 
 
-def btn_add_company_clicked(window):
-    window.create_modal_window_from_file(rf'{cfg.source_root}\core\ui\ui_elements\windows\wnd_add_company.json', window)
-
-
-def btn_add_person_clicked(window):
-    window.create_modal_window_from_file(rf'{cfg.source_root}\core\ui\ui_elements\windows\wnd_add_person.json', window)
+def btn_open_wnd_add_contact_clicked(window):
+    window.create_modal_window_from_file(rf'{cfg.source_root}\core\ui\ui_elements\windows\wnd_add_contact.json', window)
 
 
 def btn_update_contact_clicked(window):

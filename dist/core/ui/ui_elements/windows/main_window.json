@@ -101,21 +101,6 @@
                             }
                         },
                         {
-                            "name": "btn_add_company",
-                            "library": "tkinter",
-                            "type": "Button",
-                            "properties": {
-                                "text": "Add Company",
-                                "command": {
-                                    "path": "modules.contact_management.event_handlers",
-                                    "function": "btn_add_company_clicked",
-                                    "kwargs": {
-                                        "window": "@obj@window"
-                                    }
-                                }
-                            }
-                        },
-                        {
                             "name": "lbl_search_people",
                             "library": "tkinter",
                             "type": "Label",
@@ -139,14 +124,14 @@
                             }
                         },
                         {
-                            "name": "btn_add_person",
+                            "name": "btn_open_wnd_add_contact",
                             "library": "tkinter",
                             "type": "Button",
                             "properties": {
-                                "text": "Add Person",
+                                "text": "Add Contact",
                                 "command": {
                                     "path": "modules.contact_management.event_handlers",
-                                    "function": "btn_add_person_clicked",
+                                    "function": "btn_open_wnd_add_contact_clicked",
                                     "kwargs": {
                                         "window": "@obj@window"
                                     }
@@ -203,7 +188,7 @@
                                 "text": "Delete Selected Contact",
                                 "command": {
                                     "path": "modules.contact_management.event_handlers",
-                                    "function": "btn_add_company_clicked",
+                                    "function": "btn_open_wnd_add_contact_clicked",
                                     "kwargs": {
                                         "window": "@obj@window"
                                     }
