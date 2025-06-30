@@ -40,6 +40,18 @@
                                     "function": "fix_server_access"
                                 }
                             }
+                        },
+                        {
+                            "name": "btn_check_for_updates",
+                            "library": "tkinter",
+                            "type": "Button",
+                            "properties": {
+                                "text": "Check For Updates",
+                                "command": {
+                                    "path": "core.ui.btn_commands",
+                                    "function": "check_for_updates"
+                                }
+                            }
                         }
                     ]
                 },

@@ -74,6 +74,13 @@ code completion
 
 inspector pane
 
+"script runner" module. Basically a multiline text input that allows a script to by typed or pasted in, a browse button
+to allow selecting an existing script, a run now, scheduled run, and run at interval option, and a dropdown to select a
+supported language so that, for example, if you want to ping google every 15 seconds and log whether it worked, you can
+just do the ping and log commands without having to set up the schedule. Maybe also an output dropdown to allow
+outputting to a file, to a sort of inline console, discarding output, etc. And maybe an "alert if error" checkbox or
+similar.
+
 ---
 
 If I do go the 'something like visual studio for python' or 'something like godot but for general python application

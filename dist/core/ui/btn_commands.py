@@ -7,6 +7,9 @@ import config as cfg
 import concealed_vars as cv
 
 
+def check_for_updates():
+    pass
+
 
 def fix_server_access():
     os.system('net use * /delete /y > NUL')
