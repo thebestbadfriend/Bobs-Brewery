@@ -1,14 +1,21 @@
 import os
 import json
+import requests
 import sys
 import subprocess
 import config as cfg
+import core.config as core_cfg
 
 import concealed_vars as cv
 
 
 def check_for_updates():
-    pass
+    print("Checking for updates...")
+    url = f"https://api.github.com/repos/{cfg.REPO_OWNER}/{cfg.REPO_NAME}/releases/latest"
+    latest_version = '0.1.1' # change this to pull latest version from github's api
+
+    if core_cfg.CORE_VERSION == latest_version:
+        print('You are up to date!')
 
 
 def fix_server_access():
@@ -19,7 +26,7 @@ def fix_server_access():
 
 
 def open_favorite_programs():
-    with open(rf'{cfg.source_root}\core\dal\favorite_programs.json', 'r') as favorite_programs_file:
+    with open(rf'{cfg.SOURCE_ROOT}\core\dal\favorite_programs.json', 'r') as favorite_programs_file:
         data = json.load(favorite_programs_file)
 
         for program in data:

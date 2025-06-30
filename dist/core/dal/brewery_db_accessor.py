@@ -14,7 +14,7 @@ class BreweryDBAccessor:
     pg_host = cv.DB_HOST
     pg_port = '5432'
     db_name = 'bb_contacts'
-    dump_directory = rf'{cfg.source_root}\core\dal\dumps'
+    dump_directory = rf'{cfg.SOURCE_ROOT}\core\dal\dumps'
     dump_file = rf'{dump_directory}\bb_contacts.schema.20250327.100337.dump'
 
     # Set environment variable for password (optional, if password is needed)

@@ -4,11 +4,11 @@ from . import dal
 
 
 def btn_open_wnd_add_contact_clicked(window):
-    window.create_modal_window_from_file(rf'{cfg.source_root}\core\ui\ui_elements\windows\wnd_add_contact.json', window)
+    window.create_modal_window_from_file(rf'{cfg.SOURCE_ROOT}\core\ui\ui_elements\windows\wnd_add_contact.json', window)
 
 
 def btn_update_contact_clicked(window):
-    window.create_modal_window_from_file(rf'{cfg.source_root}\core\ui\ui_elements\windows\update_contact_window.json', window)
+    window.create_modal_window_from_file(rf'{cfg.SOURCE_ROOT}\core\ui\ui_elements\windows\update_contact_window.json', window)
 
 
 def btn_submit_add_company_clicked(window):
