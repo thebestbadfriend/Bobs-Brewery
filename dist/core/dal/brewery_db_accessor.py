@@ -4,7 +4,7 @@ import psycopg
 import subprocess
 import sys
 import concealed_vars as cv
-import config as cfg
+from global_tools import config as cfg
 
 
 class BreweryDBAccessor:

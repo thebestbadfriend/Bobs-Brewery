@@ -1,5 +1,4 @@
-import config as cfg
-from core.meta import utilities
+from global_tools import config as cfg
 from . import dal
 
 

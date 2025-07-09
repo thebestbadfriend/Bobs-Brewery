@@ -1,9 +1,9 @@
 import os
 import json
-import requests
+
 import sys
 import subprocess
-import config as cfg
+from global_tools import config as cfg
 import core.config as core_cfg
 
 import concealed_vars as cv

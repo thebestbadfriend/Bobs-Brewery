@@ -1,5 +1,5 @@
 import json
-import config
+from global_tools import config
 from core.meta.module import Module
 from core.meta.registry import Registry
 from core.meta.utilities import utilities

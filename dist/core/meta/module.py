@@ -1,5 +1,5 @@
 from .registry import Registry
-import config
+from global_tools import config
 
 
 class Module:
